@@ -1,1 +1,2 @@
-This is a test
+This is the git test.
+James was here.
