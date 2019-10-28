@@ -73,11 +73,11 @@ steps:
  #   publishWebProjects: true
  #   zipAfterPublish: true
 
-- task: AzureRmWebAppDeployment@4
-  displayName: App Service deploy
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Free Trial(9b456fa1-308e-4dba-bc90-6a89c7f8efcf)'
-    appType: 'webApp'
-    WebAppName: 
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+#- task: AzureRmWebAppDeployment@4
+  #displayName: App Service deploy
+  #inputs:
+  #  ConnectionType: 'AzureRM'
+  #  azureSubscription: 'Free Trial(9b456fa1-308e-4dba-bc90-6a89c7f8efcf)'
+  #  appType: 'webApp'
+  #  WebAppName: 
+  #  packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
