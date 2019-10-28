@@ -2,7 +2,9 @@
 
 namespace HelpAByPros.BusinessLogic
 {
-    public class Class1
+    public class Member:User
     {
+
+
     }
 }
