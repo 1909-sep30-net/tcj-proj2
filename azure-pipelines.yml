@@ -45,10 +45,16 @@ steps:
 # write it all out in script step...
 # in this case, this task is both running tests and publishing the results
 # to the build itself
+
 - task: DotNetCoreCLI@2
   displayName: dotnet test
   inputs:
-    command: 'test'
+    command: test
+    projects: |   
+     HelpByPros.Test/HelpByPros.Test.csproj
+     HelpByPros.BusinessLogic/HelpAByPros.BusinessLogic.csproj
+     HelpByPros.sln    # Pass a solution instead of a csproj.
+
     arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
 
 
