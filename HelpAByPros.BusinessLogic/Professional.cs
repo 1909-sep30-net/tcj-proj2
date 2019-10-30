@@ -6,6 +6,8 @@ namespace HelpAByPros.BusinessLogic
 {
     class Professional:User
     {
+        ///Linkdeln info 
+       
 
     }
 }

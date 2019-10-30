@@ -6,6 +6,7 @@ namespace HelpAByPros.BusinessLogic
 {
     interface IPayment
     {
+        
         void Payment(int points);
     }
 }
