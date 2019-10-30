@@ -15,14 +15,13 @@ variables:
 steps:
 
 - task: SonarCloudPrepare@1
-  displayName: Prepare SonarCloud analysis
   inputs:
     SonarCloud: 'Proj2'
-    organization: 'project2rev'
+    organization: '1909-sep30-net'
     scannerMode: 'MSBuild'
-    projectKey: 'project2rev'
+    projectKey: 'Project2tcj'
+    projectName: 'Project2tcj'
     extraProperties: 'sonar.exclusions=**/lib/**'
-
 # three different ways to solve the initial problem
 
 # - script:
