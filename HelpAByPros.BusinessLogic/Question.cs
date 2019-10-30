@@ -1,22 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace HelpAByPros.BusinessLogic
+namespace HelpByPros.BusinessLogic
 {
-    enum Category
+
+    public class Question
     {
-        Math = 1,
-        ComputerScience = 2,
-        Construction = 3,
-        English = 4
+        /// <summary>
+        /// There is a category for a question.
+        /// </summary>
+        public Category Category { get; set; } = new Category();
+        
+        /// <summary>
+        /// There is goign to be 1 question in a single instance of Question Class
+        /// </summary>
+        public string UserQuestion { get; set; }
+        
+        /// <summary>
+        /// There is going to be mulitple answers for a single questions
+        /// </summary>
+        public List<Answer> Answer { get; set; } = new List<Answer>();
+        
+        /// <summary>
+        /// the orginal author of the question 
+        /// </summary>
+        public IUser Author { get; set; } = new User();
 
-    }
-    class Question
-    {    
+        /// <summary>
+        /// track the question if it is already being answered 
+        /// </summary>
+        public bool Answered { get; set; } = new bool();
 
-        public string Category { get; set; }
+       
 
-        public string Answer { get; set; }
     }
 }
