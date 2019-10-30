@@ -1,4 +1,4 @@
-﻿namespace HelpAByPros.BusinessLogic
+﻿namespace HelpByPros.BusinessLogic
 {
     public interface ITextEntry
     {

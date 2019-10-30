@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace HelpAByPros.BusinessLogic
+namespace HelpByPros.BusinessLogic
 {
-    public class Admin:User
+    public class Admin : User
     {
-        [Required]
-        public string AccessLevel { get; set = Admin; }
+    }
 
-        }
 }

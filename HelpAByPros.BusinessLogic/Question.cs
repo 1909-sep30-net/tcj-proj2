@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace HelpAByPros.BusinessLogic
+namespace HelpByPros.BusinessLogic
 {
-    public enum Category
-    {
-        Math = 1,
-        ComputerScience = 2,
-        Construction = 3,
-        English = 4
 
-    }
     public class Question
     {
         /// <summary>
@@ -22,7 +13,7 @@ namespace HelpAByPros.BusinessLogic
         /// <summary>
         /// There is goign to be 1 question in a single instance of Question Class
         /// </summary>
-        public string Quest { get; set; }
+        public string UserQuestion { get; set; }
         
         /// <summary>
         /// There is going to be mulitple answers for a single questions

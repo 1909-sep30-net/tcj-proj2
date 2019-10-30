@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HelpAByPros.BusinessLogic
+namespace HelpByPros.BusinessLogic
 {
     public class Answer
     {
@@ -21,14 +21,18 @@ namespace HelpAByPros.BusinessLogic
         /// </summary>
         public IUser Author { get; set; } = new User();
         /// <summary>
-        /// A way to let know how will the question is been answered. 
+        /// A way to know how will the question is been answered. 
         /// </summary>
         public int UpVote { get; set; }
 
         /// <summary>
-        /// A way to let know how will the question is been answered. 
+        /// A way to know how will the question is been answered. 
         /// </summary>
         public int DownVote { get; set; }
-        
+        /// <summary>
+        /// Citing source of truth  
+        /// </summary>
+        public int Source { get; set; }
+
     }
 }

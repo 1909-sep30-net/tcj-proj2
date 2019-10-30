@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HelpAByPros.BusinessLogic
+namespace HelpByPros.BusinessLogic
 {
     public class Member:User
     {
 
-        public Question Question { get; set; } = new Question();
-        public Dictionary<Question, List<Answer>> Answer { get; set; } = new Dictionary<Question, List<Answer>>();
+        public List<Question> Question { get; set; } = new List<Question>();
+        public int PointAvailable { get; set; }
+
+
     }
 }
