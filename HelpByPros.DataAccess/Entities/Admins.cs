@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HelpByPros.DataAccess.Entities
 {
-    public class Admin
+    public class Admins
     {
         public int Id { get; set; }
         public int UsersID { get; set; }
