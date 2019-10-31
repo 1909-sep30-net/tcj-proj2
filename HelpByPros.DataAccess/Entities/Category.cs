@@ -11,5 +11,6 @@ namespace HelpByPros.DataAccess.Entities
         public int Id { get; set; }
         public Category Category { get; set; }
 
+        public Questions Question { get; set; }
     }
 }

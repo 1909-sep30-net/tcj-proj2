@@ -6,6 +6,9 @@ namespace HelpByPros.DataAccess.Entities
 {
     public class Admin
     {
-        public Users Users { get; set; }
+        public int Id { get; set; }
+        public int UsersID { get; set; }
+
+        public Users User { get; set; }
     }
 }
