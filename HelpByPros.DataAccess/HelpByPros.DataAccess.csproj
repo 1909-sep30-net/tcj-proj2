@@ -14,7 +14,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\HelpAByPros.BusinessLogic\HelpByPros.BusinessLogic.csproj" />
+    <ProjectReference Include="..\HelpByPros.BusinessLogic\HelpByPros.BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>

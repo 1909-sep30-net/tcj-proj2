@@ -13,4 +13,9 @@
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HelpByPros.BusinessLogic\HelpByPros.BusinessLogic.csproj" />
+    <ProjectReference Include="..\HelpByPros.DataAccess\HelpByPros.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
