@@ -39,9 +39,9 @@ namespace HelpByPros.Test
 
         }
 
-        
+
         [Theory]
-        [ InlineData( "Jane", "Doe", "jane.doe@yahoo.com", "janey", "12345") ] //arrange
+        [InlineData("Jane", "Doe", "jane.doe@yahoo.com", "janey", "12345")] //arrange
 
         public void CreateMultipleUsers_Test(string value1, string value2, string value3, string value4, string value5)
         {
@@ -68,33 +68,90 @@ namespace HelpByPros.Test
 
         ///
         /// <summary>
-        /// The following tests if bad user data, specifically blank or null, has been submitted for a User.
+        /// Tests for correct data type.  While not SUPER important
+        /// for business logic, should be used for network-traffic.
         /// </summary>
         ///
-        /*
+
+        /*//must be strongly typed
         [Theory]
-        [InlineData("Sammy", "Davis Jr.", "sammydjr@ysammy.com", "sammeh", "121239")] //arrange
-        [InlineData("Sammy", "", "sammydjr@ysammy.com", "sammeh", "121239")] //arrange
-        [InlineData("Sammy", "Davis Jr.", "", "sammeh", "121239")] //arrange
-        [InlineData("Sammy", "Davis Jr.", "sammydjr@ysammy.com", "", "121239")] //arrange
-        [InlineData("Sammy", "Davis Jr.", "sammydjr@ysammy.com", "sammeh", "")] //arrange
+        [InlineData(7, "Davis Jr.", "sammydjr@ysammy.com", "sammeh", "121239")] //arrange
+        [InlineData("Sammy", 8, "sammydjr@ysammy.com", "sammeh", "121239")] //arrange
+        [InlineData("Sammy", "Davis Jr.", 9, "sammeh", "121239")] //arrange
+        [InlineData("Sammy", "Davis Jr.", "sammydjr@ysammy.com", 10, "121239")] //arrange
+        [InlineData("Sammy", "Davis Jr.", "sammydjr@ysammy.com", "sammeh", 11)] //arrange
+        */
 
-
-        public void CreateBadUsers_Test(string value1, string value2, string value3, string value4, string value5)
+        [Fact]
+        public void TestForValidDataType()
         {
-            //arrange
+            //assemble
 
-            //Act
+            User labRat = new User() { FirstName = "Sammy", LastName = "Davis", Email = "Junior", Username = "sammeh", Password = "121234" };
+
+            for (int i = 0; i < 7; i++)
+            {
+                switch (i)
+                {
+                    case 1:
+                        Assert.IsType<string>(labRat.FirstName);
+                        break;
+
+                    case 2:
+                        Assert.IsType<string>(labRat.LastName);
+                        break;
+
+                    case 3:
+                        Assert.IsType<string>(labRat.Email);
+                        break;
+
+                    case 4:
+                        Assert.IsType<string>(labRat.Username);
+                        break;
+
+                    case 5:
+                        Assert.IsType<string>(labRat.Password);
+                        break;
+
+                    default:
+                        break;
+
+                }
+
+            }
+
 
             //We need a constructor so we can simply write this...
             //IUser user = new User(fname, lname, email, login, password);
 
-            //instead of this
             //Act
-            IUser user = new User() { FirstName = value1, LastName = value2, Email = value3, Username = value4, Password = value5 };
+            /*
+            try
+            { 
+                if(act1.FirstName == null)
+                { 
+                    throw new NullReferenceException;
+                }
+                string act1a = act1.FirstName.ToUpper();
+            }
+            catch(NullReferenceException ex)
+            {
+                Assert.Throws<NullReferenceException>(() => act1.FirstName.ToUpper());
+            }
+            */
 
+            //Action act = () => act1.FirstName.ToUpper();
+
+            //Assert.Throws<NullReferenceException>( () => act1.FirstName.ToUpper() );
 
             //Assert
+
+
+
+            /*
+            Assert.Equal( ArgumentException, ex );
+
+
             Assert.NotEqual("", user.FirstName);
             Assert.NotNull(user.FirstName);
 
@@ -109,9 +166,8 @@ namespace HelpByPros.Test
             
             Assert.NotEqual("", user.Password);
             Assert.NotNull(user.Password);
-
+            */
         }
 
-        */
     }
 }
