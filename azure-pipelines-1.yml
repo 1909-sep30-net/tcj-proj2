@@ -4,31 +4,50 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- master
+  branches:
+    include:
+    - Feature
+    exclude:
+    - master/*
+    - tonywork/*
+    - charlie/*
+
 
 pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
 steps:
-- task: NuGetToolInstaller@1
 
-- task: NuGetCommand@2
+- task: SonarCloudPrepare@1
   inputs:
-    restoreSolution: '$(solution)'
+    SonarCloud: 'Proj2'
+    organization: 'project2rev'
+    scannerMode: 'MSBuild'
+    projectKey: 'project2rev'
+    extraProperties: 'sonar.exclusions=**/lib/**'
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
+  workingDirectory: './DatabasesNDragons'
 
-- task: VSTest@2
+- task: DotNetCoreCLI@2
+  displayName: dotnet test
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'test'
+    projects: |
+     HelpByPros.Test/HelpByPros.Test.csproj
+     HelpByPros.BusinessLogic/HelpAByPros.BusinessLogic.csproj
+     HelpByPros.sln    # Pass a solution instead of a csproj.
+    arguments: --configuration $(buildConfiguration) --collect "XPlat Code Coverage"
+
+- task: PublishCodeCoverageResults@1
+  displayName: Publish code coverage
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
+- task: SonarCloudAnalyze@1
+- task: SonarCloudPublish@1
+  displayName: Publish SonarCloud quality gate result
