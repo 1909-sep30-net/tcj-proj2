@@ -14,5 +14,6 @@ namespace HelpByPros.DataAccess.Entities
         /// </summary>
         public string Summary { get; set; }
         public int YearsOfExperience { get; set; }
+        public Professional Professional { get; set; }
     }
 }

@@ -4,6 +4,9 @@
     {
         public int Id { get; set; }
         public int PointAvailable { get; set; }
-        public float Money { get; set; }
+       // public float Money { get; set; }
+        public Members Member { get; set; }
+        public Professional Professional { get; set; }
+
     }
 }
