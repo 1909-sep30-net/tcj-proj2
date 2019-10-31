@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpByPros.Test", "HelpByPr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpByPros.BusinessLogic", "HelpByPros.BusinessLogic\HelpByPros.BusinessLogic.csproj", "{E6D1B027-FCB7-498F-8C13-4A2488BA536E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PH", "PH\PH.csproj", "{21A4632F-55D1-4019-B3ED-DD383411944A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpByPros.Api", "PH\HelpByPros.Api.csproj", "{21A4632F-55D1-4019-B3ED-DD383411944A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
