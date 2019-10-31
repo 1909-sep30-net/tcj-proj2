@@ -5,7 +5,12 @@ namespace HelpByPros.DataAccess.Entities
 
     public class Questions
     {
-        public int Id;
+        public Questions()
+        {
+            AnsCollection = new HashSet<Answers>();
+        }
+
+        public int Id { get; set; }
         public int CategoryID { get; set; }
 
         public Categorys Category { get; set; }

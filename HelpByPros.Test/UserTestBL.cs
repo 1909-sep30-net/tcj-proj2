@@ -15,13 +15,13 @@ namespace HelpByPros.Test
         // Test each part of the business logic in seperate method. 
 
         [Fact]
-        public void UserName_Test()
+        public void UserNameShouldFomatCorrectly_Test()
         {
 
         }
         [Fact]
 
-        public void UserEmail_Test()
+        public void UserEmailShouldFormat_Test()
         {
 
         }

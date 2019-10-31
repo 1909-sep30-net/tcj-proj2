@@ -13,7 +13,7 @@ namespace HelpByPros.DataAccess.Entities
         }
 
         public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<Admin> Admin { get; set; }
+        public virtual DbSet<Admins> Admin { get; set; }
         public virtual DbSet<Members> Members { get; set; }
         public virtual DbSet<Professional> Professionals { get; set; }
         public virtual DbSet<AccountInfo> AccountInfos { get; set; }
@@ -51,7 +51,7 @@ namespace HelpByPros.DataAccess.Entities
                     .IsUnique();// UNIQUE
             });
 
-            modelBuilder.Entity<Admin>(entity =>
+            modelBuilder.Entity<Admins>(entity =>
             {
                 entity.Property(p => p.Id)
                     .UseIdentityColumn(); // IDENTITY(1,1)
