@@ -73,7 +73,7 @@ namespace HelpByPros.Test
         /// </summary>
         ///
 
-        /*//must be strongly typed
+        /*//must be strongly typed by default, so needless.
         [Theory]
         [InlineData(7, "Davis Jr.", "sammydjr@ysammy.com", "sammeh", "121239")] //arrange
         [InlineData("Sammy", 8, "sammydjr@ysammy.com", "sammeh", "121239")] //arrange
@@ -83,7 +83,7 @@ namespace HelpByPros.Test
         */
 
         [Fact]
-        public void TestForValidDataType()
+        public void BusinessLogic_User_TestForValidDataType()
         {
             //assemble
 
@@ -168,6 +168,19 @@ namespace HelpByPros.Test
             Assert.NotNull(user.Password);
             */
         }
+
+        ///
+        //<summary>
+        //Test for blank values - > ""
+        ///
+
+        [Fact]
+        public void BusinessLogic_User_TestForBlankField()
+        {
+
+            
+        }
+
 
     }
 }
