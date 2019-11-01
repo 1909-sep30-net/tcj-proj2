@@ -20,6 +20,10 @@ namespace HelpByPros.BusinessLogic
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "The Input Must be Letters"), Required(AllowEmptyStrings = false)]
         public string LastName { get; set; }
         /// <summary>
+        /// phone should be a regex
+        /// </summary>
+        public int Phone { get; set; }
+        /// <summary>
         /// To notify a question has been raised or answer has been answered
         /// </summary>
         [Required]
@@ -41,7 +45,12 @@ namespace HelpByPros.BusinessLogic
         [StringLength(12, MinimumLength = 4, ErrorMessage = "Must be Between 4 and 12 Characters.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        /// <summary>
+        /// adding pictures in the future
+        /// </summary>
+        public byte[] Profile_Pic { get; set; }
 
+        public int Id { get; set; }
 
     }
 }

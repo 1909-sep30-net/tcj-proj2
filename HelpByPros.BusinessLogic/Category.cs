@@ -12,6 +12,5 @@ namespace HelpByPros.BusinessLogic
             Construction = 3,
             English = 4
 
-        
         }
 }

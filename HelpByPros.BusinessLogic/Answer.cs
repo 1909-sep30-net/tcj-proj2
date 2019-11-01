@@ -6,12 +6,13 @@ namespace HelpByPros.BusinessLogic
 {
     public class Answer
     {
+        public int ID { get; set; }
         /// <summary>
         /// An answer there is always a single best answer. 
         /// By deffault Best is always set to false.
         /// </summary>        
-        public bool  Best { get; set;}
-        
+        public bool Best { get; set; }
+
         /// <summary>
         ///The answer that a user answered.  
         /// </summary>
@@ -32,7 +33,9 @@ namespace HelpByPros.BusinessLogic
         /// <summary>
         /// Citing source of truth  
         /// </summary>
-        public int Source { get; set; }
+        public string Source { get; set; }
+
+        public int AnsQuestionID{get;set;}
 
     }
 }

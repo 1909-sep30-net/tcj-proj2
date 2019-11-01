@@ -20,4 +20,9 @@
     <ProjectReference Include="..\HelpByPros.BusinessLogic\HelpByPros.BusinessLogic.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Repo\" />
+  </ItemGroup>
+
 </Project>

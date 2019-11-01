@@ -3,23 +3,23 @@
 namespace HelpByPros.BusinessLogic
 {
 
-    public class Question
+    public class Question : IQuestion
     {
         /// <summary>
         /// There is a category for a question.
         /// </summary>
         public Category Category { get; set; } = new Category();
-        
+
         /// <summary>
         /// There is goign to be 1 question in a single instance of Question Class
         /// </summary>
         public string UserQuestion { get; set; }
-        
+
         /// <summary>
         /// There is going to be mulitple answers for a single questions
         /// </summary>
         public List<Answer> Answer { get; set; } = new List<Answer>();
-        
+
         /// <summary>
         /// the orginal author of the question 
         /// </summary>
@@ -30,7 +30,7 @@ namespace HelpByPros.BusinessLogic
         /// </summary>
         public bool Answered { get; set; } = new bool();
 
-       
 
+        public int Id { get; set; }
     }
 }
