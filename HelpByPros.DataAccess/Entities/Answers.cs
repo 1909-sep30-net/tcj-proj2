@@ -15,5 +15,7 @@ namespace HelpByPros.DataAccess.Entities
 
         public Users User { get; set; }
         public string Answer { get; set; }
+        public string Sources { get; set; }
+        public bool Best { get; set; }
     }
 }

@@ -17,6 +17,10 @@ namespace HelpByPros.BusinessLogic
         /// </summary>
         public string LastName { get; set; }
         /// <summary>
+        /// phone should be a regex
+        /// </summary>
+        public int Phone { get; set; }
+        /// <summary>
         /// To notify a question has been raised or answer has been answered
         /// </summary>
         public string Email { get; set; }
@@ -28,7 +32,12 @@ namespace HelpByPros.BusinessLogic
         /// password 
         /// </summary>
         public string Password { get; set; }
+        /// <summary>
+        /// adding pictures in the future
+        /// </summary>
+        public byte[] Profile_Pic { get; set; }
 
+        public int Id { get; set; }
 
     }
 }

@@ -15,7 +15,7 @@ namespace HelpByPros.DataAccess.Entities
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Admins> Admin { get; set; }
         public virtual DbSet<Members> Members { get; set; }
-        public virtual DbSet<Professional> Professionals { get; set; }
+        public virtual DbSet<Professionals> Professionals { get; set; }
         public virtual DbSet<AccountInfo> AccountInfos { get; set; }
         public virtual DbSet<Questions> Questions { get; set; }
         public virtual DbSet<Answers> Answers { get; set; }
@@ -73,14 +73,14 @@ namespace HelpByPros.DataAccess.Entities
                   .IsRequired() // NOT NULL
                   .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
 
-                entity.HasOne(pt => pt.AccountInfo) // configure one nav property
+                entity.HasOne(pt => pt.AccInfo) // configure one nav property
                  .WithOne(p => p.Member) // configure the opposite nav property          
                  .HasForeignKey<Members>(p => p.AccountInfoID)
                  .IsRequired() // NOT NULL
                  .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
 
             });
-            modelBuilder.Entity<Professional>(entity =>
+            modelBuilder.Entity<Professionals>(entity =>
             {
                 entity.Property(p => p.Id)
                     .UseIdentityColumn(); // IDENTITY(1,1)
@@ -90,15 +90,15 @@ namespace HelpByPros.DataAccess.Entities
                   .IsRequired() // NOT NULL
                   .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
 
-                entity.HasOne(pt => pt.AccountInfo) // configure one nav property
+                entity.HasOne(pt => pt.AccInfo) // configure one nav property
                .WithOne(p => p.Professional) // configure the opposite nav property          
-               .HasForeignKey<Professional>(p => p.AccountInfoID)
+               .HasForeignKey<Professionals>(p => p.AccountInfoID)
                .IsRequired() // NOT NULL
                .OnDelete(DeleteBehavior.Cascade);// ON DELETE CASCADE
 
                entity.HasOne(pt => pt.Profession) // configure one nav property
               .WithOne(p => p.Professional) // configure the opposite nav property          
-              .HasForeignKey<Professional>(p => p.ProfessionID)
+              .HasForeignKey<Professionals>(p => p.ProfessionID)
               .IsRequired() // NOT NULL
               .OnDelete(DeleteBehavior.Cascade);// ON DELETE CASCADE
             });
@@ -120,13 +120,13 @@ namespace HelpByPros.DataAccess.Entities
                 entity.Property(p => p.UserQuestion)
                     .IsRequired() // NOT NULL
                     .HasMaxLength(126); // NVARCHAR(64)   
-
+                entity.Property(p => p.Answered)
+                    .IsRequired(); // NOT NULL
                 entity.HasOne(pt => pt.Category) // configure one nav property
                     .WithOne(p => p.Question) // configure the opposite nav property          
                     .HasForeignKey<Questions>(p => p.CategoryID)
                     .IsRequired() // NOT NULL
                     .OnDelete(DeleteBehavior.Cascade);// ON DELETE CASCADE
-
                 entity.HasOne(pt => pt.Users) // configure one nav property
                     .WithMany(p => p.QueCollection) // configure the opposite nav property          
                     .HasForeignKey(p => p.UsersID)
@@ -145,6 +145,12 @@ namespace HelpByPros.DataAccess.Entities
                 entity.Property(p => p.DownVote)
                     .IsRequired() // NOT NULL
                     .HasMaxLength(4); // NVARCHAR(64)
+                entity.Property(p => p.Sources)
+                   .IsRequired() // NOT NULL
+                   .HasMaxLength(64); // NVARCHAR(64)
+
+                entity.Property(p => p.Best)
+                   .IsRequired(); // NOT NULL
 
                 entity.HasOne(pt => pt.User) // configure one nav property
                    .WithMany(p => p.AnsCollection) // configure the opposite nav property          

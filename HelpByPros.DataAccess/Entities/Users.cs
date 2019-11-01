@@ -15,7 +15,7 @@ namespace HelpByPros.DataAccess.Entities
 
             Admins = new HashSet<Admins>();
 
-            Professionals = new HashSet<Professional>();
+            Professionals = new HashSet<Professionals>();
 
         }
 
@@ -31,7 +31,7 @@ namespace HelpByPros.DataAccess.Entities
 
         public ICollection<Members> Members {get;set;}
         public ICollection<Admins> Admins { get; set; }
-        public ICollection<Professional> Professionals { get; set; }
+        public ICollection<Professionals> Professionals { get; set; }
         public ICollection<Questions> QueCollection { get; set; }
         public ICollection<Answers> AnsCollection { get; set; }
 

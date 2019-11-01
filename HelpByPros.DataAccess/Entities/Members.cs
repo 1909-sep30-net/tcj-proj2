@@ -8,8 +8,8 @@ namespace HelpByPros.DataAccess.Entities
     {
         public int Id { get; set; }
         public Users User { get; set; }
-        public int UsersID { get; set; }
+        public int UserID { get; set; }
         public int AccountInfoID { get; set; }
-        public AccountInfo AccountInfo { get; set; }
+        public AccountInfo AccInfo { get; set; }
     }
 }

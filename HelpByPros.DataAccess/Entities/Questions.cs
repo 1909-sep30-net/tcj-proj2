@@ -18,6 +18,7 @@ namespace HelpByPros.DataAccess.Entities
         public int UsersID { get; set; }
 
         public Users Users { get; set; }
+        public bool Answered { get; set; }
         public ICollection<Answers> AnsCollection { get; set; }
     }
 }
