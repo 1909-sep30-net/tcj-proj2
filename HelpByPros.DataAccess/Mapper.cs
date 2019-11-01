@@ -1,9 +1,5 @@
 ﻿using HelpByPros.BusinessLogic;
 using HelpByPros.DataAccess.Entities;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HelpByPros.DataAccess
 {
