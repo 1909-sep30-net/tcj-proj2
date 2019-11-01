@@ -59,7 +59,6 @@ namespace HelpByPros.DataAccess
                  Username = m.User.Username,
                  Password = m.User.Password,
                  Phone = m.User.Phone,
-
                  Profile_Pic = m.User.Profile_Pic,
                  PointAvailable= m.AccInfo.PointAvailable
 
