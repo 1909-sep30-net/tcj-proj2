@@ -29,7 +29,7 @@ namespace HelpByPros.DataAccess.Repo
             }
             catch
             {
-                throw new InvalidOperationException("UserName Already exists");
+                throw new InvalidOperationException("There is already an existed username, phone, or email");
             }
         }
         /// <summary>
@@ -77,6 +77,8 @@ namespace HelpByPros.DataAccess.Repo
 
             return xList;
         }
+
+
 
     }
 }

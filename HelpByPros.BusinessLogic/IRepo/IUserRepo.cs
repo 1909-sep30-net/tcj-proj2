@@ -20,6 +20,7 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// <param name="p"></param>
         /// <returns></returns>
         Task AddProfessionalAsync(Professional p);
+
         #endregion
 
 

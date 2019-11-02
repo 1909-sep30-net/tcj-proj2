@@ -18,6 +18,8 @@ namespace HelpByPros.DataAccess.Repo
             _context = context;
         }
 
+
+
         #region Add information to db
         public async Task AddMemberAsync(Member m)
         {
@@ -29,12 +31,9 @@ namespace HelpByPros.DataAccess.Repo
             }
             catch
             {
-                throw new InvalidOperationException("UserName Already exists");
+                throw new InvalidOperationException("There is already an existed username, phone, or email");
             }
-
-           
         }
-
         public async Task AddProfessionalAsync(Professional p)
         {
             try
@@ -46,7 +45,7 @@ namespace HelpByPros.DataAccess.Repo
             }
             catch
             {
-                throw new InvalidOperationException("UserName Already exists");
+                throw new InvalidOperationException("There is already an existed username, phone, or email");
             }
         }
         #endregion
