@@ -12,7 +12,5 @@ namespace HelpByPros.BusinessLogic
         CustomerService,
         DataEntryClerk,
         MathSpecialist,
-
-
     };
 }

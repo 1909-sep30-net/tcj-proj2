@@ -10,19 +10,16 @@ namespace HelpByPros.BusinessLogic
         /// </summary>
         [Required(ErrorMessage = "Please Enter Credentials")]
         [Display(Name = "Credentials")]
-
-        public string Crediential { get; set; }
+        public string Credential { get; set; }
 
         /// <summary>
         /// A list for Questions asked.
-        /// </summary>
-        
+        /// </summary>        
         public List<Question> MyQuestion { get; set; } = new List<Question>();
 
         /// <summary>
         /// A List for Answers given.
-        /// </summary>
-        
+        /// </summary>        
         public List<Answer> MyAnswers { get; set; } = new List<Answer>();
 
         /// <summary>
