@@ -21,18 +21,33 @@ namespace HelpByPros.DataAccess.Repo
         #region Add information to db
         public async Task AddMemberAsync(Member m)
         {
-            var e = Mapper.MapMember(m);
+            try
+            {
+                var e = Mapper.MapMember(m);
+                _context.Add(e);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("UserName Already exists");
+            }
 
-            _context.Add(e);
-            await _context.SaveChangesAsync();
+           
         }
 
         public async Task AddProfessionalAsync(Professional p)
         {
-            var e = Mapper.MapProfessonal(p);
+            try
+            {
+                var e = Mapper.MapProfessonal(p);
 
-            _context.Add(e);
-            await _context.SaveChangesAsync();
+                _context.Add(e);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("UserName Already exists");
+            }
         }
         #endregion
 

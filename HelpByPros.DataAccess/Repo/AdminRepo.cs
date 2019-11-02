@@ -20,10 +20,17 @@ namespace HelpByPros.DataAccess.Repo
 
         public async Task AddAdminAsync(Admin a)
         {
-            var e = Mapper.MapAdmin(a);
+            try
+            {
+                var e = Mapper.MapAdmin(a);
 
-            _context.Add(e);
-            await _context.SaveChangesAsync();
+                _context.Add(e);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("UserName Already exists");
+            }
         }
         /// <summary>
         /// future implementation
@@ -59,7 +66,7 @@ namespace HelpByPros.DataAccess.Repo
         public async Task<IEnumerable<Admin>> GetAdminListAsync()
         {
 
-            var x = await _context.Admin.Include(x => x.User).ToListAsync();
+            var x = await _context.Admin.Include(y => y.User).ToListAsync();
             List<Admin> xList = new List<Admin>();
 
 
