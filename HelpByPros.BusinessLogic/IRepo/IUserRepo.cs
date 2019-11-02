@@ -53,22 +53,19 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// <summary>
         /// getting a single member 
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        Task<Member> GetAMemberAsync(int id);
+        Task<Member> GetAMemberAsync(string UserName=default,int UserID=0);
         /// <summary>
         /// getting a professional
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        Task<Member> GetAProfessionalAsync(int id);
+        Task<Professional> GetAProfessionalAsync(string UserName=default, int UserID=0);
 
         /// <summary>
         /// getting a admin
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        Task<Member> GetAAdminAsync(int id);
+        Task<Admin> GetAAdminAsync(string UserName=default, int UserID=0);
         #endregion
 
 
