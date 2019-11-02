@@ -20,14 +20,6 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// <param name="p"></param>
         /// <returns></returns>
         Task AddProfessionalAsync(Professional p);
-
-        /// <summary>
-        /// Add an Admin to the db
-        /// </summary>
-        /// <param name="a"></param>
-        /// <returns></returns>
-        Task AddAdminAsync(Admin a);
-
         #endregion
 
 
@@ -44,11 +36,7 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable <Professional>> GetProfessionalListAsync();
-        /// <summary>
-        /// getting a list admin
-        /// </summary>
-        /// <returns></returns>
-        Task<IEnumerable<Admin>> GetAdminListAsync();
+       
 
         /// <summary>
         /// getting a single member 
@@ -61,11 +49,7 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// <returns></returns>
         Task<Professional> GetAProfessionalAsync(string UserName=default, int UserID=0);
 
-        /// <summary>
-        /// getting a admin
-        /// </summary>
-        /// <returns></returns>
-        Task<Admin> GetAAdminAsync(string UserName=default, int UserID=0);
+     
         #endregion
 
 

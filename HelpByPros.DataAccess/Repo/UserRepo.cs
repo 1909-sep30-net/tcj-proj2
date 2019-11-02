@@ -19,14 +19,6 @@ namespace HelpByPros.DataAccess.Repo
         }
 
         #region Add information to db
-        public async Task AddAdminAsync(Admin a)
-        {
-            var e = Mapper.MapAdmin(a);
-
-            _context.Add(e);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task AddMemberAsync(Member m)
         {
             var e = Mapper.MapMember(m);
@@ -47,26 +39,7 @@ namespace HelpByPros.DataAccess.Repo
         #region Get Infomation from database
 
         /// <summary>
-        /// getting an admin if it exist if not then exeception will be thrown instead
-        /// </summary>
-        /// <param name="UserName"> optional attribute </param>
-        /// <param name="UserID">optional attribute </param>
-        /// <returns></returns>
-        public async Task<Admin> GetAAdminAsync(string UserName= default, int UserID = 0)
-        {
-            try
-            {
-                var x = await _context.Admin.Include(x => x.UsersID == UserID || x.User.Username == UserName).FirstAsync();
-                return Mapper.MapAdmin(x);
-
-            }
-            catch (ArgumentNullException ex)
-            {
-                throw new ArgumentNullException("There is no such admin: " + ex );
-            }
-        }
-        /// <summary>
-        /// getting an admin if it exist if not then exeception will be thrown instead
+        /// getting a member if it exist if not then exeception will be thrown instead
         /// </summary>
         /// <param name="UserName"> optional attribute </param>
         /// <param name="UserID">optional attribute </param>
@@ -84,7 +57,7 @@ namespace HelpByPros.DataAccess.Repo
             }
         }
         /// <summary>
-        /// getting an admin if it exist if not then exeception will be thrown instead
+        /// getting a Professonal if it exist if not then exeception will be thrown instead
         /// </summary>
         /// <param name="UserName"> optional attribute </param>
         /// <param name="UserID">optional attribute </param>
@@ -102,20 +75,7 @@ namespace HelpByPros.DataAccess.Repo
             }
         }
 
-        public async Task<IEnumerable<Admin>> GetAdminListAsync()
-        {
-
-            var x = await _context.Admin.Include(x => x.User).ToListAsync();
-            List<Admin> xList = new List<Admin>();
-
-
-            foreach(Admins a in x)
-            {
-                xList.Add(Mapper.MapAdmin(a));
-            }
-
-            return xList;
-        }
+       
 
 
 
