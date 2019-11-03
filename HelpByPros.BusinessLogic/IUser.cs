@@ -10,7 +10,7 @@ namespace HelpByPros.BusinessLogic
 
         string LastName { get; set; }
 
-        int Phone { get; set; }
+        string Phone { get; set; }
 
         string Email { get; set; }
 

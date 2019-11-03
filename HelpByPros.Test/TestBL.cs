@@ -15,7 +15,7 @@ namespace HelpByPros.Test
 
             string fname = "John";
             string lname = "Smith";
-            int phone = 1231231234;
+            string phone = "1231231234";
             string email = "john.smith@gmail.com";
             string login = "johnny";
             string password = "password";
