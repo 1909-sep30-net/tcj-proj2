@@ -217,8 +217,6 @@ namespace HelpByPros.DataAccess
             //upvote
             //downvote
 
-            //Missing from both (but exists on database)
-            //"Sources"
             
             //auto-generated on server
             //x.Id = a.Id;
