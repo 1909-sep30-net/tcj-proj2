@@ -28,7 +28,8 @@ namespace HelpByPros.DataAccess.Entities
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.Property(p => p.Id)
-                    .UseIdentityColumn(); // IDENTITY(1,1)
+                    .UseIdentityColumn(1, 1) // IDENTITY(1,1)
+                    .IsRequired();
                 entity.Property(p => p.FirstName)
                     .IsRequired() // NOT NULL
                     .HasMaxLength(64); // NVARCHAR(64)
@@ -43,30 +44,39 @@ namespace HelpByPros.DataAccess.Entities
                     .IsRequired() // NOT NULL
                     .HasMaxLength(64); // NVARCHAR(64)
                 entity.Property(p => p.Phone)
-                    .HasMaxLength(10); // NVARCHAR(64)   
+                    .HasMaxLength(10); // NVARCHAR(64) 
+                
                 entity.Property(p => p.Email)
                    .HasMaxLength(100) // NVARCHAR(64)   
                    .IsRequired();
                 entity.HasIndex(p => p.Username)
+                    .IsUnique();// UNIQUE
+                entity.HasIndex(p => p.Phone)
+                    .IsUnique();// UNIQUE
+                entity.HasIndex(p => p.Email)
+                    .IsUnique();// UNIQUE
+                entity.HasIndex(p => p.Id)
                     .IsUnique();// UNIQUE
             });
 
             modelBuilder.Entity<Admins>(entity =>
             {
                 entity.Property(p => p.Id)
-                    .UseIdentityColumn(); // IDENTITY(1,1)
-
+                     .UseIdentityColumn(1, 1) // IDENTITY(1,1)
+                    .IsRequired();
                 entity.HasOne(pt => pt.User) // configure one nav property
                    .WithMany(p=> p.Admins) // configure the opposite nav property
                    .HasForeignKey(pt => pt.UsersID) // configure the foreign key property
                    .IsRequired() // NOT NULL
                    .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
-
+                entity.HasIndex(p => p.Id)
+                   .IsUnique();// UNIQUE
             });
             modelBuilder.Entity<Members>(entity =>
             {
                 entity.Property(p => p.Id)
-                    .UseIdentityColumn(); // IDENTITY(1,1)
+                    .UseIdentityColumn(1, 1) // IDENTITY(1,1)
+                    .IsRequired();
                 entity.HasOne(pt => pt.User) // configure one nav property
                   .WithMany(p => p.Members) // configure the opposite nav property
                   .HasForeignKey(pt => pt.Id) // configure the foreign key property
@@ -78,13 +88,15 @@ namespace HelpByPros.DataAccess.Entities
                  .HasForeignKey<Members>(p => p.AccountInfoID)
                  .IsRequired() // NOT NULL
                  .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
-
+                entity.HasIndex(p => p.Id)
+                   .IsUnique();// UNIQUE
             });
             modelBuilder.Entity<Professionals>(entity =>
             {
                 entity.Property(p => p.Id)
-                    .UseIdentityColumn(); // IDENTITY(1,1)
-                entity.HasOne(pt => pt.User) // configure one nav property
+                    .UseIdentityColumn(1, 1) // IDENTITY(1,1)
+                    .IsRequired();
+                 entity.HasOne(pt => pt.User) // configure one nav property
                   .WithMany(p => p.Professionals) // configure the opposite nav property
                   .HasForeignKey(pt => pt.Id) // configure the foreign key property
                   .IsRequired() // NOT NULL
@@ -101,22 +113,28 @@ namespace HelpByPros.DataAccess.Entities
               .HasForeignKey<Professionals>(p => p.ProfessionID)
               .IsRequired() // NOT NULL
               .OnDelete(DeleteBehavior.Cascade);// ON DELETE CASCADE
+                
+                entity.HasIndex(p => p.Id)
+                        .IsUnique();// UNIQUE
             });
             
             modelBuilder.Entity<AccountInfo>(entity =>
             {
                 entity.Property(p => p.Id)
-                    .UseIdentityColumn(); // IDENTITY(1,1)
+                    .UseIdentityColumn(1, 1) // IDENTITY(1,1)
+                    .IsRequired();
                 entity.Property(p => p.PointAvailable)
                     .IsRequired() // NOT NULL
                     .HasMaxLength(64); // NVARCHAR(64)   
-              
 
+                entity.HasIndex(p => p.Id)
+                   .IsUnique();// UNIQUE
             });
             modelBuilder.Entity<Questions>(entity =>
             {
                 entity.Property(p => p.Id)
-                    .UseIdentityColumn(); // IDENTITY(1,1)
+                     .UseIdentityColumn(1, 1) // IDENTITY(1,1)
+                    .IsRequired();
                 entity.Property(p => p.UserQuestion)
                     .IsRequired() // NOT NULL
                     .HasMaxLength(126); // NVARCHAR(64)   
@@ -132,13 +150,15 @@ namespace HelpByPros.DataAccess.Entities
                     .HasForeignKey(p => p.UsersID)
                     .IsRequired() // NOT NULL
                     .OnDelete(DeleteBehavior.Cascade);// ON DELETE CASCADE
-
+                entity.HasIndex(p => p.Id)
+                   .IsUnique();// UNIQUE
             });
            
             modelBuilder.Entity<Answers>(entity =>
             {
                 entity.Property(p => p.Id)
-                    .UseIdentityColumn(); // IDENTITY(1,1)
+                    .UseIdentityColumn(1, 1) // IDENTITY(1,1)
+                    .IsRequired();
                 entity.Property(p => p.UpVote)
                     .IsRequired() // NOT NULL
                     .HasMaxLength(4); // NVARCHAR(64)  
@@ -163,26 +183,32 @@ namespace HelpByPros.DataAccess.Entities
                   .HasForeignKey(p => p.QuestionID)
                   .IsRequired() // NOT NULL
                   .OnDelete(DeleteBehavior.Cascade);// ON DELETE CASCADE
-
+                entity.HasIndex(p => p.Id)
+                   .IsUnique();// UNIQUE
 
             });
             modelBuilder.Entity<Categorys>(entity =>
             {
                 entity.Property(p => p.Id)
-                    .UseIdentityColumn(); // IDENTITY(1,1)   
+                    .UseIdentityColumn(1, 1) // IDENTITY(1,1)
+                    .IsRequired();
+                entity.HasIndex(p => p.Id)
+                   .IsUnique();// UNIQUE
             });
 
             modelBuilder.Entity<Professions>(entity =>
             {
                 entity.Property(p => p.Id)
-                    .UseIdentityColumn(); // IDENTITY(1,1)
+                   .UseIdentityColumn(1, 1) // IDENTITY(1,1)
+                    .IsRequired();
                 entity.Property(p => p.Summary)
                     .IsRequired() // NOT NULL
                     .HasMaxLength(126); // NVARCHAR(126)  
                 entity.Property(p => p.YearsOfExperience)
                     .IsRequired() // NOT NULL
                     .HasMaxLength(2); // NVARCHAR(64)
-
+                entity.HasIndex(p => p.Id)
+                   .IsUnique();// UNIQUE
 
             });
         }

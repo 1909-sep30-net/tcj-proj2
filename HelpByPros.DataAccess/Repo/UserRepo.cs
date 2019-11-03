@@ -1,61 +1,126 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HelpByPros.BusinessLogic;
 using HelpByPros.BusinessLogic.IRepo;
+using HelpByPros.DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace HelpByPros.DataAccess.Repo
 {
     public class UserRepo : IUserRepo
     {
+        private readonly PH_DbContext _context;
+
+        public UserRepo(PH_DbContext context)
+        {
+            _context = context;
+        }
+
+
+
         #region Add information to db
-        public Task AddAdminAsync(Admin a)
+        public async Task AddMemberAsync(Member m)
         {
-
-            throw new System.NotImplementedException();
+            try
+            {
+                var e = Mapper.MapMember(m);
+                _context.Add(e);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("There is already an existed username, phone, or email");
+            }
         }
-
-        public Task AddMemberAsync(Member m)
+        public async Task AddProfessionalAsync(Professional p)
         {
-            throw new System.NotImplementedException();
-        }
+            try
+            {
+                var e = Mapper.MapProfessonal(p);
 
-        public Task AddProfessionalAsync(Professional p)
-        {
-            throw new System.NotImplementedException();
+                _context.Add(e);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("There is already an existed username, phone, or email");
+            }
         }
         #endregion
 
         #region Get Infomation from database
 
-        public Task<Member> GetAAdminAsync(int id)
+        /// <summary>
+        /// getting a member if it exist if not then exeception will be thrown instead
+        /// </summary>
+        /// <param name="UserName"> optional attribute </param>
+        /// <param name="UserID">optional attribute </param>
+        /// <returns></returns>
+        public async Task<Member> GetAMemberAsync(string UserName=default, int UserID = 0)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var x = await _context.Members.Include(x => x.UserID == UserID || x.User.Username == UserName).FirstOrDefaultAsync();
+                return Mapper.MapMember(x);
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new ArgumentNullException("There is no such Member: " + ex);
+            }
+        }
+        /// <summary>
+        /// getting a Professonal if it exist if not then exeception will be thrown instead
+        /// </summary>
+        /// <param name="UserName"> optional attribute </param>
+        /// <param name="UserID">optional attribute </param>
+        /// <returns></returns>
+        public async Task<Professional> GetAProfessionalAsync(string UserName=default, int UserID = 0)
+        {
+            try
+            {
+                var x = await _context.Professionals.Include(x => x.UserID == UserID || x.User.Username == UserName).FirstOrDefaultAsync();
+                return Mapper.MapProfessonal(x);
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new ArgumentNullException("There is no such Professional: " + ex);
+            }
         }
 
-        public Task<IEnumerable<Admin>> GetAdminListAsync()
+       
+
+
+
+        public async Task<IEnumerable<Member>> GetMemberListAsync()
         {
-            throw new System.NotImplementedException();
+            var x = await _context.Members.Include(x => x.User).ToListAsync();
+            List<Member> xList = new List<Member>();
+
+
+            foreach (Members a in x)
+            {
+                xList.Add(Mapper.MapMember(a));
+            }
+
+            return xList;
         }
 
-        public Task<Member> GetAMemberAsync(int id)
+        public async Task<IEnumerable<Professional>> GetProfessionalListAsync()
         {
-            throw new System.NotImplementedException();
+            var x = await _context.Professionals.Include(x => x.User).ToListAsync();
+            List<Professional> xList = new List<Professional>();
+
+
+            foreach (Professionals a in x)
+            {
+                xList.Add(Mapper.MapProfessonal(a));
+            }
+
+            return xList;
         }
 
-        public Task<Member> GetAProfessionalAsync(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IEnumerable<Member>> GetMemberListAsync()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IEnumerable<Professional>> GetProfessionalListAsync()
-        {
-            throw new System.NotImplementedException();
-        }
         #endregion
     }
 }
