@@ -14,6 +14,10 @@ namespace HelpByPros.BusinessLogic
         /// There is goign to be 1 question in a single instance of Question Class
         /// </summary>
         public string UserQuestion { get; set; }
+        /// <summary>
+        /// There is a question body for every question. 
+        /// </summary>
+        public string QuestionBOdy { get; set; }
 
         /// <summary>
         /// There is going to be mulitple answers for a single questions

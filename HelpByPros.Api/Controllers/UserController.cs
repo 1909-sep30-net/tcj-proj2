@@ -25,17 +25,26 @@ namespace HelpByPros.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Member>> GetAllUser()
+        public async Task<IEnumerable<Member>> GetAllMembers()
         {
 
             var x = _userRepo.GetMemberListAsync();
             return await x;
         }
-
-      /*  [HttpPost]
-        /*public async Task CreateAUser()
+        // GET: api/GetAMember/username
+        [HttpGet("{username}", Name = "GetA")]
+        public async Task<Member> GetA(string username)
         {
-            _userRepo.AddMemberAsync
+
+            var x = _userRepo.GetAMemberAsync(username);
+            return await x;
+        }
+
+
+       /* [HttpPost]
+        public async Task CreateAUser( )
+        {
+         _userRepo.AddMemberAsync();
             var x = _userRepo.GetMemberListAsync();
             return await x;
         }*/

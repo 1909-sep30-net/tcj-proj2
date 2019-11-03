@@ -21,7 +21,7 @@ namespace HelpByPros.DataAccess.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public byte[] Profile_Pic { get; set; }
-        public int Phone { get; set; }
+        public string Phone { get; set; }
         public string Email { get; set; }
 
         public string Username { get; set; }

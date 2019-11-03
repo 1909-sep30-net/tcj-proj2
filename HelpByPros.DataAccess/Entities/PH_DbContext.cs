@@ -20,7 +20,6 @@ namespace HelpByPros.DataAccess.Entities
         public virtual DbSet<Questions> Questions { get; set; }
         public virtual DbSet<Answers> Answers { get; set; }
         public virtual DbSet<Categorys> Categorys { get; set; }
-        public virtual DbSet<Professions> Professions { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,8 +43,7 @@ namespace HelpByPros.DataAccess.Entities
                     .IsRequired() // NOT NULL
                     .HasMaxLength(64); // NVARCHAR(64)
                 entity.Property(p => p.Phone)
-                    .HasMaxLength(10); // NVARCHAR(64) 
-                
+                    .HasMaxLength(64); // NVARCHAR(64)                 
                 entity.Property(p => p.Email)
                    .HasMaxLength(100) // NVARCHAR(64)   
                    .IsRequired();
@@ -82,7 +80,7 @@ namespace HelpByPros.DataAccess.Entities
                   .HasForeignKey(pt => pt.Id) // configure the foreign key property
                   .IsRequired() // NOT NULL
                   .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
-
+                
                 entity.HasOne(pt => pt.AccInfo) // configure one nav property
                  .WithOne(p => p.Member) // configure the opposite nav property          
                  .HasForeignKey<Members>(p => p.AccountInfoID)
@@ -96,6 +94,7 @@ namespace HelpByPros.DataAccess.Entities
                 entity.Property(p => p.Id)
                     .UseIdentityColumn(1, 1) // IDENTITY(1,1)
                     .IsRequired();
+
                  entity.HasOne(pt => pt.User) // configure one nav property
                   .WithMany(p => p.Professionals) // configure the opposite nav property
                   .HasForeignKey(pt => pt.Id) // configure the foreign key property
@@ -107,13 +106,14 @@ namespace HelpByPros.DataAccess.Entities
                .HasForeignKey<Professionals>(p => p.AccountInfoID)
                .IsRequired() // NOT NULL
                .OnDelete(DeleteBehavior.Cascade);// ON DELETE CASCADE
-
-               entity.HasOne(pt => pt.Profession) // configure one nav property
-              .WithOne(p => p.Professional) // configure the opposite nav property          
-              .HasForeignKey<Professionals>(p => p.ProfessionID)
-              .IsRequired() // NOT NULL
-              .OnDelete(DeleteBehavior.Cascade);// ON DELETE CASCADE
                 
+                entity.Property(p => p.Id)
+                 .UseIdentityColumn(1, 1) // IDENTITY(1,1)
+                 .IsRequired();
+
+                entity.Property(p => p.Expertise )
+                    .IsRequired();
+
                 entity.HasIndex(p => p.Id)
                         .IsUnique();// UNIQUE
             });
@@ -140,6 +140,9 @@ namespace HelpByPros.DataAccess.Entities
                     .HasMaxLength(126); // NVARCHAR(64)   
                 entity.Property(p => p.Answered)
                     .IsRequired(); // NOT NULL
+                entity.Property(p => p.Answered)
+                   .HasMaxLength(200)                   
+                   .IsRequired(); // NOT NULL
                 entity.HasOne(pt => pt.Category) // configure one nav property
                     .WithOne(p => p.Question) // configure the opposite nav property          
                     .HasForeignKey<Questions>(p => p.CategoryID)
@@ -196,21 +199,7 @@ namespace HelpByPros.DataAccess.Entities
                    .IsUnique();// UNIQUE
             });
 
-            modelBuilder.Entity<Professions>(entity =>
-            {
-                entity.Property(p => p.Id)
-                   .UseIdentityColumn(1, 1) // IDENTITY(1,1)
-                    .IsRequired();
-                entity.Property(p => p.Summary)
-                    .IsRequired() // NOT NULL
-                    .HasMaxLength(126); // NVARCHAR(126)  
-                entity.Property(p => p.YearsOfExperience)
-                    .IsRequired() // NOT NULL
-                    .HasMaxLength(2); // NVARCHAR(64)
-                entity.HasIndex(p => p.Id)
-                   .IsUnique();// UNIQUE
-
-            });
+           
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
