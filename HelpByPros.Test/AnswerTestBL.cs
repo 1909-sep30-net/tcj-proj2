@@ -4,14 +4,14 @@ using HelpByPros.BusinessLogic;
 
 namespace HelpByPros.DataAccess
 {
-    public class AnswerTest
+    public class AnswerTestBL
     {
         private readonly Answer _answer = new Answer();
 
         [Fact]
         public void Best_StoresCorrectly()
         {
-            bool best  = true;
+            bool best = true;
 
             _answer.Best = best;
 
@@ -31,7 +31,11 @@ namespace HelpByPros.DataAccess
         [Fact]
         public void Author_StoresCorrectly()
         {
-            //IUser
+            IUser user = new User();
+
+            _answer.Author = user;
+
+            Assert.Equal(user, _answer.Author);
         }
 
         [Fact]

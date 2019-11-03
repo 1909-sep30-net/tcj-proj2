@@ -29,14 +29,10 @@ namespace HelpByPros.BusinessLogic
         /// <summary>
         /// Phone Number
         /// </summary>
-<<<<<<< tonyFeatureWork
-        public string Phone { get; set; }
-=======
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Provided Phone Number not Valid")]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
->>>>>>> feature
         /// <summary>
         /// To notify a question has been raised or answer has been answered
         /// </summary>
