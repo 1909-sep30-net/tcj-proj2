@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HelpByPros.DataAccess.Migrations
 {
-    public partial class Proj2Mig : Migration
+    public partial class removedATable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,21 +35,6 @@ namespace HelpByPros.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Professions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<int>(nullable: false),
-                    Summary = table.Column<string>(maxLength: 126, nullable: false),
-                    YearsOfExperience = table.Column<int>(maxLength: 2, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Professions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -58,7 +43,7 @@ namespace HelpByPros.DataAccess.Migrations
                     FirstName = table.Column<string>(maxLength: 64, nullable: false),
                     LastName = table.Column<string>(maxLength: 64, nullable: false),
                     Profile_Pic = table.Column<byte[]>(nullable: true),
-                    Phone = table.Column<int>(maxLength: 10, nullable: false),
+                    Phone = table.Column<string>(maxLength: 64, nullable: true),
                     Email = table.Column<string>(maxLength: 100, nullable: false),
                     Username = table.Column<string>(maxLength: 64, nullable: false),
                     Password = table.Column<string>(maxLength: 64, nullable: false)
@@ -92,7 +77,7 @@ namespace HelpByPros.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false),
-                    UsersID = table.Column<int>(nullable: false),
+                    UserID = table.Column<int>(nullable: false),
                     AccountInfoID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -119,7 +104,9 @@ namespace HelpByPros.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false),
                     UserID = table.Column<int>(nullable: false),
                     AccountInfoID = table.Column<int>(nullable: false),
-                    ProfessionID = table.Column<int>(nullable: false)
+                    Expertise = table.Column<string>(nullable: false),
+                    YearsOfExp = table.Column<int>(nullable: false),
+                    Summary = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -136,12 +123,6 @@ namespace HelpByPros.DataAccess.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Professionals_Professions_ProfessionID",
-                        column: x => x.ProfessionID,
-                        principalTable: "Professions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,7 +133,8 @@ namespace HelpByPros.DataAccess.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CategoryID = table.Column<int>(nullable: false),
                     UserQuestion = table.Column<string>(maxLength: 126, nullable: false),
-                    UsersID = table.Column<int>(nullable: false)
+                    UsersID = table.Column<int>(nullable: false),
+                    Answered = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,7 +163,9 @@ namespace HelpByPros.DataAccess.Migrations
                     UpVote = table.Column<int>(maxLength: 4, nullable: false),
                     DownVote = table.Column<int>(maxLength: 4, nullable: false),
                     UserID = table.Column<int>(nullable: false),
-                    Answer = table.Column<string>(nullable: true)
+                    Answer = table.Column<string>(nullable: true),
+                    Sources = table.Column<string>(maxLength: 64, nullable: false),
+                    Best = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -201,9 +185,27 @@ namespace HelpByPros.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AccountInfos_Id",
+                table: "AccountInfos",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Admin_Id",
+                table: "Admin",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Admin_UsersID",
                 table: "Admin",
                 column: "UsersID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Answers_Id",
+                table: "Answers",
+                column: "Id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_QuestionID",
@@ -216,9 +218,21 @@ namespace HelpByPros.DataAccess.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categorys_Id",
+                table: "Categorys",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Members_AccountInfoID",
                 table: "Members",
                 column: "AccountInfoID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Members_Id",
+                table: "Members",
+                column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -228,9 +242,9 @@ namespace HelpByPros.DataAccess.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Professionals_ProfessionID",
+                name: "IX_Professionals_Id",
                 table: "Professionals",
-                column: "ProfessionID",
+                column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -240,9 +254,33 @@ namespace HelpByPros.DataAccess.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Questions_Id",
+                table: "Questions",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_UsersID",
                 table: "Questions",
                 column: "UsersID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Id",
+                table: "Users",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Phone",
+                table: "Users",
+                column: "Phone",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Username",
@@ -270,9 +308,6 @@ namespace HelpByPros.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AccountInfos");
-
-            migrationBuilder.DropTable(
-                name: "Professions");
 
             migrationBuilder.DropTable(
                 name: "Categorys");

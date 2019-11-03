@@ -44,22 +44,18 @@ namespace HelpByPros.DataAccess
         public static Member MapMember(Members m)
         {
 
-         
+            var x = new Member();
+            x.Email = m.User.Email;
+            x.FirstName = m.User.FirstName;
+            x.LastName = m.User.LastName;
+            x.Username = m.User.Username;
+            x.Password = m.User.Password;
+            x.Phone = m.User.Phone;
+            x.Profile_Pic = m.User.Profile_Pic;
+            x.PointAvailable = m.AccInfo.PointAvailable;
 
-            return new Member
-             {
-                
-                 Email = m.User.Email,
-                 FirstName = m.User.FirstName,
-                 LastName = m.User.LastName,
-                 Username = m.User.Username,
-                 Password = m.User.Password,
-                 Phone = m.User.Phone,
-                 Profile_Pic = m.User.Profile_Pic,
-                 PointAvailable= m.AccInfo.PointAvailable
-
-             };
-  
+      
+            return x;
 
         }
         /// <summary>
@@ -97,7 +93,7 @@ namespace HelpByPros.DataAccess
                 Phone = p.User.Phone,
                 Profile_Pic = p.User.Profile_Pic,
                 PointAvailable = p.AccInfo.PointAvailable
-
+                
             };
 
          
@@ -116,7 +112,7 @@ namespace HelpByPros.DataAccess
                 User = MapUser(p)
             };
             x.AccInfo.PointAvailable = p.PointAvailable;
-            x.Profession.Title = p.Title;
+            x.Expertise = p.Title.ToString("g");
             x.YearsOfExp = p.YearsOfExp;
             return x;
 

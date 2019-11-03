@@ -3,6 +3,7 @@ using System;
 using HelpByPros.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -10,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HelpByPros.DataAccess.Migrations
 {
     [DbContext(typeof(PH_DbContext))]
-    [Migration("20191101164926_reworkedOnEntities")]
-    partial class reworkedOnEntities
+    [Migration("20191103175201_addedQuestionBodytoQuestion")]
+    partial class addedQuestionBodytoQuestion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,13 +27,19 @@ namespace HelpByPros.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("PointAvailable")
                         .HasColumnType("integer")
                         .HasMaxLength(64);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("AccountInfos");
                 });
@@ -42,12 +49,18 @@ namespace HelpByPros.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("UsersID")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.HasIndex("UsersID");
 
@@ -59,7 +72,10 @@ namespace HelpByPros.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Answer")
                         .HasColumnType("text");
@@ -88,6 +104,9 @@ namespace HelpByPros.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id")
+                        .IsUnique();
+
                     b.HasIndex("QuestionID");
 
                     b.HasIndex("UserID");
@@ -100,12 +119,18 @@ namespace HelpByPros.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Category")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("Categorys");
                 });
@@ -114,7 +139,9 @@ namespace HelpByPros.DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AccountInfoID")
                         .HasColumnType("integer");
@@ -127,6 +154,9 @@ namespace HelpByPros.DataAccess.Migrations
                     b.HasIndex("AccountInfoID")
                         .IsUnique();
 
+                    b.HasIndex("Id")
+                        .IsUnique();
+
                     b.ToTable("Members");
                 });
 
@@ -134,13 +164,19 @@ namespace HelpByPros.DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AccountInfoID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProfessionID")
-                        .HasColumnType("integer");
+                    b.Property<string>("Expertise")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Summary")
+                        .HasColumnType("text");
 
                     b.Property<int>("UserID")
                         .HasColumnType("integer");
@@ -153,34 +189,10 @@ namespace HelpByPros.DataAccess.Migrations
                     b.HasIndex("AccountInfoID")
                         .IsUnique();
 
-                    b.HasIndex("ProfessionID")
+                    b.HasIndex("Id")
                         .IsUnique();
 
                     b.ToTable("Professionals");
-                });
-
-            modelBuilder.Entity("HelpByPros.DataAccess.Entities.Professions", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasColumnType("character varying(126)")
-                        .HasMaxLength(126);
-
-                    b.Property<int>("Title")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("YearsOfExperience")
-                        .HasColumnType("integer")
-                        .HasMaxLength(2);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Professions");
                 });
 
             modelBuilder.Entity("HelpByPros.DataAccess.Entities.Questions", b =>
@@ -188,13 +200,20 @@ namespace HelpByPros.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("Answered")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasMaxLength(200);
 
                     b.Property<int>("CategoryID")
                         .HasColumnType("integer");
+
+                    b.Property<string>("QuestionBody")
+                        .HasColumnType("text");
 
                     b.Property<string>("UserQuestion")
                         .IsRequired()
@@ -209,6 +228,9 @@ namespace HelpByPros.DataAccess.Migrations
                     b.HasIndex("CategoryID")
                         .IsUnique();
 
+                    b.HasIndex("Id")
+                        .IsUnique();
+
                     b.HasIndex("UsersID");
 
                     b.ToTable("Questions");
@@ -219,7 +241,10 @@ namespace HelpByPros.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -241,9 +266,9 @@ namespace HelpByPros.DataAccess.Migrations
                         .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("integer")
-                        .HasMaxLength(10);
+                    b.Property<string>("Phone")
+                        .HasColumnType("character varying(64)")
+                        .HasMaxLength(64);
 
                     b.Property<byte[]>("Profile_Pic")
                         .HasColumnType("bytea");
@@ -254,6 +279,15 @@ namespace HelpByPros.DataAccess.Migrations
                         .HasMaxLength(64);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("Phone")
+                        .IsUnique();
 
                     b.HasIndex("Username")
                         .IsUnique();
@@ -311,12 +345,6 @@ namespace HelpByPros.DataAccess.Migrations
                     b.HasOne("HelpByPros.DataAccess.Entities.Users", "User")
                         .WithMany("Professionals")
                         .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HelpByPros.DataAccess.Entities.Professions", "Profession")
-                        .WithOne("Professional")
-                        .HasForeignKey("HelpByPros.DataAccess.Entities.Professionals", "ProfessionID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

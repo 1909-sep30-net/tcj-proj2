@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HelpByPros.DataAccess.Migrations
 {
     [DbContext(typeof(PH_DbContext))]
-    [Migration("20191102151219_reworkedOnIdentityAndUnique")]
-    partial class reworkedOnIdentityAndUnique
+    [Migration("20191103000237_removedATable")]
+    partial class removedATable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -171,8 +171,12 @@ namespace HelpByPros.DataAccess.Migrations
                     b.Property<int>("AccountInfoID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProfessionID")
-                        .HasColumnType("integer");
+                    b.Property<string>("Expertise")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Summary")
+                        .HasColumnType("text");
 
                     b.Property<int>("UserID")
                         .HasColumnType("integer");
@@ -188,40 +192,7 @@ namespace HelpByPros.DataAccess.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.HasIndex("ProfessionID")
-                        .IsUnique();
-
                     b.ToTable("Professionals");
-                });
-
-            modelBuilder.Entity("HelpByPros.DataAccess.Entities.Professions", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasColumnType("character varying(126)")
-                        .HasMaxLength(126);
-
-                    b.Property<int>("Title")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("YearsOfExperience")
-                        .HasColumnType("integer")
-                        .HasMaxLength(2);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("Professions");
                 });
 
             modelBuilder.Entity("HelpByPros.DataAccess.Entities.Questions", b =>
@@ -291,9 +262,9 @@ namespace HelpByPros.DataAccess.Migrations
                         .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("integer")
-                        .HasMaxLength(10);
+                    b.Property<string>("Phone")
+                        .HasColumnType("character varying(64)")
+                        .HasMaxLength(64);
 
                     b.Property<byte[]>("Profile_Pic")
                         .HasColumnType("bytea");
@@ -370,12 +341,6 @@ namespace HelpByPros.DataAccess.Migrations
                     b.HasOne("HelpByPros.DataAccess.Entities.Users", "User")
                         .WithMany("Professionals")
                         .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HelpByPros.DataAccess.Entities.Professions", "Profession")
-                        .WithOne("Professional")
-                        .HasForeignKey("HelpByPros.DataAccess.Entities.Professionals", "ProfessionID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

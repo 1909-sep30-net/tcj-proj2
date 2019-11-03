@@ -19,7 +19,7 @@ namespace HelpByPros.BusinessLogic
         /// <summary>
         /// phone should be a regex
         /// </summary>
-        public int Phone { get; set; }
+        public string Phone { get; set; }
         /// <summary>
         /// To notify a question has been raised or answer has been answered
         /// </summary>

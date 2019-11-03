@@ -58,16 +58,22 @@ namespace HelpByPros.DataAccess.Repo
         /// <param name="UserName"> optional attribute </param>
         /// <param name="UserID">optional attribute </param>
         /// <returns></returns>
-        public async Task<Member> GetAMemberAsync(string UserName=default, int UserID = 0)
+        public async Task<Member> GetAMemberAsync(string UserName)
         {
             try
             {
-                var x = await _context.Members.Include(x => x.UserID == UserID || x.User.Username == UserName).FirstOrDefaultAsync();
-                return Mapper.MapMember(x);
+                var y = _context.Members.Include(x => x.User).Include(j => j.AccInfo);
+                var z =await y.Where(x => x.User.Username == UserName).FirstOrDefaultAsync();
+                return Mapper.MapMember(z);
             }
             catch (ArgumentNullException ex)
             {
                 throw new ArgumentNullException("There is no such Member: " + ex);
+            }
+            catch (Exception p) 
+            {
+                throw new Exception("somethign wrong " + p);
+
             }
         }
         /// <summary>
@@ -76,12 +82,13 @@ namespace HelpByPros.DataAccess.Repo
         /// <param name="UserName"> optional attribute </param>
         /// <param name="UserID">optional attribute </param>
         /// <returns></returns>
-        public async Task<Professional> GetAProfessionalAsync(string UserName=default, int UserID = 0)
+        public async Task<Professional> GetAProfessionalAsync(string UserName)
         {
             try
             {
-                var x = await _context.Professionals.Include(x => x.UserID == UserID || x.User.Username == UserName).FirstOrDefaultAsync();
-                return Mapper.MapProfessonal(x);
+                var y =  _context.Professionals.Include(x => x.User).Include(j => j.AccInfo);
+                var z = await y.Where(x => x.User.Username == UserName).FirstOrDefaultAsync();
+                return  Mapper.MapProfessonal(z);
             }
             catch (ArgumentNullException ex)
             {
@@ -95,7 +102,7 @@ namespace HelpByPros.DataAccess.Repo
 
         public async Task<IEnumerable<Member>> GetMemberListAsync()
         {
-            var x = await _context.Members.Include(x => x.User).ToListAsync();
+            var x = await _context.Members.Include(x => x.User).Include(x=> x.AccInfo).ToListAsync();
             List<Member> xList = new List<Member>();
 
 
@@ -121,6 +128,27 @@ namespace HelpByPros.DataAccess.Repo
             return xList;
         }
 
+
+        public async Task ModifyQuestion(int questionID, string username)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task DeleteQuestion(int QuestionID, string username)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<IEnumerable<Answer>> GetUsersAnswer(string UserName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Question>> GetUsersQuestion(string UserName)
+        {
+            throw new NotImplementedException();
+        }
+
+
+    
         #endregion
     }
 }
