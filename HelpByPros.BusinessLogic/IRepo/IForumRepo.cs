@@ -44,6 +44,9 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// </summary>
         Task<IEnumerable<Answer>> GetAnswerListAsync(int qID, int start, int qty);
 
+        /// <summary>
+        /// Get an additional list of answers for the next page of questions.
+        /// </summary>
         public List<Answer> GetMoreAnswers(int qID, int start, int qty);
 
         /// <summary>

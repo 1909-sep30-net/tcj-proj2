@@ -142,7 +142,7 @@ namespace HelpByPros.DataAccess.Repo
         }
 
         /// <summary>
-        /// Helper method to get the best, or only a single answer to a question.
+        /// Helper method to get the best or single answer to a question.
         /// </summary>
         /// <param name="qID"></param>
         /// <returns></returns>
@@ -245,15 +245,22 @@ namespace HelpByPros.DataAccess.Repo
                           select question).Skip(start).Take(qty).ToList();
             */
 
-
-
+            //On the database, the category is represented ONLY by a number
+            /*
+             
             //compare the two strings.
             var questions = (from question in _dbContext.Questions
                           where Enum.GetName(typeof(Category), question.Category)  == catName
                           select question).Skip(start).Take(qty);
+            */
 
 
-            
+            //compare two integers, Category is stored as an integer on the postGre SQL server.
+            var questions = (from question in _dbContext.Questions
+                             where ( (int) question.Category.Category ) == ( ( (int) category ) + 1)
+                             select question).Skip(start).Take(qty);
+                       
+
             //convert them to BusinessLogic objects.
             foreach (var question in questions)
             {
