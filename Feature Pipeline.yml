@@ -43,6 +43,7 @@ steps:
      HelpByPros.BusinessLogic/HelpAByPros.BusinessLogic.csproj
      HelpByPros.sln    # Pass a solution instead of a csproj.
     arguments: --configuration $(buildConfiguration) --collect "XPlat Code Coverage"
+  continueOnError: true
 
 - task: PublishCodeCoverageResults@1
   displayName: Publish code coverage
