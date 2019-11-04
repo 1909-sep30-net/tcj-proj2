@@ -62,6 +62,7 @@ steps:
      HelpByPros.sln    # Pass a solution instead of a csproj.
 
     arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
+  continueOnError: true
 
 
 - task: SonarCloudAnalyze@1
