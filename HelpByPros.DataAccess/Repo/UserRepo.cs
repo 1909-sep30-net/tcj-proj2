@@ -152,6 +152,20 @@ namespace HelpByPros.DataAccess.Repo
             throw new NotImplementedException();
         }
 
+        public async Task<User> GetAUser(string userName)
+        {
+            try
+            {
+                var y = _context.Users.Include(x => x.Id);
+                var z = await y.Where(x => x.Username == userName).FirstOrDefaultAsync();
+                return Mapper.MapUser(z);
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new ArgumentNullException("There is no such user: " + ex);
+            }
+        }
+
 
 
         #endregion

@@ -49,8 +49,13 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// </summary>
         /// <returns></returns>
         Task<Professional> GetAProfessionalAsync(string UserName);
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<User> GetAUser(string userName);
+  
 
 
         #endregion
