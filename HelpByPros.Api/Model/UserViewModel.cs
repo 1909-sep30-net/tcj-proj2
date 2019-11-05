@@ -7,5 +7,6 @@ namespace HelpByPros.Api.Model
 {
     public class UserViewModel
     {
+
     }
 }
