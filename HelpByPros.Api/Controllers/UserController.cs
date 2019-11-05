@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using HelpByPros.Api.Model;
 using HelpByPros.BusinessLogic;
 using HelpByPros.BusinessLogic.IRepo;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +16,25 @@ namespace HelpByPros.Controllers
 
         private readonly ILogger<UserController> _logger;
         private readonly IUserRepo _userRepo;
+        private readonly ISentMessage _messageSender;
+     
 
-        public UserController(ILogger<UserController> logger, IUserRepo userRepo)
+        public UserController(ILogger<UserController> logger, IUserRepo userRepo, ISentMessage sentMessage)
         {
+            TwillioAPICalls calls = new TwillioAPICalls();
+
             _logger = logger;
             _userRepo = userRepo;
-        }
+            _messageSender = sentMessage;
 
+        }
+        /// <summary>
+        /// only admin are allowed this function;
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IEnumerable<Member>> GetAllMembers()
+        public async Task<IEnumerable<Member>> GetAllMembers(string userName)
         {
 
             var x = _userRepo.GetMemberListAsync();
@@ -39,14 +48,19 @@ namespace HelpByPros.Controllers
             var x = _userRepo.GetAMemberAsync(username);
             return await x;
         }
-
-
-       /* [HttpPost]
-        public async Task CreateAUser( )
+        //Post: api/user
+        [HttpPost]
+        public async Task CreateMember(RegisterViewModel model)
         {
-         _userRepo.AddMemberAsync();
-            var x = _userRepo.GetMemberListAsync();
-            return await x;
-        }*/
+            await _userRepo.AddMemberAsync(model.RegisterMember);
+        }
+        //Post: api/user
+        [HttpPost]
+        public async Task CreateProfessonal(RegisterViewModel model)
+        {
+            await _userRepo.AddProfessionalAsync(model.RegisterProfessionl);
+        }
+
+
     }
 }

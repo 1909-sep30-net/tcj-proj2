@@ -70,11 +70,11 @@ namespace HelpByPros.DataAccess.Repo
             {
                 throw new ArgumentNullException("There is no such Member: " + ex);
             }
-            catch (Exception p) 
+           /* catch (Exception p) 
             {
                 throw new Exception("somethign wrong " + p);
 
-            }
+            }*/
         }
         /// <summary>
         /// getting a Professonal if it exist if not then exeception will be thrown instead
@@ -99,7 +99,7 @@ namespace HelpByPros.DataAccess.Repo
        
 
 
-
+            
         public async Task<IEnumerable<Member>> GetMemberListAsync()
         {
             var x = await _context.Members.Include(x => x.User).Include(x=> x.AccInfo).ToListAsync();
@@ -147,8 +147,13 @@ namespace HelpByPros.DataAccess.Repo
             throw new NotImplementedException();
         }
 
+        public Task ModifyAnswer(int answerID, string username)
+        {
+            throw new NotImplementedException();
+        }
 
-    
+
+
         #endregion
     }
 }
