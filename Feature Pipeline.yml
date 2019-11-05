@@ -9,8 +9,9 @@ trigger:
     - Feature
     exclude:
     - master/*
-    - tonywork/*
+    - tonyFeaturework/*
     - charlie/*
+    - james/*
 
 
 pool:
