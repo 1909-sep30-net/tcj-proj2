@@ -13,7 +13,7 @@ namespace HelpByPros.DataAccess.Repo
     /// Accessor and Mutator methods for allowing the BusinessLogic class to interact with the PostGre Databse
     /// Getters and Setters
     /// </summary>
-    class ForumRepo : BusinessLogic.IRepo.IForumRepo
+    public class ForumRepo : BusinessLogic.IRepo.IForumRepo
     {
 
         #region Specify the repository and any related logger

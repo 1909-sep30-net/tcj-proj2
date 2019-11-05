@@ -31,6 +31,7 @@ namespace HelpByPros.Controllers
             var x = _userRepo.GetMemberListAsync();
             return await x;
         }
+
         // GET: api/GetAMember/username
         [HttpGet("{username}", Name = "GetA")]
         public async Task<Member> GetA(string username)

@@ -171,9 +171,7 @@ namespace HelpByPros.DataAccess
 
                 UserQuestion = a.UserQuestion,       //the body text for the question
 
-                //server does not store , specifically, who wrote the answers for a specific question on the Questions-table
-                //therefore it cannot be mapped to the BL-version.
-                
+                QuestionBody = a.QuestionBody,
 
                 Author = MapUser(a.Users),          //who wrote it?
 
@@ -203,6 +201,8 @@ namespace HelpByPros.DataAccess
             x.Category.Category = (Category)x.Category.Id;  //category number
 
             x.UserQuestion = a.UserQuestion;                //body text of question.
+
+            x.QuestionBody = a.QuestionBody;
             
             //may only need to map to the Professional who wrote this.
             x.UsersID = a.Author.Id;                        //who asked the question
@@ -234,17 +234,7 @@ namespace HelpByPros.DataAccess
         {
             //declare the new instance of the EF class
             DataAccess.Entities.Answers x = new DataAccess.Entities.Answers();
-            /*
-             *  
-             *          
-             *          
 
-                public int QuestionID { get; set; }
-                public Questions Question { get; set; }
-                public int UpVote { get; set; }
-                public int DownVote { get; set; }
-                public int UserID { get; set; }
-             * */
             //map
 
 
