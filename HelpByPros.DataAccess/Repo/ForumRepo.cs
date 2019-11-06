@@ -257,7 +257,7 @@ namespace HelpByPros.DataAccess.Repo
 
             //compare two integers, Category is stored as an integer on the postGre SQL server.
             var questions = (from question in _dbContext.Questions
-                             where ( (int) question.Category.Category ) == ( ( (int) category ) + 1)
+                             where question.Category  ==category.ToString() 
                              select question).Skip(start).Take(qty);
                        
 

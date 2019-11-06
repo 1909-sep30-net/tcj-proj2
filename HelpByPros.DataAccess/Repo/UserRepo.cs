@@ -129,27 +129,93 @@ namespace HelpByPros.DataAccess.Repo
         }
 
 
-        public async Task ModifyQuestion(int questionID, string username)
+        public async Task ModifyQuestion(Question ques, string username)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                var q = (await GetUsersQuestion(username)).ToList();
+
+                Question question = q.Where(x => x.Id == ques.Id).First();
+
+                var e = Mapper.MapQuestion(question);
+                _context.Entry(e).CurrentValues.SetValues(e);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("There is no question existed");
+            }
+
+
+
         }
         public async Task DeleteQuestion(int QuestionID, string username)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var q = (await GetUsersQuestion(username)).ToList();
+
+                Question question = q.Where(x => x.Id == QuestionID).First();
+                var answers = _context.Answers.Where(b => b.QuestionID == QuestionID);
+                foreach (var ans in answers)
+                {
+                    _context.Remove(ans);
+                }
+
+                var e = Mapper.MapQuestion(question);
+                _context.Remove(e);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("There is no question existed");
+            }
+
         }
         public async Task<IEnumerable<Answer>> GetUsersAnswer(string UserName)
         {
-            throw new NotImplementedException();
+            var a = await _context.Answers.Include(x => x.User).ToListAsync();
+            List<Answer> xList = new List<Answer>();
+
+            foreach (Answers ans in a)
+            {
+                xList.Add(Mapper.MapAnswer(ans));
+
+            }
+            return xList;
         }
 
         public async Task<IEnumerable<Question>> GetUsersQuestion(string UserName)
         {
-            throw new NotImplementedException();
+            var q = await _context.Questions.Include(x => x.Users).ToListAsync();
+            List<Question> xList = new List<Question>();
+
+            foreach (Questions ques in q)
+            {
+                xList.Add(Mapper.MapQuestion(ques));
+
+            }
+            return xList;
         }
 
-        public Task ModifyAnswer(int answerID, string username)
+        public async Task ModifyAnswer(int answerID, string username)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var q = (await GetUsersAnswer(username)).ToList();
+
+                Answer a = q.Where(x => x.ID == answerID).First();
+
+                var e = Mapper.MapAnswer(a);
+                _context.Entry(e).CurrentValues.SetValues(e);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("There is no such response to the question existed");
+            }
+
         }
 
         public async Task<User> GetAUser(string userName)
@@ -163,6 +229,23 @@ namespace HelpByPros.DataAccess.Repo
             catch (ArgumentNullException ex)
             {
                 throw new ArgumentNullException("There is no such user: " + ex);
+            }
+        }
+
+        public async Task DeleteAAnswer(Answer ans, string userName)
+        {
+            try
+            {
+                var q = (await GetUsersAnswer(userName));
+               var x= q.Where(x => x.ID == ans.ID).First();
+
+                var e = Mapper.MapAnswer(x);
+                _context.Remove(e);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("There is no such answer existed");
             }
         }
 

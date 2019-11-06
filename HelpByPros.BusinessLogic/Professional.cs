@@ -39,7 +39,7 @@ namespace HelpByPros.BusinessLogic
         /// </summary>
         [Required(ErrorMessage = "Please Enter a Title")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Title Must be Letters")]
-        public Title Title { get; set; }
+        public Category _category { get; set; }
 
     }
 }

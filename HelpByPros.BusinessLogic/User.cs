@@ -26,20 +26,11 @@ namespace HelpByPros.BusinessLogic
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "The Input Must be Letters")]
         public string LastName { get; set; }
 
-        /// <summary>
-        /// Phone Number
-        /// </summary>
-<<<<<<< tonyFeatureWork
-        public string Phone { get; set; }
-=======
+
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Provided Phone Number not Valid")]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
->>>>>>> feature
-        /// <summary>
-        /// To notify a question has been raised or answer has been answered
-        /// </summary>
         [Required]
         [Display(Name = "Email Address")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Must Enter Correct Email Address.")]

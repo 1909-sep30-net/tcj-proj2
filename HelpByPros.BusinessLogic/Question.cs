@@ -8,7 +8,7 @@ namespace HelpByPros.BusinessLogic
         /// <summary>
         /// There is a category for a question.
         /// </summary>
-        public Category Category { get; set; } = new Category();
+        public Category _category { get; set; } = new Category();
 
         /// <summary>
         /// There is goign to be 1 question in a single instance of Question Class

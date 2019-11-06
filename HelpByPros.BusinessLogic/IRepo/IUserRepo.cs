@@ -69,7 +69,7 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// <param name="QuestionID"></param>
         /// /// <param username="QuestionID"> use for authentication: only user is allowed to modify their own question </param>
         /// <returns></returns>
-        Task ModifyQuestion(int questionID, string username);
+        Task ModifyQuestion(Question x, string username);
         /// <summary>
         /// The answer is modifiable 
         /// </summary>
@@ -100,7 +100,12 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// <param name="UserName"></param>
         /// <returns></returns>
         Task<IEnumerable<Answer>> GetUsersAnswer(string UserName);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ans"></param>
+        /// <returns></returns>
+        Task DeleteAAnswer(Answer ans, string UserName);
 
 
 

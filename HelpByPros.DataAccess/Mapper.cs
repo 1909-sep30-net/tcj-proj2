@@ -1,5 +1,6 @@
 ﻿using HelpByPros.BusinessLogic;
 using HelpByPros.DataAccess.Entities;
+using System;
 
 namespace HelpByPros.DataAccess
 {
@@ -83,7 +84,7 @@ namespace HelpByPros.DataAccess
         /// <returns></returns>
         public static Professional MapProfessonal(Professionals p)
         {
-            
+
             return new Professional
             {
                 Email = p.User.Email,
@@ -93,9 +94,11 @@ namespace HelpByPros.DataAccess
                 Password = p.User.Password,
                 Phone = p.User.Phone,
                 Profile_Pic = p.User.Profile_Pic,
-                PointAvailable = p.AccInfo.PointAvailable
-                
-            };
+                PointAvailable = p.AccInfo.PointAvailable,
+                _category = (Category)Enum.Parse(typeof(Category),p.Expertise,true)
+         
+
+        };
 
         }
         /// <summary>
@@ -110,7 +113,7 @@ namespace HelpByPros.DataAccess
                 User = MapUser(p)
             };
             x.AccInfo.PointAvailable = p.PointAvailable;
-            x.Expertise = p.Title.ToString("g");
+            x.Expertise = p._category.ToString("g");
             x.YearsOfExp = p.YearsOfExp;
             return x;
 
@@ -167,7 +170,7 @@ namespace HelpByPros.DataAccess
             var x = new Question()
             {
 
-                Category = (Category)a.Category.Id,  //the category of the question.
+                _category = (Category)Enum.Parse(typeof(Category), a.Category, true),
 
                 UserQuestion = a.UserQuestion,       //the body text for the question
 
@@ -200,7 +203,7 @@ namespace HelpByPros.DataAccess
 
             var x = new Questions();
 
-            x.Category.Category = (Category)x.Category.Id;  //category number
+            x.Category = a._category.ToString("g");  //category number
 
             x.UserQuestion = a.UserQuestion;                //body text of question.
             

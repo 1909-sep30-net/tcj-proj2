@@ -39,9 +39,9 @@ namespace HelpByPros.Api.Model
                 _professonal.Password = value.Password;
                 _professonal.PointAvailable = 0;
                 _professonal.Phone = value.Phone;
-                _professonal.Title = value.Title;// enum stating what you good at 
+                _professonal._category = value._category;// enum stating what you good at 
                 _professonal.YearsOfExp = value.YearsOfExp;
-                _professonal.Crediential = value.Crediential;// link to your profile(lindeln) for other to check your trust
+                _professonal.Credential = value.Credential;// link to your profile(lindeln) for other to check your trust
 
 
             }
