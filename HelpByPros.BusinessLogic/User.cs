@@ -26,12 +26,14 @@ namespace HelpByPros.BusinessLogic
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "The Input Must be Letters")]
         public string LastName { get; set; }
 
+
         /// <summary>
         /// Phone Number
         /// </summary>
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Provided Phone Number not Valid")]
         public string Phone { get; set; }
+
 
         /// <summary>
         /// To notify a question has been raised or answer has been answered
@@ -56,12 +58,6 @@ namespace HelpByPros.BusinessLogic
         [StringLength(12, MinimumLength = 4, ErrorMessage = "Must be Between 4 and 12 Characters.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        [Required(ErrorMessage = "Confirm Password is required")]
-        [StringLength(12, MinimumLength = 4, ErrorMessage = "Must be Between 4 and 12 Characters.")]
-        [DataType(DataType.Password)]
-        [Compare("Password")]
-        public string ConfirmPassword { get; set; }
 
         /// <summary>
         /// adding pictures in the future

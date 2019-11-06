@@ -1,5 +1,7 @@
+﻿using System;
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 
 namespace HelpByPros.BusinessLogic
 {
@@ -7,9 +9,34 @@ namespace HelpByPros.BusinessLogic
     public class Question : IQuestion
     {
         /// <summary>
-        /// Every Question is assigned a Category.
-        /// </summary>
-        public Category Category { get; set; } = new Category();
+
+        /// There is a category for a question.
+        /// </summary>        
+        private Category _categ;
+
+        public string Category
+        {
+
+            get
+            {
+                return _categ.ToString();
+            }
+            set
+            {
+                try
+                {
+
+                    _categ = (Category)Enum.Parse(typeof(Category), value, true);
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new InvalidOperationException("There is no such Category.");
+                }
+            }
+
+
+        }
+
 
         /// <summary>
         /// There is going to be 1 question in a single instance of Question Class

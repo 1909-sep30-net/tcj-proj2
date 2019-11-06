@@ -14,8 +14,7 @@ namespace HelpByPros.DataAccess.Entities
         public AccountInfo AccInfo { get; set; }
         public string Expertise { get; set; }
         public int YearsOfExp { get; set; }
-        public string Summary { get; set; } 
-        
+        public string Summary { get; set; }
 
     }
 }

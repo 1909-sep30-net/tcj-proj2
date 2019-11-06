@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 namespace HelpByPros.DataAccess.Entities
 {
     public partial class PH_DbContext : DbContext
@@ -19,7 +20,6 @@ namespace HelpByPros.DataAccess.Entities
         public virtual DbSet<AccountInfo> AccountInfos { get; set; }
         public virtual DbSet<Questions> Questions { get; set; }
         public virtual DbSet<Answers> Answers { get; set; }
-        public virtual DbSet<Categorys> Categorys { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -77,7 +77,7 @@ namespace HelpByPros.DataAccess.Entities
                     .IsRequired();
                 entity.HasOne(pt => pt.User) // configure one nav property
                   .WithMany(p => p.Members) // configure the opposite nav property
-                  .HasForeignKey(pt => pt.Id) // configure the foreign key property
+                  .HasForeignKey(pt => pt.UserID) // configure the foreign key property
                   .IsRequired() // NOT NULL
                   .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
                 
@@ -97,7 +97,7 @@ namespace HelpByPros.DataAccess.Entities
 
                  entity.HasOne(pt => pt.User) // configure one nav property
                   .WithMany(p => p.Professionals) // configure the opposite nav property
-                  .HasForeignKey(pt => pt.Id) // configure the foreign key property
+                  .HasForeignKey(pt => pt.UserID) // configure the foreign key property
                   .IsRequired() // NOT NULL
                   .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
 
@@ -106,16 +106,10 @@ namespace HelpByPros.DataAccess.Entities
                .HasForeignKey<Professionals>(p => p.AccountInfoID)
                .IsRequired() // NOT NULL
                .OnDelete(DeleteBehavior.Cascade);// ON DELETE CASCADE
-                
-                entity.Property(p => p.Id)
-                 .UseIdentityColumn(1, 1) // IDENTITY(1,1)
-                 .IsRequired();
 
                 entity.Property(p => p.Expertise )
                     .IsRequired();
 
-                entity.HasIndex(p => p.Id)
-                        .IsUnique();// UNIQUE
             });
             
             modelBuilder.Entity<AccountInfo>(entity =>
@@ -130,6 +124,7 @@ namespace HelpByPros.DataAccess.Entities
                 entity.HasIndex(p => p.Id)
                    .IsUnique();// UNIQUE
             });
+
             modelBuilder.Entity<Questions>(entity =>
             {
                 entity.Property(p => p.Id)
@@ -143,11 +138,9 @@ namespace HelpByPros.DataAccess.Entities
                 entity.Property(p => p.Answered)
                    .HasMaxLength(200)                   
                    .IsRequired(); // NOT NULL
-                entity.HasOne(pt => pt.Category) // configure one nav property
-                    .WithOne(p => p.Question) // configure the opposite nav property          
-                    .HasForeignKey<Questions>(p => p.CategoryID)
-                    .IsRequired() // NOT NULL
-                    .OnDelete(DeleteBehavior.Cascade);// ON DELETE CASCADE
+                entity.Property(p => p.Category)
+                  .HasMaxLength(200)
+                  .IsRequired(); // NOT NULL
                 entity.HasOne(pt => pt.Users) // configure one nav property
                     .WithMany(p => p.QueCollection) // configure the opposite nav property          
                     .HasForeignKey(p => p.UsersID)
@@ -190,14 +183,8 @@ namespace HelpByPros.DataAccess.Entities
                    .IsUnique();// UNIQUE
 
             });
-            modelBuilder.Entity<Categorys>(entity =>
-            {
-                entity.Property(p => p.Id)
-                    .UseIdentityColumn(1, 1) // IDENTITY(1,1)
-                    .IsRequired();
-                entity.HasIndex(p => p.Id)
-                   .IsUnique();// UNIQUE
-            });
+
+ 
 
            
         }
