@@ -27,10 +27,17 @@ namespace HelpByPros.BusinessLogic
         public string LastName { get; set; }
 
 
+        /// <summary>
+        /// Phone Number
+        /// </summary>
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Provided Phone Number not Valid")]
         public string Phone { get; set; }
 
+
+        /// <summary>
+        /// To notify a question has been raised or answer has been answered
+        /// </summary>
         [Required]
         [Display(Name = "Email Address")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Must Enter Correct Email Address.")]

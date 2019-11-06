@@ -1,6 +1,7 @@
 ﻿using System;
 using Xunit;
 using HelpByPros.BusinessLogic;
+using System.Collections.Generic;
 
 namespace HelpByPros.Test
 {
@@ -22,13 +23,21 @@ namespace HelpByPros.Test
         [Fact]
         public void MyQuestion_StoresCorrectly()
         {
+            List<Question> question = new List<Question>();
 
+            _professional.MyQuestion = question;
+
+            Assert.Equal(question, _professional.MyQuestion);
         }
 
         [Fact]
         public void MyAnswers_StoresCorrectly()
         {
+            List<Answer> answer = new List<Answer>();
 
+            _professional.MyAnswers = answer;
+
+            Assert.Equal(answer, _professional.MyAnswers);
         }
 
         [Fact]
@@ -56,7 +65,11 @@ namespace HelpByPros.Test
         [Fact]
         public void Title_StoresCorrectly()
         {
+            Title title = Title.Doctor;
 
+            _professional.Title = title;
+
+            Assert.Equal(title, _professional.Title);
         }
     }
 }
