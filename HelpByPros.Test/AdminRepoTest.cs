@@ -14,7 +14,6 @@ namespace HelpByPros.Test
 
         //public Task DeleteAccountAsync(string UserName = null, int UserID = 0)
 
-        //public async Task<Admin> GetAAdminAsync(string UserName = default, int UserID = 0)
         [Fact]
         public void GetAAdminAsyncShouldReturnResult()
         {
@@ -42,6 +41,31 @@ namespace HelpByPros.Test
             Assert.NotNull(result);
         }
 
-        //public async Task<IEnumerable<Admin>> GetAdminListAsync()
+        [Fact]
+        public void GetAdminListAsyncShouldReturnResult()
+        {
+            // arrange
+            var options = new DbContextOptionsBuilder<PH_DbContext>()
+                .UseInMemoryDatabase("GetAdminListAsyncShouldReturnResult")
+                .Options;
+
+            using var arrangeContext = new PH_DbContext(options);
+
+            var id = 5;
+            var UserId = 10;
+            var newUser = new Users { Username = "dude" };
+
+            arrangeContext.Admin.Add(new Admins { Id = id, UsersID = UserId, User = newUser });
+            arrangeContext.SaveChanges();
+
+            using var actContext = new PH_DbContext(options);
+            var repo = new AdminRepo(actContext);
+
+            // act
+            var result = repo.GetAdminListAsync();
+
+            // assert
+            Assert.NotNull(result);
+        }
     }
 }

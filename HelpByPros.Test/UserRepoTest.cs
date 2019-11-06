@@ -11,30 +11,71 @@ namespace HelpByPros.Test
 {
     public class UserRepoTest
     {
-        
-        //[Fact]
-        //public async void AddMemberAsyncShouldAdd()
-        //{
-        //    // arrange
-        //    var options = new DbContextOptionsBuilder<PH_DbContext>()
-        //        .UseInMemoryDatabase("AddMemberAsyncShouldAdd")
-        //        .Options;
+        [Fact]
+        public async void AddMemberAsyncShouldAdd()
+        {
+            // arrange
+            var options = new DbContextOptionsBuilder<PH_DbContext>()
+                .UseInMemoryDatabase("AddMemberAsyncShouldAdd")
+                .Options;
 
-        //    var points = 10;
-        //    var newMember = new Member { PointAvailable = points};
+            using var actContext = new PH_DbContext(options);
+            var repo = new UserRepo(actContext);
 
-        //    using var actContext = new PH_DbContext(options);
-        //    var repo = new UserRepo(actContext);
+            Member newMember = new Member()
+            {
+                FirstName = "Rando",
+                LastName = "Random",
+                Email = "rando@random.ran",
+                Username = "randorandom",
+                Password = "ranran",
+                Phone = "1231231234",
+                //PointAvailable = 100
+            };
 
-        //    // act
-        //    await repo.AddMemberAsync(newMember);
-        //    actContext.SaveChanges();
-            
-        //    // assert
-        //    using var assertContext = new PH_DbContext(options);
-        //    var member = assertContext.Members.First(m => m.AccInfo.PointAvailable == points);
-        //    Assert.NotNull(member);
-        //}
+            // act
+            await repo.AddMemberAsync(newMember);
+            //actContext.SaveChanges();
+
+            // assert
+            using var assertContext = new PH_DbContext(options);
+            var member = assertContext.Members.Select(m => newMember);
+            Assert.NotNull(member);
+        }
+
+        [Fact]
+        public async void AddProfessionalAsyncShouldAdd()
+        {
+            // arrange
+            var options = new DbContextOptionsBuilder<PH_DbContext>()
+                .UseInMemoryDatabase("AddProfessionalAsyncShouldAdd")
+                .Options;
+
+            using var actContext = new PH_DbContext(options);
+            var repo = new UserRepo(actContext);
+
+            Professional professional = new Professional()
+            {
+                Email = "random@ran.dom",
+                FirstName = "Rando",
+                LastName = "Random",
+                Username = "randorandom",
+                Password = "ranran",
+                Phone = "1231231234",
+                //Profile_Pic = p.User.Profile_Pic,
+                //PointAvailable = p.AccInfo.PointAvailable,
+                Category = "Math"
+            };
+
+            // act
+            await repo.AddProfessionalAsync(professional);
+            //actContext.SaveChanges();
+
+            // assert
+            using var assertContext = new PH_DbContext(options);
+            var member = assertContext.Members.Select(m => professional);
+            Assert.NotNull(member);
+        }
 
         [Fact]
         public void GetAMemberAsyncShouldReturnResult()

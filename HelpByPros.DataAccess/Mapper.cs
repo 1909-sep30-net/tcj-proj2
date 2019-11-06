@@ -96,9 +96,9 @@ namespace HelpByPros.DataAccess
                 Profile_Pic = p.User.Profile_Pic,
                 PointAvailable = p.AccInfo.PointAvailable,
                 Category = p.Expertise
-         
 
-        };
+
+            };
 
         }
         /// <summary>
