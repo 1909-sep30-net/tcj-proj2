@@ -36,24 +36,24 @@ namespace HelpByPros.DataAccess.Repo
         }
         public async Task AddProfessionalAsync(Professional p)
         {
-           
+
             var e = Mapper.MapProfessonal(p);
-               
+
             try
             {
                 _context.Add(e);
 
                 await _context.SaveChangesAsync();
-            }            
+            }
             catch (InvalidOperationException)
             {
                 throw new InvalidOperationException("Duplicate info in unique Column");
 
             }
         }
-            
-        
-        
+
+
+
         #endregion
 
         #region Get Infomation from database
@@ -69,16 +69,16 @@ namespace HelpByPros.DataAccess.Repo
             try
             {
                 var y = _context.Members.Include(x => x.User).Include(j => j.AccInfo);
-                var z =await y.Where(x => x.User.Username == UserName).FirstAsync();
-                return  Mapper.MapMember(z);
+                var z = await y.Where(x => x.User.Username == UserName).FirstAsync();
+                return Mapper.MapMember(z);
             }
             catch (ArgumentNullException)
             {
                 throw new ArgumentNullException();
             }
-            catch (InvalidOperationException) 
+            catch (InvalidOperationException)
             {
-                throw new InvalidOperationException( );
+                throw new InvalidOperationException();
 
             }
         }
@@ -92,9 +92,9 @@ namespace HelpByPros.DataAccess.Repo
         {
             try
             {
-                var y =  _context.Professionals.Include(x => x.User).Include(j => j.AccInfo);
+                var y = _context.Professionals.Include(x => x.User).Include(j => j.AccInfo);
                 var z = await y.Where(x => x.User.Username == UserName).FirstOrDefaultAsync();
-                return  Mapper.MapProfessonal(z);
+                return Mapper.MapProfessonal(z);
             }
             catch (ArgumentNullException ex)
             {
@@ -102,13 +102,13 @@ namespace HelpByPros.DataAccess.Repo
             }
         }
 
-       
 
 
-            
+
+
         public async Task<IEnumerable<Member>> GetMemberListAsync()
         {
-            var x = await _context.Members.Include(x => x.User).Include(x=> x.AccInfo).ToListAsync();
+            var x = await _context.Members.Include(x => x.User).Include(x => x.AccInfo).ToListAsync();
             List<Member> xList = new List<Member>();
 
 
@@ -243,7 +243,7 @@ namespace HelpByPros.DataAccess.Repo
             try
             {
                 var q = (await GetUsersAnswer(userName));
-               var x= q.Where(x => x.ID == ans.ID).First();
+                var x = q.Where(x => x.ID == ans.ID).First();
 
                 var e = Mapper.MapAnswer(x);
                 _context.Remove(e);

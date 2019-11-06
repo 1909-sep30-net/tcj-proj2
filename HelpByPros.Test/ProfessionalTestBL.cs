@@ -62,14 +62,14 @@ namespace HelpByPros.Test
 
         }
 
-        [Fact]
-        public void Title_StoresCorrectly()
-        {
-            Title title = Title.Doctor;
+        //[Fact]
+        //public void Title_StoresCorrectly()
+        //{
+        //    Title title = Title.Doctor;
 
-            _professional.Title = title;
+        //    _professional.Title = title;
 
-            Assert.Equal(title, _professional.Title);
-        }
+        //    Assert.Equal(title, _professional.Title);
+        //}
     }
 }
