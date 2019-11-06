@@ -49,7 +49,42 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// </summary>
         /// <returns></returns>
         Task<Professional> GetAProfessionalAsync(string UserName);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<User> GetAUser(string userName);
+  
 
+
+        #endregion
+
+
+        #region UserPower
+
+        /// <summary>
+        /// The question is modifiable 
+        /// </summary>
+        /// <param name="QuestionID"></param>
+        /// /// <param username="QuestionID"> use for authentication: only user is allowed to modify their own question </param>
+        /// <returns></returns>
+        Task ModifyQuestion(Question x, string username);
+        /// <summary>
+        /// The answer is modifiable 
+        /// </summary>
+        /// <param name="QuestionID"></param>
+        /// /// <param username="QuestionID"> use for authentication: only user is allowed to modify their own question </param>
+        /// <returns></returns>
+        Task ModifyAnswer(int answerID, string username);
+
+        /// <summary>
+        /// The question is deleteable 
+        /// </summary>
+        /// <param name="QuestionID"> To identify the question </param>
+        /// /// <param username="QuestionID"> use for authentication: only user is allowed to delete their own question </param>
+        /// <returns></returns>
+        Task DeleteQuestion(int QuestionID, string username);
 
 
         /// <summary>
@@ -65,30 +100,12 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// <param name="UserName"></param>
         /// <returns></returns>
         Task<IEnumerable<Answer>> GetUsersAnswer(string UserName);
-
-
-        #endregion
-
-
-        #region UserPower
-
         /// <summary>
-        /// The question is modifiable 
+        /// 
         /// </summary>
-        /// <param name="QuestionID"></param>
-        /// /// <param username="QuestionID"> use for authentication: only user is allowed to modify their own question </param>
+        /// <param name="ans"></param>
         /// <returns></returns>
-        Task ModifyQuestion(int questionID, string username);
-
-        /// <summary>
-        /// The question is deleteable 
-        /// </summary>
-        /// <param name="QuestionID"> To identify the question </param>
-        /// /// <param username="QuestionID"> use for authentication: only user is allowed to delete their own question </param>
-        /// <returns></returns>
-        Task DeleteQuestion(int QuestionID, string username);
-
-
+        Task DeleteAAnswer(Answer ans, string UserName);
 
 
 

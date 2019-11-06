@@ -31,7 +31,6 @@ namespace HelpByPros.Test
                 Email = email,
                 Username = login,
                 Password = password,
-                ConfirmPassword = confirmPassword
             };
 
             //Assert
@@ -41,7 +40,6 @@ namespace HelpByPros.Test
             Assert.Equal(email, user.Email);
             Assert.Equal(login, user.Username);
             Assert.Equal(password, user.Password);
-            Assert.Equal(confirmPassword, user.ConfirmPassword);
 
         }
 
