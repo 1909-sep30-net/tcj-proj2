@@ -65,11 +65,11 @@ namespace HelpByPros.Test
         [Fact]
         public void Title_StoresCorrectly()
         {
-            Title title = Title.Doctor;
+            Category title = Category.Doctor;
 
-            _professional.Title = title;
+            _professional.Category = title.ToString();
 
-            Assert.Equal(title, _professional.Title);
+            Assert.Equal(title, (Category)Enum.Parse(typeof(Category), _professional.Category, true));
         }
     }
 }

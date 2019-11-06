@@ -41,8 +41,7 @@ namespace HelpByPros.Api.Controllers
                 }
             return QList;
         }
-        [HttpGet(Name = "GetMoreList")]
-
+    /*  [HttpGet("{ContinueList}")]
         public List<List<Question>> GetMoreList(List<List<Question>> ContinueList)
         {
 
@@ -52,20 +51,22 @@ namespace HelpByPros.Api.Controllers
                 QList.Add(_forumRepo.GetQuestionList(x, 100, 50));
             }
             return QList;
-        }
-        [HttpGet(Name = "GetMoreListUsingStarting")]
+        }*/
+        
+        [HttpGet("{starting}", Name = "GetMoreListUsingStarting")]
 
-        public List<List<Question>> GetMoreListUsingStarting(int starting, int amount)
+        public List<List<Question>> GetMoreListUsingStarting(int starting)
         {
 
             List<List<Question>> QList = new List<List<Question>>();
             foreach (var x in Enum.GetValues(typeof(Category)).OfType<Category>().ToArray())
             {
-                QList.Add(_forumRepo.GetQuestionList(x, starting, amount));
+                QList.Add(_forumRepo.GetQuestionList(x, starting, 50));
             }
             return QList;
         }
+        
 
-
+    
     }
 }

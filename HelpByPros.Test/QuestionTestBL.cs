@@ -14,9 +14,9 @@ namespace HelpByPros.Test
         {
             Category category = new Category();
 
-            _question.Category = category;
+            _question.Category = category.ToString();
 
-            Assert.Equal(category, _question.Category);
+            Assert.Equal(category.ToString(), _question.Category);
         }
 
         [Fact]
