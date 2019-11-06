@@ -42,9 +42,7 @@ namespace PH
 
             services.AddControllers();
             services.AddScoped<IUserRepo, UserRepo>();
-       
-
-
+            services.AddScoped<IForumRepo, ForumRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

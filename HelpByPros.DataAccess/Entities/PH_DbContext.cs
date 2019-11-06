@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 namespace HelpByPros.DataAccess.Entities
 {
     public partial class PH_DbContext : DbContext
@@ -76,7 +77,7 @@ namespace HelpByPros.DataAccess.Entities
                     .IsRequired();
                 entity.HasOne(pt => pt.User) // configure one nav property
                   .WithMany(p => p.Members) // configure the opposite nav property
-                  .HasForeignKey(pt => pt.Id) // configure the foreign key property
+                  .HasForeignKey(pt => pt.UserID) // configure the foreign key property
                   .IsRequired() // NOT NULL
                   .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
                 
@@ -96,7 +97,7 @@ namespace HelpByPros.DataAccess.Entities
 
                  entity.HasOne(pt => pt.User) // configure one nav property
                   .WithMany(p => p.Professionals) // configure the opposite nav property
-                  .HasForeignKey(pt => pt.Id) // configure the foreign key property
+                  .HasForeignKey(pt => pt.UserID) // configure the foreign key property
                   .IsRequired() // NOT NULL
                   .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
 

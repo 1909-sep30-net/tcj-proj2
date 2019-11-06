@@ -13,7 +13,7 @@ namespace HelpByPros.DataAccess.Repo
     /// Accessor and Mutator methods for allowing the BusinessLogic class to interact with the PostGre Databse
     /// Getters and Setters
     /// </summary>
-    class ForumRepo : BusinessLogic.IRepo.IForumRepo
+    public class ForumRepo : BusinessLogic.IRepo.IForumRepo
     {
 
         #region Specify the repository and any related logger
@@ -256,7 +256,7 @@ namespace HelpByPros.DataAccess.Repo
 
 
             //compare two integers, Category is stored as an integer on the postGre SQL server.
-            var questions = (from question in _dbContext.Questions
+            var questions = (from question in _dbContext.Questions.Include(x => x.Users)
                              where question.Category  ==category.ToString() 
                              select question).Skip(start).Take(qty);
                        
@@ -270,6 +270,15 @@ namespace HelpByPros.DataAccess.Repo
             return questionList;
 
         }
+
+
+
+       
+
+
+
+
+
 
         #endregion
 

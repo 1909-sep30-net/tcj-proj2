@@ -95,7 +95,7 @@ namespace HelpByPros.DataAccess
                 Phone = p.User.Phone,
                 Profile_Pic = p.User.Profile_Pic,
                 PointAvailable = p.AccInfo.PointAvailable,
-                _category = (Category)Enum.Parse(typeof(Category),p.Expertise,true)
+                Category = p.Expertise
          
 
         };
@@ -108,12 +108,14 @@ namespace HelpByPros.DataAccess
         /// <returns></returns>
         public static Professionals MapProfessonal(Professional p)
         {
+            var accInfo = new AccountInfo();
+            accInfo.PointAvailable = p.PointAvailable;
             var x = new Professionals
             {
                 User = MapUser(p)
             };
-            x.AccInfo.PointAvailable = p.PointAvailable;
-            x.Expertise = p._category.ToString("g");
+            x.AccInfo = accInfo;
+            x.Expertise = p.Category;
             x.YearsOfExp = p.YearsOfExp;
             return x;
 
@@ -170,7 +172,7 @@ namespace HelpByPros.DataAccess
             var x = new Question()
             {
 
-                _category = (Category)Enum.Parse(typeof(Category), a.Category, true),
+                Category = a.Category,
 
                 UserQuestion = a.UserQuestion,       //the body text for the question
 
@@ -203,7 +205,7 @@ namespace HelpByPros.DataAccess
 
             var x = new Questions();
 
-            x.Category = a._category.ToString("g");  //category number
+            x.Category = a.Category;
 
             x.UserQuestion = a.UserQuestion;                //body text of question.
             

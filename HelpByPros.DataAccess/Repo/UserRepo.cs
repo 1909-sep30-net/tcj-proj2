@@ -36,18 +36,24 @@ namespace HelpByPros.DataAccess.Repo
         }
         public async Task AddProfessionalAsync(Professional p)
         {
+           
+            var e = Mapper.MapProfessonal(p);
+               
             try
             {
-                var e = Mapper.MapProfessonal(p);
-
                 _context.Add(e);
+
                 await _context.SaveChangesAsync();
-            }
-            catch
+            }            
+            catch (InvalidOperationException)
             {
-                throw new InvalidOperationException("There is already an existed username, phone, or email");
+                throw new InvalidOperationException("Duplicate info in unique Column");
+
             }
         }
+            
+        
+        
         #endregion
 
         #region Get Infomation from database
@@ -63,18 +69,18 @@ namespace HelpByPros.DataAccess.Repo
             try
             {
                 var y = _context.Members.Include(x => x.User).Include(j => j.AccInfo);
-                var z =await y.Where(x => x.User.Username == UserName).FirstOrDefaultAsync();
-                return Mapper.MapMember(z);
+                var z =await y.Where(x => x.User.Username == UserName).FirstAsync();
+                return  Mapper.MapMember(z);
             }
-            catch (ArgumentNullException ex)
+            catch (ArgumentNullException)
             {
-                throw new ArgumentNullException("There is no such Member: " + ex);
+                throw new ArgumentNullException();
             }
-           /* catch (Exception p) 
+            catch (InvalidOperationException) 
             {
-                throw new Exception("somethign wrong " + p);
+                throw new InvalidOperationException( );
 
-            }*/
+            }
         }
         /// <summary>
         /// getting a Professonal if it exist if not then exeception will be thrown instead

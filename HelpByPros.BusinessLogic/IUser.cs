@@ -17,7 +17,5 @@ namespace HelpByPros.BusinessLogic
         string Username { get; set; }
 
         string Password { get; set; }
-
-        string ConfirmPassword { get; set; }
     }
 }

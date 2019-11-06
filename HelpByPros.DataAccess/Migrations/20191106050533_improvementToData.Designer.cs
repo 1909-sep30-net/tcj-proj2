@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HelpByPros.DataAccess.Migrations
 {
     [DbContext(typeof(PH_DbContext))]
-    [Migration("20191106013314_improvementToData")]
+    [Migration("20191106050533_improvementToData")]
     partial class improvementToData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,7 +117,9 @@ namespace HelpByPros.DataAccess.Migrations
             modelBuilder.Entity("HelpByPros.DataAccess.Entities.Members", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -136,13 +138,17 @@ namespace HelpByPros.DataAccess.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
+                    b.HasIndex("UserID");
+
                     b.ToTable("Members");
                 });
 
             modelBuilder.Entity("HelpByPros.DataAccess.Entities.Professionals", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -167,6 +173,8 @@ namespace HelpByPros.DataAccess.Migrations
 
                     b.HasIndex("AccountInfoID")
                         .IsUnique();
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Professionals");
                 });
@@ -304,7 +312,7 @@ namespace HelpByPros.DataAccess.Migrations
 
                     b.HasOne("HelpByPros.DataAccess.Entities.Users", "User")
                         .WithMany("Members")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -319,7 +327,7 @@ namespace HelpByPros.DataAccess.Migrations
 
                     b.HasOne("HelpByPros.DataAccess.Entities.Users", "User")
                         .WithMany("Professionals")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

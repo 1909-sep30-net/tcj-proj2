@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace HelpByPros.BusinessLogic
 {
@@ -7,8 +8,31 @@ namespace HelpByPros.BusinessLogic
     {
         /// <summary>
         /// There is a category for a question.
-        /// </summary>
-        public Category _category { get; set; } = new Category();
+        /// </summary>        
+        private Category _categ;
+
+        public string Category
+        {
+
+            get
+            {
+                return _categ.ToString();
+            }
+            set
+            {
+                try
+                {
+
+                    _categ = (Category)Enum.Parse(typeof(Category), value, true);
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new InvalidOperationException("There is no such Category.");
+                }
+            }
+
+
+        }
 
         /// <summary>
         /// There is goign to be 1 question in a single instance of Question Class

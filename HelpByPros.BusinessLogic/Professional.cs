@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace HelpByPros.BusinessLogic
 {
-    public class Professional:User
+    public class Professional : User
     {
         /// <summary>
         /// Linkeldn info; prefer a link to their profile
@@ -34,12 +35,36 @@ namespace HelpByPros.BusinessLogic
         [Required(ErrorMessage = "Enter Years of Experience")]
         public int YearsOfExp { get; set; }
 
+        private Category _category;
         /// <summary>
         /// Professional Title.
         /// </summary>
         [Required(ErrorMessage = "Please Enter a Title")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Title Must be Letters")]
-        public Category _category { get; set; }
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Category Must be Letters")]
+        public string Category
+        {
 
+            get
+            {
+                return _category.ToString();
+            }
+            set
+            {
+                try
+                {
+
+                    _category=(Category)Enum.Parse(typeof(Category), value, true);
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new InvalidOperationException("There is no such Category.");
+                }
+            }
+
+
+        }
+        public string Summary { get; set; }
     }
 }
+
+    

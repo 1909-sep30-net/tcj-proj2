@@ -10,19 +10,17 @@ namespace HelpByPros.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class MemberController : ControllerBase
     {
 
 
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<MemberController> _logger;
         private readonly IUserRepo _userRepo;
         private readonly ISentMessage _messageSender;
      
 
-        public UserController(ILogger<UserController> logger, IUserRepo userRepo, ISentMessage sentMessage)
+        public MemberController(ILogger<MemberController> logger, IUserRepo userRepo, ISentMessage sentMessage)
         {
-            TwillioAPICalls calls = new TwillioAPICalls();
-
             _logger = logger;
             _userRepo = userRepo;
             _messageSender = sentMessage;
@@ -41,26 +39,23 @@ namespace HelpByPros.Controllers
             return await x;
         }
         // GET: api/GetAMember/username
-        [HttpGet("{username}", Name = "GetA")]
-        public async Task<Member> GetA(string username)
+        [HttpGet("{username}", Name = "GetAMember")]
+        public async Task<Member> GetAMember(string username)
         {
-
-            var x = _userRepo.GetAMemberAsync(username);
-            return await x;
-        }
-        //Post: api/user
-        [HttpPost]
-        public async Task CreateMember(RegisterViewModel model)
-        {
-            await _userRepo.AddMemberAsync(model.RegisterMember);
-        }
-        //Post: api/user
-        [HttpPost]
-        public async Task CreateProfessonal(RegisterViewModel model)
-        {
-            await _userRepo.AddProfessionalAsync(model.RegisterProfessionl);
+            try
+            {
+                var x = _userRepo.GetAMemberAsync(username);
+                return await x;
+            }
+            catch
+            {
+                BadRequest();
+                throw;
+            }
         }
 
+ 
+     
 
     }
 }
