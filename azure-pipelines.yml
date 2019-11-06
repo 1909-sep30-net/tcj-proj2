@@ -27,7 +27,9 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'Project2tcj'
     projectName: 'Project2tcj'
-    extraProperties: 'sonar.exclusions=**/lib/**'
+    extraProperties: |
+      'sonar.exclusions=**/lib/**'
+       sonar.exclusions=**/HelpByPros.DataAccess/**
 # three different ways to solve the initial problem
 
 # - script:
