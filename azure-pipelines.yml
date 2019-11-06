@@ -29,7 +29,9 @@ steps:
     projectName: 'Project2tcj'
     extraProperties: |
       'sonar.exclusions=**/lib/**'
-       sonar.exclusions=**/HelpByPros.DataAccess/**
+       sonar.exclusions=**/HelpByPros.DataAccess/Entities/**
+       sonar.exclusions=**/HelpByPros.DataAccess/Migrations/**
+
 # three different ways to solve the initial problem
 
 # - script:
