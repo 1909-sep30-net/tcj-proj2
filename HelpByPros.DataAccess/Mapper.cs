@@ -1,5 +1,6 @@
 ﻿using HelpByPros.BusinessLogic;
 using HelpByPros.DataAccess.Entities;
+using System;
 
 namespace HelpByPros.DataAccess
 {
@@ -8,6 +9,7 @@ namespace HelpByPros.DataAccess
 
         public static User MapUser(Users u)
         {
+
             return new User
             {
                 Email = u.Email,
@@ -44,22 +46,18 @@ namespace HelpByPros.DataAccess
         public static Member MapMember(Members m)
         {
 
-         
+            var x = new Member();
+            x.Email = m.User.Email;
+            x.FirstName = m.User.FirstName;
+            x.LastName = m.User.LastName;
+            x.Username = m.User.Username;
+            x.Password = m.User.Password;
+            x.Phone = m.User.Phone;
+            x.Profile_Pic = m.User.Profile_Pic;
+            x.PointAvailable = m.AccInfo.PointAvailable;
 
-            return new Member
-             {
-                
-                 Email = m.User.Email,
-                 FirstName = m.User.FirstName,
-                 LastName = m.User.LastName,
-                 Username = m.User.Username,
-                 Password = m.User.Password,
-                 Phone = m.User.Phone,
-                 Profile_Pic = m.User.Profile_Pic,
-                 PointAvailable= m.AccInfo.PointAvailable
-
-             };
-  
+      
+            return x;
 
         }
         /// <summary>
@@ -86,7 +84,7 @@ namespace HelpByPros.DataAccess
         /// <returns></returns>
         public static Professional MapProfessonal(Professionals p)
         {
-            
+
             return new Professional
             {
                 Email = p.User.Email,
@@ -96,12 +94,11 @@ namespace HelpByPros.DataAccess
                 Password = p.User.Password,
                 Phone = p.User.Phone,
                 Profile_Pic = p.User.Profile_Pic,
-                PointAvailable = p.AccInfo.PointAvailable
-
-            };
-
+                PointAvailable = p.AccInfo.PointAvailable,
+                Category = p.Expertise
          
 
+        };
 
         }
         /// <summary>
@@ -111,12 +108,14 @@ namespace HelpByPros.DataAccess
         /// <returns></returns>
         public static Professionals MapProfessonal(Professional p)
         {
+            var accInfo = new AccountInfo();
+            accInfo.PointAvailable = p.PointAvailable;
             var x = new Professionals
             {
                 User = MapUser(p)
             };
-            x.AccInfo.PointAvailable = p.PointAvailable;
-            x.Profession.Title = p.Title;
+            x.AccInfo = accInfo;
+            x.Expertise = p.Category;
             x.YearsOfExp = p.YearsOfExp;
             return x;
 
@@ -129,6 +128,8 @@ namespace HelpByPros.DataAccess
         /// <returns></returns>
         public static Admin MapAdmin(Admins a)
         {
+
+
             return new Admin
             {
                 Email = a.User.Email,
@@ -160,48 +161,115 @@ namespace HelpByPros.DataAccess
 
 
         /// <summary>
-        /// Entities converted to Business Logic  class
-        ///  with included answers and user 
+        /// DataBase.Entities converted to BusinessLogic-object
+        /// 
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
         public static Question MapQuestion(Questions a)
         {
 
-            var x = new Question();
-            x.Answered = a.Answered;
-            x.Author = MapUser(a.Users);
-            foreach(Answers ans in a.AnsCollection)
+            var x = new Question()
             {
-                x.Answer.Add(MapAnswer(ans));
-            }
-            x.UserQuestion = a.UserQuestion;
-            x.Category = (Category)a.Category.Id;
 
+                Category = a.Category,
+
+                UserQuestion = a.UserQuestion,       //the body text for the question
+
+                //server does not store , specifically, who wrote the answers for a specific question on the Questions-table
+                //therefore it cannot be mapped to the BL-version.
+                
+
+                Author = MapUser(a.Users),          //who wrote it?
+
+                Answered = a.Answered,              //check if answered
+
+                Id = a.Id                           //we get the automatically generated ID from the server
+
+            };
 
             return x;
 
 
         }
+
+
         /// <summary>
-        /// Business Logic converted to Entities class
+        /// From BusinessLogic.Question to DataAccess.Entities.Questions
         /// 
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
         public static Questions MapQuestion(Question a)
         {
-            var x = new Questions();
-            x.UserQuestion = a.UserQuestion;
-            x.UsersID = a.Author.Id;
-            x.Category.Category = (Category) x.Category.Id;
 
-            foreach(Answer ans in a.Answer)
-            x.AnsCollection.Add(MapAnswer(ans)) ;
-            x.Id = a.Id;
+            var x = new Questions();
+
+            x.Category = a.Category;
+
+            x.UserQuestion = a.UserQuestion;                //body text of question.
+            
+            //may only need to map to the Professional who wrote this.
+            x.UsersID = a.Author.Id;                        //who asked the question
+
+            x.Answered = a.Answered;                        //was the question answered?
+
+            //MISSING ITEMS FROM DataBase.Entities.Questions
+            //upvote
+            //downvote
+
+            
+            //auto-generated on server
+            //x.Id = a.Id;
+
             return x;
 
         }
+
+        ////Corrected //////////////////
+
+
+        /// <summary>
+        /// Business Logic converted to Entities class
+        /// 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        public static Entities.Answers MapAnswer(BusinessLogic.Answer a)
+        {
+            //declare the new instance of the EF class
+            DataAccess.Entities.Answers x = new DataAccess.Entities.Answers();
+            /*
+             *  
+             *          
+             *          
+
+                public int QuestionID { get; set; }
+                public Questions Question { get; set; }
+                public int UpVote { get; set; }
+                public int DownVote { get; set; }
+                public int UserID { get; set; }
+             * */
+            //map
+
+
+            x.QuestionID = a.AnsQuestionID;             //what question does this answer pertain to?
+            
+            x.Best = a.Best;                            //is this the best answer?
+
+            x.DownVote = a.DownVote;                    //upvote and downvote values.
+                                                        //       ^
+            x.UpVote = a.UpVote;                        //       |
+            
+            x.Sources = a.Source;                       // Citation for source-material on answer
+
+            x.UserID = a.Author.Id;                     //who wrote the answer?
+
+            return x;
+
+        }
+
+
 
         /// <summary>
         /// Entities converted to Business Logic  class
@@ -209,40 +277,27 @@ namespace HelpByPros.DataAccess
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
-        public static Answer MapAnswer(Answers a)
+        public static BusinessLogic.Answer MapAnswer(DataAccess.Entities.Answers a)
         {
 
-            var x = new Answer();
-            x.AnswerText = a.Answer;
-            x.Author = MapUser(a.User);
-            x.Best = a.Best;
-            x.DownVote = a.DownVote;
-            x.UpVote = a.UpVote;
-            x.Source = a.Sources;
+            var x = new BusinessLogic.Answer()
+            {
+                AnswerText = a.Answer,          //the body text of the answer
+
+                Author = MapUser(a.User),       //the user who wrote it.
+                
+                Best = a.Best,                  //is this the best answer?
+                
+                DownVote = a.DownVote,          //upvote value
+                
+                UpVote = a.UpVote,              //downvote value
+                
+                Source = a.Sources              //citations, the source of information to support the answer.
+            };
 
             return x;
-
-
         }
-        /// <summary>
-        /// Business Logic converted to Entities class
-        /// 
-        /// </summary>
-        /// <param name="a"></param>
-        /// <returns></returns>
-        public static Answers MapAnswer(Answer a)
-        {
-            var x = new Answers();
-            x.QuestionID = a.AnsQuestionID;
-            x.Best = a.Best;
-            x.DownVote = a.DownVote;
-            x.UpVote = a.UpVote;
-            x.Sources = a.Source;
-            x.Id = a.ID;
-            x.User = MapUser((User)a.Author);
-            return x;
 
-        }
 
 
 

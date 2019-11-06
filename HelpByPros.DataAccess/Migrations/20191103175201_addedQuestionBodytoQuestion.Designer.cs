@@ -4,15 +4,17 @@ using HelpByPros.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HelpByPros.DataAccess.Migrations
 {
     [DbContext(typeof(PH_DbContext))]
-    partial class PH_DbContextModelSnapshot : ModelSnapshot
+    [Migration("20191103175201_addedQuestionBodytoQuestion")]
+    partial class addedQuestionBodytoQuestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,12 +114,31 @@ namespace HelpByPros.DataAccess.Migrations
                     b.ToTable("Answers");
                 });
 
-            modelBuilder.Entity("HelpByPros.DataAccess.Entities.Members", b =>
+            modelBuilder.Entity("HelpByPros.DataAccess.Entities.Categorys", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Category")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("Categorys");
+                });
+
+            modelBuilder.Entity("HelpByPros.DataAccess.Entities.Members", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -136,17 +157,13 @@ namespace HelpByPros.DataAccess.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.HasIndex("UserID");
-
                     b.ToTable("Members");
                 });
 
             modelBuilder.Entity("HelpByPros.DataAccess.Entities.Professionals", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -172,7 +189,8 @@ namespace HelpByPros.DataAccess.Migrations
                     b.HasIndex("AccountInfoID")
                         .IsUnique();
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("Professionals");
                 });
@@ -191,10 +209,8 @@ namespace HelpByPros.DataAccess.Migrations
                         .HasColumnType("boolean")
                         .HasMaxLength(200);
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("character varying(200)")
-                        .HasMaxLength(200);
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("integer");
 
                     b.Property<string>("QuestionBody")
                         .HasColumnType("text");
@@ -208,6 +224,9 @@ namespace HelpByPros.DataAccess.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryID")
+                        .IsUnique();
 
                     b.HasIndex("Id")
                         .IsUnique();
@@ -310,7 +329,7 @@ namespace HelpByPros.DataAccess.Migrations
 
                     b.HasOne("HelpByPros.DataAccess.Entities.Users", "User")
                         .WithMany("Members")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -325,13 +344,19 @@ namespace HelpByPros.DataAccess.Migrations
 
                     b.HasOne("HelpByPros.DataAccess.Entities.Users", "User")
                         .WithMany("Professionals")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("HelpByPros.DataAccess.Entities.Questions", b =>
                 {
+                    b.HasOne("HelpByPros.DataAccess.Entities.Categorys", "Category")
+                        .WithOne("Question")
+                        .HasForeignKey("HelpByPros.DataAccess.Entities.Questions", "CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HelpByPros.DataAccess.Entities.Users", "Users")
                         .WithMany("QueCollection")
                         .HasForeignKey("UsersID")

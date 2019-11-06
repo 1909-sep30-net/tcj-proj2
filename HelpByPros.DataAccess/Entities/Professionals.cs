@@ -1,5 +1,7 @@
 ﻿
 
+using HelpByPros.BusinessLogic;
+
 namespace HelpByPros.DataAccess.Entities
 {
    public  class Professionals
@@ -10,10 +12,9 @@ namespace HelpByPros.DataAccess.Entities
         public int AccountInfoID { get; set; }
 
         public AccountInfo AccInfo { get; set; }
-        public int ProfessionID { get; set; }
-
-        public Professions Profession { get; set; }
+        public string Expertise { get; set; }
         public int YearsOfExp { get; set; }
+        public string Summary { get; set; }
 
     }
 }
