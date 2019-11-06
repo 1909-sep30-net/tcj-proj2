@@ -8,8 +8,8 @@ trigger:
     include:
     - master
     exclude:
-    - Feature/*
-    - tonywork/*
+    - feature/*
+    - tonyfeaturework/*
     - charlie/*
 
 pool:
