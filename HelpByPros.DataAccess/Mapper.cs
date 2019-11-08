@@ -70,8 +70,8 @@ namespace HelpByPros.DataAccess
             var x = new Members
             {
                 User = MapUser(m)
-                
-                
+
+
             };
             x.AccInfo.PointAvailable = m.PointAvailable;
             return x;          
