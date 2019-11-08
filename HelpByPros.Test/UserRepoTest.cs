@@ -383,10 +383,33 @@ namespace HelpByPros.Test
         //[Fact]
 
         /// <summary>
-        /// Test
+        /// Get User Answer should return a List
         /// </summary>
         //public async Task<IEnumerable<Answer>> GetUsersAnswer(string UserName)
-        //[Fact]
+        [Fact]
+        public void GetUsersAnswerShouldReturnResult()
+        {
+            // arrange
+            var options = new DbContextOptionsBuilder<PH_DbContext>()
+                .UseInMemoryDatabase("GetUsersAnswerShouldReturnResult")
+                .Options;
+
+            using var arrangeContext = new PH_DbContext(options);
+
+            string username = "random";
+
+            arrangeContext.Answers.Add(new Answers { Answer = "ligma" });
+            arrangeContext.SaveChanges();
+
+            using var actContext = new PH_DbContext(options);
+            var repo = new UserRepo(actContext);
+
+            // act
+            var result = repo.GetUsersAnswer(username);
+
+            // assert
+            Assert.NotNull(result);
+        }
 
         /// <summary>
         /// Get Users Question should return a List
@@ -413,15 +436,8 @@ namespace HelpByPros.Test
             var result = repo.GetUsersQuestion(username);
 
             // assert
-            // if it is needed to check the actual database here,
-            // use a separate assertContext as well.
             Assert.NotNull(result);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        
 
         /// <summary>
         /// Test
