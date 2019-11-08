@@ -335,40 +335,40 @@ namespace HelpByPros.Test
         /// <summary>
         /// Test for Modify question
         /// </summary>
-        [Fact]
-        public void ModifyQuestionShouldModify()
-        {
-            // arrange
-            var options = new DbContextOptionsBuilder<PH_DbContext>()
-                .UseInMemoryDatabase("ModifyQuestionShouldModify")
-                .Options;
+        //[Fact]
+        //public void ModifyQuestionShouldModify()
+        //{
+        //    // arrange
+        //    var options = new DbContextOptionsBuilder<PH_DbContext>()
+        //        .UseInMemoryDatabase("ModifyQuestionShouldModify")
+        //        .Options;
 
-            Questions questions = new Questions();
+        //    Questions questions = new Questions();
 
-            string username = "random";
+        //    string username = "random";
 
-            questions.Users.Username = username;
-            questions.UserQuestion = "Original message";
+        //    questions.Users.Username = username;
+        //    questions.UserQuestion = "Original message";
 
-            using (var arrangeContext = new PH_DbContext(options))
-            {
-                arrangeContext.Add(questions);
-                arrangeContext.SaveChanges();
-            };
+        //    using (var arrangeContext = new PH_DbContext(options))
+        //    {
+        //        arrangeContext.Add(questions);
+        //        arrangeContext.SaveChanges();
+        //    };
 
-            Question question = Mapper.MapQuestion(questions);
-            question.UserQuestion = "New Message";
+        //    Question question = Mapper.MapQuestion(questions);
+        //    question.UserQuestion = "New Message";
 
-            using var actContext = new PH_DbContext(options);
+        //    using var actContext = new PH_DbContext(options);
 
-            var repo = new UserRepo(actContext);
+        //    var repo = new UserRepo(actContext);
 
-            repo.ModifyQuestion(question, username);
+        //    repo.ModifyQuestion(question, username);
 
-            var modQuestion = actContext.Questions.Select(m => questions.UserQuestion);
+        //    var modQuestion = actContext.Questions.Select(m => questions.UserQuestion);
 
-            Assert.NotEqual(modQuestion.ToString(), questions.UserQuestion);
-        }
+        //    Assert.NotEqual(modQuestion.ToString(), questions.UserQuestion);
+        //}
 
         /// <summary>
         /// Exception test for Modify Question
@@ -389,10 +389,39 @@ namespace HelpByPros.Test
         //[Fact]
 
         /// <summary>
-        /// Test
+        /// Get Users Question should return a List
         /// </summary>
-        //public async Task<IEnumerable<Question>> GetUsersQuestion(string UserName)
-        //[Fact]
+        [Fact]
+        public void GetUsersQuestionShouldReturnResult()
+        {
+            // arrange
+            var options = new DbContextOptionsBuilder<PH_DbContext>()
+                .UseInMemoryDatabase("GetUsersQuestionShouldReturnResult")
+                .Options;
+
+            using var arrangeContext = new PH_DbContext(options);
+
+            string username = "random";
+
+            arrangeContext.Questions.Add(new Questions { UserQuestion = "wtf?" });
+            arrangeContext.SaveChanges();
+
+            using var actContext = new PH_DbContext(options);
+            var repo = new UserRepo(actContext);
+
+            // act
+            var result = repo.GetUsersQuestion(username);
+
+            // assert
+            // if it is needed to check the actual database here,
+            // use a separate assertContext as well.
+            Assert.NotNull(result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        
 
         /// <summary>
         /// Test
@@ -404,7 +433,52 @@ namespace HelpByPros.Test
         /// Test 
         /// </summary>
         //public async Task<User> GetAUser(string userName)
-        //[Fact]
+        [Fact]
+        public void GetAUserShouldReturnResult()
+        {
+            // arrange
+            var options = new DbContextOptionsBuilder<PH_DbContext>()
+                .UseInMemoryDatabase("GetAUserShouldReturnResult")
+                .Options;
+
+            using var arrangeContext = new PH_DbContext(options);
+
+            var id = 5;
+            var username = "Abc";
+
+            arrangeContext.Users.Add(new Users { Id = id, Username = username });
+            arrangeContext.SaveChanges();
+
+            using var actContext = new PH_DbContext(options);
+            var repo = new UserRepo(actContext);
+
+            // act
+            var result = repo.GetAUser(username);
+
+            // assert
+            Assert.NotNull(result);
+        }
+
+        /// <summary>
+        /// Get A User should throw a NULL exception.
+        /// </summary>
+        [Fact]
+        public void GetAUserShouldThrowNullException()
+        {
+            // arrange
+            var options = new DbContextOptionsBuilder<PH_DbContext>()
+                .UseInMemoryDatabase("GetAUserShouldThrowNullException")
+                .Options;
+
+            string username = null;
+
+            //assert
+            using (var assertContext = new PH_DbContext(options))
+            {
+                var repo = new UserRepo(assertContext);
+                Assert.ThrowsAsync<ArgumentNullException>(() => repo.GetAUser(username));
+            }
+        }
 
         /// <summary>
         /// Test
