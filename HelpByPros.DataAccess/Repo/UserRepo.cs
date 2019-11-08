@@ -82,6 +82,7 @@ namespace HelpByPros.DataAccess.Repo
 
             }
         }
+
         /// <summary>
         /// getting a Professonal if it exist if not then exeception will be thrown instead
         /// </summary>
@@ -101,10 +102,6 @@ namespace HelpByPros.DataAccess.Repo
                 throw new ArgumentNullException("There is no such Professional: " + ex);
             }
         }
-
-
-
-
 
         public async Task<IEnumerable<Member>> GetMemberListAsync()
         {
@@ -137,7 +134,6 @@ namespace HelpByPros.DataAccess.Repo
 
         public async Task ModifyQuestion(Question ques, string username)
         {
-
             try
             {
                 var q = (await GetUsersQuestion(username)).ToList();
@@ -152,10 +148,8 @@ namespace HelpByPros.DataAccess.Repo
             {
                 throw new InvalidOperationException("There is no question existed");
             }
-
-
-
         }
+
         public async Task DeleteQuestion(int QuestionID, string username)
         {
             try
