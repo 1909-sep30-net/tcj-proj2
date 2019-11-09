@@ -10,5 +10,6 @@ namespace HelpByPros.BusinessLogic
         Construction,
         English ,
         Doctor,
+        Agriculture,
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using HelpByPros.Api.Model;
 using HelpByPros.BusinessLogic;
 using HelpByPros.BusinessLogic.IRepo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -10,6 +11,8 @@ namespace HelpByPros.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
+
     public class MemberController : ControllerBase
     {
 

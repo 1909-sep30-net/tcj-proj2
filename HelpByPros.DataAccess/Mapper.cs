@@ -18,7 +18,9 @@ namespace HelpByPros.DataAccess
                 Username = u.Username,
                 Password = u.Password,
                 Phone = u.Phone,
-                Profile_Pic = u.Profile_Pic
+                Profile_Pic = u.Profile_Pic,
+                Id = u.Id
+                
             };
 
           
@@ -33,7 +35,9 @@ namespace HelpByPros.DataAccess
                 Username = u.Username,
                 Password = u.Password,
                 Phone = u.Phone,
-                Profile_Pic = u.Profile_Pic
+                Profile_Pic = u.Profile_Pic,
+                Id = u.Id
+
             };
 
 
@@ -67,13 +71,17 @@ namespace HelpByPros.DataAccess
         /// <returns></returns>
         public static Members MapMember(Member m)
         {
+            var accInfo = new AccountInfo();
+            accInfo.PointAvailable = m.PointAvailable;
             var x = new Members
             {
                 User = MapUser(m)
                 
                 
             };
-            x.AccInfo.PointAvailable = m.PointAvailable;
+            x.AccInfo = accInfo;
+
+         
             return x;          
 
         }
@@ -168,25 +176,26 @@ namespace HelpByPros.DataAccess
         /// <returns></returns>
         public static Question MapQuestion(Questions a)
         {
+            var x = new Question();
 
-            var x = new Question()
-            {
 
-                Category = a.Category,
 
-                UserQuestion = a.UserQuestion,       //the body text for the question
+            x.Category = a.Category;
 
-                //server does not store , specifically, who wrote the answers for a specific question on the Questions-table
-                //therefore it cannot be mapped to the BL-version.
-                
+            x.UserQuestion = a.UserQuestion;      //the body text for the question
 
-                Author = MapUser(a.Users),          //who wrote it?
+            //server does not store , specifically, who wrote the answers for a specific question on the Questions-table
+            //therefore it cannot be mapped to the BL-version.
+            x.Author = MapUser(a.Users);
+            
+            x.AuthorName = x.Author.Username;
 
-                Answered = a.Answered,              //check if answered
+            x.Answered = a.Answered;              //check if answered
 
-                Id = a.Id                           //we get the automatically generated ID from the server
+            x.Id = a.Id;                      //we get the automatically generated ID from the server
 
-            };
+            x.QuestionBody = a.QuestionBody;
+        
 
             return x;
 
@@ -207,20 +216,22 @@ namespace HelpByPros.DataAccess
 
             x.Category = a.Category;
 
-            x.UserQuestion = a.UserQuestion;                //body text of question.
-            
-            //may only need to map to the Professional who wrote this.
-            x.UsersID = a.Author.Id;                        //who asked the question
+            x.UserQuestion = a.UserQuestion;                //body text of questSion.
 
+            //may only need to map to the Professional who wrote this.
+            //x.Users = MapUser(a.Author);
+            x.UsersID = a.Author.Id;                       
+            
             x.Answered = a.Answered;                        //was the question answered?
 
             //MISSING ITEMS FROM DataBase.Entities.Questions
             //upvote
             //downvote
+            x.QuestionBody = a.QuestionBody;
 
             
             //auto-generated on server
-            //x.Id = a.Id;
+            x.Id = a.Id;
 
             return x;
 
@@ -264,7 +275,8 @@ namespace HelpByPros.DataAccess
             x.Sources = a.Source;                       // Citation for source-material on answer
 
             x.UserID = a.Author.Id;                     //who wrote the answer?
-
+            x.Answer = a.AnswerText;
+            x.Id = a.ID;
             return x;
 
         }

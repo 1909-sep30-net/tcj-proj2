@@ -13,36 +13,21 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// <summary>
         /// Get Question from Database
         /// </summary>
-        Task<BusinessLogic.Question> GetQuestionAsync(int qID);
+        public Task<BusinessLogic.Question> GetQuestionAsync(int qID);
 
         /// <summary>
         /// Get Question Header For a Qustion
         /// </summary>
-        Task<string> GetQuestHeaderAsync(int qID);
+        public Task<string> GetQuestHeaderAsync(int qID);
 
         /// <summary>
         /// Get Answer from Database by ID
         /// </summary>
-        Task<BusinessLogic.Answer> GetAnAnswerAsyc(int aID);
-
-
-
-        /// <summary>
-        /// Get a single answer from the database, by default, get the best.
-        /// </summary>
-        Task<BusinessLogic.Answer> GetOneAnswerAsyc(int qID);
-
-
-        /// <summary>
-        /// Get Best Answer from Database
-        /// </summary>
-        Task<BusinessLogic.Answer> GetBestAnswer(int qID);
-
-
+        public Task<BusinessLogic.Answer> GetAnAnswerAsyc(int aID);
         /// <summary>
         /// Get a list of answers to a given question, and how many to view.
         /// </summary>
-        Task<IEnumerable<Answer>> GetAnswerListAsync(int qID, int start, int qty);
+        public Task<IEnumerable<Answer>> GetAnswerListAsync(int qID, int start, int qty);
 
         /// <summary>
         /// Get an additional list of answers for the next page of questions.
@@ -62,12 +47,12 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// <summary>
         /// Add a question to the database
         /// </summary>
-        Task AddQuestionToDBAsync(Question q);
+        public Task AddQuestionAsync(Question q);
 
         /// <summary>
         /// Add a question to the database
         /// </summary>
-        Task AddAnswerToDBAsync(Answer a);
+        public Task AddAnswerAsync(Answer a);
         #endregion
     }
 }

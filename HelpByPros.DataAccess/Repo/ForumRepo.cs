@@ -13,7 +13,7 @@ namespace HelpByPros.DataAccess.Repo
     /// Accessor and Mutator methods for allowing the BusinessLogic class to interact with the PostGre Databse
     /// Getters and Setters
     /// </summary>
-    public class ForumRepo : BusinessLogic.IRepo.IForumRepo
+    public class ForumRepo : IForumRepo
     {
 
         #region Specify the repository and any related logger
@@ -48,20 +48,43 @@ namespace HelpByPros.DataAccess.Repo
         /// <summary>
         /// Set a specific answer on the database
         /// </summary>
-        async Task IForumRepo.AddAnswerToDBAsync(BusinessLogic.Answer a)
+        public async Task AddAnswerAsync(Answer a)
         {
-            
+            if(a.Author== null)
+            {
+                    throw new InvalidOperationException("There is no user logged in.");
+            }
+
+
             await _dbContext.AddAsync( Mapper.MapAnswer(a) );
+            await _dbContext.SaveChangesAsync();
 
 
         }
+
+
+
                        
         /// <summary>
 		/// Add a specific question to the database
 		/// </summary>
-        async Task IForumRepo.AddQuestionToDBAsync(Question q)
+       public async Task AddQuestionAsync(Question ques)
         {
-            await _dbContext.AddAsync( Mapper.MapQuestion(q) );
+            if (ques.AuthorName != null)
+            {
+
+                var q = await _dbContext.Users.Where(x => x.Username == ques.AuthorName).FirstOrDefaultAsync();
+                if (q == null)
+                    throw new InvalidOperationException("There is no user logged in.");
+            }
+            else
+            {
+                throw new InvalidOperationException("There is no user logged in.");
+
+            }
+
+            await _dbContext.AddAsync( Mapper.MapQuestion(ques) );
+            await _dbContext.SaveChangesAsync();
         }
 
 
@@ -77,8 +100,11 @@ namespace HelpByPros.DataAccess.Repo
         /// </summary>
         async Task<BusinessLogic.Question> IForumRepo.GetQuestionAsync(int qID)
         {
-            //get the question
-            return Mapper.MapQuestion( await _dbContext.Questions.FindAsync( qID ) );
+
+          var q=  await _dbContext.Questions.Include(x => x.Users).ToListAsync();
+            var qq = q.Where(x => x.Id == qID).First();
+
+            return Mapper.MapQuestion( qq );
 
         }
 
@@ -107,6 +133,7 @@ namespace HelpByPros.DataAccess.Repo
         /// </summary>
         async Task<BusinessLogic.Answer> IForumRepo.GetAnAnswerAsyc(int aID)
         {
+            
             return Mapper.MapAnswer( await _dbContext.Answers.FindAsync(aID) );
         }
 
@@ -118,39 +145,7 @@ namespace HelpByPros.DataAccess.Repo
         //list result
         //var d = await db.Employee.Where(x => x.FirstName == "Jack").ToListAsync();
 
-        /// <summary>
-        /// Return an answer to a specific question.
-        /// </summary>
-        /// <param name="aID"></param>
-        /// <returns></returns>
-        /// 
-        async Task<BusinessLogic.Answer> IForumRepo.GetOneAnswerAsyc(int qID)
-        {
 
-            //get the best answer
-            return await getBest(qID) ;
-
-        }
-
-        /// <summary>
-        /// Return the best answer
-        /// </summary>
-        async Task<BusinessLogic.Answer> IForumRepo.GetBestAnswer(int qID)
-        {
-            //get the best answer
-            return await getBest(qID);
-        }
-
-        /// <summary>
-        /// Helper method to get the best or single answer to a question.
-        /// </summary>
-        /// <param name="qID"></param>
-        /// <returns></returns>
-        async Task<BusinessLogic.Answer> getBest(int qID)
-        {
-            var bestAnswer = await _dbContext.Answers.FirstOrDefaultAsync(a => a.QuestionID == qID && a.Best == true);
-            return Mapper.MapAnswer(bestAnswer);
-        }
 
 
 
@@ -160,15 +155,7 @@ namespace HelpByPros.DataAccess.Repo
         async Task<IEnumerable<Answer>> IForumRepo.GetAnswerListAsync(int qID, int start, int qty)
         {
             //declare the list
-            List<Answer> ansList = new List<Answer>();
-            
-            
-            //first get the best answer.  
-            Answer first = await getBest(qID);
-            
-            //add the first answer
-            ansList.Add(first);
-
+            List<Answer> ansList = new List<Answer>();   
 
             //Get qty-1 entries
             //this part can't be asynch, yet
@@ -181,6 +168,7 @@ namespace HelpByPros.DataAccess.Repo
             var others = (from ans in _dbContext.Answers
                           where ans.Id == qID
                           select ans).Skip(start).Take(qty).ToList();
+            others.OrderBy(x => x.Best);
 
 
             //convert them to BusinessLogic objects.
@@ -224,8 +212,6 @@ namespace HelpByPros.DataAccess.Repo
 
         }
         
-
-
         /// <summary>
         /// Get a list of questions based on category.
         /// </summary>
@@ -236,26 +222,6 @@ namespace HelpByPros.DataAccess.Repo
             //convert enum to string.
             string catName = Enum.GetName(typeof(Category), category);
 
-
-
-            //Will work once postGre is installed as a nuget package
-            /*
-            var others = (from question in _dbContext.Questions
-                          where question.Category == Category.ComputerScience
-                          select question).Skip(start).Take(qty).ToList();
-            */
-
-            //On the database, the category is represented ONLY by a number
-            /*
-             
-            //compare the two strings.
-            var questions = (from question in _dbContext.Questions
-                          where Enum.GetName(typeof(Category), question.Category)  == catName
-                          select question).Skip(start).Take(qty);
-            */
-
-
-            //compare two integers, Category is stored as an integer on the postGre SQL server.
             var questions = (from question in _dbContext.Questions.Include(x => x.Users)
                              where question.Category  ==category.ToString() 
                              select question).Skip(start).Take(qty);
@@ -281,6 +247,11 @@ namespace HelpByPros.DataAccess.Repo
 
 
         #endregion
+
+
+
+
+
 
 
     }//end class

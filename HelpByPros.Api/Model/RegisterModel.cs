@@ -19,6 +19,7 @@ namespace HelpByPros.Api.Model
         public int YearsOfExp { get; set; }
         public string Credential { get; set; }
         public string Summary { get; set; }
+
         public Admin RegisterAdmin()
         {
             return new Admin

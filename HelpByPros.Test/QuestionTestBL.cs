@@ -52,7 +52,7 @@ namespace HelpByPros.Test
         [Fact]
         public void Author_StoresCorrectly()
         {
-            IUser author = new User(); ;
+            User author = new User(); ;
 
             _question.Author = author;
 
