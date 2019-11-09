@@ -22,7 +22,7 @@ namespace HelpByPros.Api.Controllers
             _messageSender = sentMessage;
 
         }
-        [HttpGet("{model}",Name = "GetRegister")]
+        [HttpGet(Name = "GetRegister")]
         public RegisterModel GetRegister(RegisterModel model)
         {
             return model;
@@ -37,8 +37,9 @@ namespace HelpByPros.Api.Controllers
             return model;
         }
         //Post: api/Register
-        [HttpPost]
-        public async Task<ActionResult> CreateUser(RegisterModel model)
+
+        [HttpPost("CreateUser", Name = "CreateUser")]
+        public async Task<ActionResult> CreateUser([FromBody] RegisterModel model)
         {
             if (model.IsProfessional) {
                 await _userRepo.AddProfessionalAsync(model.RegisterProfessional());

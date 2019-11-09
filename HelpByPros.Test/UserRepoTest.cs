@@ -70,12 +70,24 @@ namespace HelpByPros.Test
                 //PointAvailable = 100
             };
 
+
             // act
-            Exception ex = await Assert.ThrowsAsync<InvalidOperationException>(() => repo.AddMemberAsync(newMember));
+            try
+            {
+                await repo.AddMemberAsync(newMember);
+                await repo.AddMemberAsync(newMember);
+                
+            }
+            catch (InvalidOperationException ex)
+            {
+                Assert.Equal("Duplicate info in unique Column", ex.Message);
+
+            }
+            
+
 
             // assert
 
-            Assert.Equal("There is already an existed username, phone, or email", ex.Message);
         }
 
         /// <summary>
@@ -139,11 +151,11 @@ namespace HelpByPros.Test
             Professional professional2 = new Professional()
             {
                 Email = "random@ran.dom",
-                FirstName = "Rando",
-                LastName = "Random",
+                FirstName = "Randwo",
+                LastName = "Randowm",
                 Username = "randorandom",
-                Password = "ranran",
-                Phone = "1231231234",
+                Password = "rawnran",
+                Phone = "w",
                 //Profile_Pic = p.User.Profile_Pic,
                 //PointAvailable = p.AccInfo.PointAvailable,
                 Category = "English"
@@ -154,20 +166,22 @@ namespace HelpByPros.Test
                 var repo = new UserRepo(actContext);
 
                 // act
-                await repo.AddProfessionalAsync(professional);
-                Exception ex = await Assert.ThrowsAsync<InvalidOperationException>(() => repo.AddProfessionalAsync(professional2));
+                try {
+                    await repo.AddProfessionalAsync(professional);
+                    await repo.AddProfessionalAsync(professional);
+                }
+                catch ( InvalidOperationException ex)
+                {
+                    Assert.Equal("Duplicate info in unique Column", ex.Message);
 
-                Assert.Equal("Duplicate info in unique Column", ex.Message);
+                }
+                //   Exception ex = await Assert.ThrowsAsync<InvalidOperationException>(() => repo.AddProfessionalAsync(professional));
+
+               // Assert.Equal("Duplicate info in unique Column", ex.Message);
+
+
             }
-            // assert
-            //using (var assertContext = new PH_DbContext(options))
-            //{
-            //    var repo = new UserRepo(assertContext);
-
-            //Exception ex = await Assert.ThrowsAsync<InvalidOperationException>(() => repo.AddProfessionalAsync(professional));
-
-            //Assert.Equal("Duplicate info in unique Column", ex.Message);
-            //}
+   
 
 
 
@@ -405,7 +419,7 @@ namespace HelpByPros.Test
             var repo = new UserRepo(actContext);
 
             // act
-            var result = repo.GetUsersAnswer(username);
+            var result = repo.GetUsersAnswerAsync(username);
 
             // assert
             Assert.NotNull(result);
@@ -433,7 +447,7 @@ namespace HelpByPros.Test
             var repo = new UserRepo(actContext);
 
             // act
-            var result = repo.GetUsersQuestion(username);
+            var result = repo.GetUsersQuestionAsync(username);
 
             // assert
             Assert.NotNull(result);
@@ -469,7 +483,7 @@ namespace HelpByPros.Test
             var repo = new UserRepo(actContext);
 
             // act
-            var result = repo.GetAUser(username);
+            var result = repo.GetAUserAsync(username);
 
             // assert
             Assert.NotNull(result);
@@ -492,7 +506,7 @@ namespace HelpByPros.Test
             using (var assertContext = new PH_DbContext(options))
             {
                 var repo = new UserRepo(assertContext);
-                Assert.ThrowsAsync<ArgumentNullException>(() => repo.GetAUser(username));
+                Assert.ThrowsAsync<ArgumentNullException>(() => repo.GetAUserAsync(username));
             }
         }
 
