@@ -1,6 +1,5 @@
-﻿using System;
+﻿using HelpByPros.BusinessLogic;
 using Xunit;
-using HelpByPros.BusinessLogic;
 
 namespace HelpByPros.DataAccess
 {
