@@ -155,7 +155,7 @@ namespace HelpByPros.DataAccess.Repo
         async Task<IEnumerable<Answer>> IForumRepo.GetAnswerListAsync(int qID, int start, int qty)
         {
             //declare the list
-            List<Answer> ansList = new List<Answer>();   
+            List<Answer> ansList = new List<Answer>();
 
             //Get qty-1 entries
             //this part can't be asynch, yet
@@ -168,7 +168,7 @@ namespace HelpByPros.DataAccess.Repo
             var others = (from ans in _dbContext.Answers
                           where ans.Id == qID
                           select ans).Skip(start).Take(qty).ToList();
-            others.OrderBy(x => x.Best);
+            others = others.OrderBy(x => x.Best).ToList();
 
 
             //convert them to BusinessLogic objects.
