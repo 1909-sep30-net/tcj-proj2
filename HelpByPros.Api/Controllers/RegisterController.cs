@@ -22,11 +22,18 @@ namespace HelpByPros.Api.Controllers
             _messageSender = sentMessage;
 
         }
-        [HttpGet(Name = "GetRegister")]
-       /// [Route({"model": Register})]
-
-        public RegisterModel Get(RegisterModel model)
+        [HttpGet("{model}",Name = "GetRegister")]
+        public RegisterModel GetRegister(RegisterModel model)
         {
+            return model;
+        }
+
+        [HttpGet(Name = "Get")]
+        /// [Route({"model": Register})]
+
+        public RegisterModel Get()
+        {
+            RegisterModel model = new RegisterModel();
             return model;
         }
         //Post: api/Register

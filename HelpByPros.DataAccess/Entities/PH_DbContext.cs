@@ -134,9 +134,9 @@ namespace HelpByPros.DataAccess.Entities
                     .IsRequired() // NOT NULL
                     .HasMaxLength(126); // NVARCHAR(64)   
                 entity.Property(p => p.Answered)
-                    .IsRequired(); // NOT NULL
-                entity.Property(p => p.Answered)
-                   .HasMaxLength(200)
+
+                   .HasMaxLength(200)                   
+
                    .IsRequired(); // NOT NULL
                 entity.Property(p => p.Category)
                   .HasMaxLength(200)

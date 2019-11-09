@@ -11,6 +11,5 @@ namespace HelpByPros.Api.Model
         public Question Question { get; set; }
         public List<Answer> Answers { get; set; }
 
-
     }
 }

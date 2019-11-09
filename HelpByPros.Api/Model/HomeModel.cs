@@ -10,7 +10,7 @@ namespace HelpByPros.Api.Model
     {
         public List<Question> QuestionList { get; set; }
 
-        private List<string> _cateList;
+        private List<string> _cateList= new List<string>();
         public List<string> CategoryList {
             get
             {

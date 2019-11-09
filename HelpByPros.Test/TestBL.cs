@@ -19,7 +19,7 @@ namespace HelpByPros.Test
             string email = "john.smith@gmail.com";
             string login = "johnny";
             string password = "password";
-            //string confirmPassword = "password";
+
 
 
             //Act

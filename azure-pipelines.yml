@@ -8,8 +8,8 @@ trigger:
     include:
     - master
     exclude:
-    - Feature/*
-    - tonywork/*
+    - feature/*
+    - tonyfeaturework/*
     - charlie/*
 
 pool:
@@ -27,7 +27,11 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'Project2tcj'
     projectName: 'Project2tcj'
-    extraProperties: 'sonar.exclusions=**/lib/**'
+    extraProperties: |
+      'sonar.exclusions=**/lib/**'
+       sonar.exclusions=**/HelpByPros.DataAccess/Entities/**
+       sonar.exclusions=**/HelpByPros.DataAccess/Migrations/**
+
 # three different ways to solve the initial problem
 
 # - script:
@@ -62,6 +66,7 @@ steps:
      HelpByPros.sln    # Pass a solution instead of a csproj.
 
     arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
+  continueOnError: true
 
 
 - task: SonarCloudAnalyze@1

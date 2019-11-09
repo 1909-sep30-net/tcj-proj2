@@ -62,14 +62,16 @@ namespace HelpByPros.Test
 
         }
 
-        //[Fact]
-        //public void Title_StoresCorrectly()
-        //{
-        //    Title title = Title.Doctor;
 
-        //    _professional.Title = title;
+        [Fact]
+        public void Title_StoresCorrectly()
+        {
+            Category title = Category.Doctor;
 
-        //    Assert.Equal(title, _professional.Title);
-        //}
+            _professional.Category = title.ToString();
+
+            Assert.Equal(title, (Category)Enum.Parse(typeof(Category), _professional.Category, true));
+        }
+
     }
 }

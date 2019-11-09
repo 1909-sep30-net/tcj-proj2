@@ -189,7 +189,7 @@ namespace HelpByPros.Test
             var id = 5;
             var firstName = "Abc";
 
-            arrangeContext.Users.Add(new Users { Id = id, FirstName = firstName });
+            arrangeContext.Users.Add(new Users { FirstName = firstName });
             arrangeContext.SaveChanges();
 
             using var actContext = new PH_DbContext(options);
@@ -288,7 +288,7 @@ namespace HelpByPros.Test
 
             var id = 5;
 
-            arrangeContext.Users.Add(new Users { Id = id, FirstName = "Abc" });
+            arrangeContext.Users.Add(new Users {FirstName = "Abc" });
             arrangeContext.SaveChanges();
 
             using var actContext = new PH_DbContext(options);

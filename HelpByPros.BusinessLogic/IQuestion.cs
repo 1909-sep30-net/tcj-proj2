@@ -6,8 +6,8 @@ namespace HelpByPros.BusinessLogic
     {
         List<Answer> Answer { get; set; }
         bool Answered { get; set; }
-        IUser Author { get; set; }
         string Category { get; set; }
         string UserQuestion { get; set; }
+        string AuthorName { get; set; }
     }
 }

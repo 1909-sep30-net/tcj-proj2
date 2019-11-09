@@ -54,7 +54,7 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        Task<User> GetAUser(string userName);
+        Task<User> GetAUserAsync(string userName);
   
 
 
@@ -67,24 +67,21 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// The question is modifiable 
         /// </summary>
         /// <param name="QuestionID"></param>
-        /// /// <param username="QuestionID"> use for authentication: only user is allowed to modify their own question </param>
         /// <returns></returns>
-        Task ModifyQuestion(Question x, string username);
+        Task ModifyQuestionAsync(Question q);
         /// <summary>
         /// The answer is modifiable 
         /// </summary>
         /// <param name="QuestionID"></param>
-        /// /// <param username="QuestionID"> use for authentication: only user is allowed to modify their own question </param>
         /// <returns></returns>
-        Task ModifyAnswer(int answerID, string username);
+        Task ModifyAnswerAsync(Answer ans);
 
         /// <summary>
         /// The question is deleteable 
         /// </summary>
         /// <param name="QuestionID"> To identify the question </param>
-        /// /// <param username="QuestionID"> use for authentication: only user is allowed to delete their own question </param>
         /// <returns></returns>
-        Task DeleteQuestion(int QuestionID, string username);
+        Task DeleteQuestionAsync(int QuestionID);
 
 
         /// <summary>
@@ -92,20 +89,20 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// </summary>
         /// <param name="UserName"></param>
         /// <returns></returns>
-        Task<IEnumerable<Question>> GetUsersQuestion(string UserName);
+        Task<IEnumerable<Question>> GetUsersQuestionAsync(string UserName);
 
         /// <summary>
         /// getting a list of user history of answers
         /// </summary>
         /// <param name="UserName"></param>
         /// <returns></returns>
-        Task<IEnumerable<Answer>> GetUsersAnswer(string UserName);
+        Task<IEnumerable<Answer>> GetUsersAnswerAsync(string UserName);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="ans"></param>
         /// <returns></returns>
-        Task DeleteAAnswer(Answer ans, string UserName);
+        Task DeleteAAnswerAsync(int ansID);
 
 
 

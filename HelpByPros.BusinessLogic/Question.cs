@@ -12,7 +12,7 @@ namespace HelpByPros.BusinessLogic
 
         /// There is a category for a question.
         /// </summary>        
-        private Category _categ;
+        private Category _categ = new Category();
 
         public string Category
         {
@@ -59,14 +59,14 @@ namespace HelpByPros.BusinessLogic
         /// <summary>
         /// the orginal author of the question 
         /// </summary>
-        public IUser Author { get; set; } = new User();
-
+        public User Author { get; set; } = new User();
+    
         /// <summary>
         /// Bool for marking whether or not a Question has an Answer. 
         /// </summary>
-        public bool Answered { get; set; } = new bool();
-
+        public bool Answered { get; set; } = new bool();    
 
         public int Id { get; set; }
+        public string AuthorName { get; set; }
     }
 }

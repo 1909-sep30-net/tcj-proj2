@@ -14,9 +14,9 @@ namespace HelpByPros.Test
         {
             string category = "Math";
 
-            _question.Category = category;
+            _question.Category = category.ToString();
 
-            Assert.Equal(category, _question.Category);
+            Assert.Equal(category.ToString(), _question.Category);
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace HelpByPros.Test
         [Fact]
         public void Author_StoresCorrectly()
         {
-            IUser author = new User(); ;
+            User author = new User(); ;
 
             _question.Author = author;
 
