@@ -69,7 +69,10 @@ namespace HelpByPros.DataAccess
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
-        public static Members MapMember(Member m)
+        /// 
+        //        public static Professionals MapProfessonal(Professional p, Professionals y= null)
+
+        public static Members MapMember(Member m, Members y=null)
         {
             var accInfo = new AccountInfo();
             accInfo.PointAvailable = m.PointAvailable;
@@ -79,7 +82,22 @@ namespace HelpByPros.DataAccess
 
 
             };
-            x.AccInfo = accInfo;
+
+
+            if (y == null)
+            {
+                accInfo.PointAvailable = m.PointAvailable;
+
+                x.AccInfo = accInfo;
+
+            }
+            else
+            {
+                x.AccInfo = y.AccInfo;
+                x.AccountInfoID = y.AccInfo.Id;
+                x.Id = y.Id;
+                x.UserID = y.UserID;
+            }
 
          
             return x;          
@@ -103,7 +121,8 @@ namespace HelpByPros.DataAccess
                 Phone = p.User.Phone,
                 Profile_Pic = p.User.Profile_Pic,
                 PointAvailable = p.AccInfo.PointAvailable,
-                Category = p.Expertise
+                Category = p.Expertise,
+                Id = p.Id
 
 
             };
@@ -114,17 +133,32 @@ namespace HelpByPros.DataAccess
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static Professionals MapProfessonal(Professional p)
+        public static Professionals MapProfessonal(Professional p, Professionals y= null)
         {
             var accInfo = new AccountInfo();
-            accInfo.PointAvailable = p.PointAvailable;
             var x = new Professionals
             {
                 User = MapUser(p)
             };
-            x.AccInfo = accInfo;
+           
             x.Expertise = p.Category;
             x.YearsOfExp = p.YearsOfExp;
+            x.Id = p.Id;
+            if (y == null)
+            {
+                accInfo.PointAvailable = p.PointAvailable;
+                
+                x.AccInfo = accInfo;
+              
+            }
+            else
+            {
+                x.AccInfo = y.AccInfo;
+                x.AccountInfoID = y.AccInfo.Id;
+                x.Id = y.Id;
+                x.UserID = y.UserID;
+            }
+          
             return x;
 
         }

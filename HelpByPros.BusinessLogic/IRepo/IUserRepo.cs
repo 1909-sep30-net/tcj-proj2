@@ -104,7 +104,15 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// <returns></returns>
         Task DeleteAAnswerAsync(int ansID);
 
+        /// <summary>
+        /// Edit user info Profile
+        /// </summary>
+        /// <param name="UserEmail"></param>
+        /// <returns></returns>
+        Task ModifyUserInfoAsync(User user);
 
+        Task ModifyProfessionalInfoAsync(Professional user);
+        Task ModifyMemberInfoAsync(Member user);
 
         #endregion
 

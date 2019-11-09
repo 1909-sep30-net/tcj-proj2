@@ -94,7 +94,7 @@ namespace HelpByPros.DataAccess.Repo
             try
             {
                 var y = _context.Professionals.Include(x => x.User).Include(j => j.AccInfo);
-                var z = await y.Where(x => x.User.Username == UserName).FirstOrDefaultAsync();
+                var z = await y.Where(x => x.User.Username == UserName).FirstAsync();
                 return Mapper.MapProfessonal(z);
             }
             catch (ArgumentNullException ex)
@@ -257,6 +257,67 @@ namespace HelpByPros.DataAccess.Repo
             }
 
         }
+
+        public async Task ModifyUserInfoAsync(User User)
+        {
+            var oldUserInfo = await _context.Users.Where(x => x.Username == User.Username).FirstAsync();
+            var newUser = Mapper.MapUser(User);
+            try
+            {
+                _context.Entry(oldUserInfo).CurrentValues.SetValues(newUser);
+
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("There is no such User.");
+
+            }
+
+        }
+
+        public async Task ModifyProfessionalInfoAsync(Professional user)
+        {
+            var UsersList = await _context.Professionals.Include(x => x.User).Include(x => x.AccInfo).ToListAsync();
+            try
+            {
+
+                var oldUserInfo = await _context.Professionals.Where(x => x.User.Username == user.Username).FirstAsync();
+
+            var newUser = Mapper.MapProfessonal(user, oldUserInfo);
+           
+                _context.Entry(oldUserInfo).CurrentValues.SetValues(newUser);
+
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("There is no such User.");
+
+            }
+        }
+
+            public async Task ModifyMemberInfoAsync(Member user)
+        {
+            var UsersList = await _context.Members.Include(x => x.User).Include(x => x.AccInfo).ToListAsync();
+            try
+            {
+
+                var oldUserInfo = await _context.Members.Where(x => x.User.Username == user.Username).FirstAsync();
+
+            var newUser = Mapper.MapMember(user, oldUserInfo);
+              _context.Entry(oldUserInfo).CurrentValues.SetValues(newUser);
+
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new InvalidOperationException("There is no such User.");
+
+            }
+        }
+
+
 
 
 
