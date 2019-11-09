@@ -63,7 +63,7 @@ namespace HelpByPros.DataAccess.Entities
                      .UseIdentityColumn(1, 1) // IDENTITY(1,1)
                     .IsRequired();
                 entity.HasOne(pt => pt.User) // configure one nav property
-                   .WithMany(p=> p.Admins) // configure the opposite nav property
+                   .WithMany(p => p.Admins) // configure the opposite nav property
                    .HasForeignKey(pt => pt.UsersID) // configure the foreign key property
                    .IsRequired() // NOT NULL
                    .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
@@ -80,7 +80,7 @@ namespace HelpByPros.DataAccess.Entities
                   .HasForeignKey(pt => pt.UserID) // configure the foreign key property
                   .IsRequired() // NOT NULL
                   .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
-                
+
                 entity.HasOne(pt => pt.AccInfo) // configure one nav property
                  .WithOne(p => p.Member) // configure the opposite nav property          
                  .HasForeignKey<Members>(p => p.AccountInfoID)
@@ -95,11 +95,11 @@ namespace HelpByPros.DataAccess.Entities
                     .UseIdentityColumn(1, 1) // IDENTITY(1,1)
                     .IsRequired();
 
-                 entity.HasOne(pt => pt.User) // configure one nav property
-                  .WithMany(p => p.Professionals) // configure the opposite nav property
-                  .HasForeignKey(pt => pt.UserID) // configure the foreign key property
-                  .IsRequired() // NOT NULL
-                  .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
+                entity.HasOne(pt => pt.User) // configure one nav property
+                 .WithMany(p => p.Professionals) // configure the opposite nav property
+                 .HasForeignKey(pt => pt.UserID) // configure the foreign key property
+                 .IsRequired() // NOT NULL
+                 .OnDelete(DeleteBehavior.Cascade); // ON DELETE CASCADE
 
                 entity.HasOne(pt => pt.AccInfo) // configure one nav property
                .WithOne(p => p.Professional) // configure the opposite nav property          
@@ -107,11 +107,11 @@ namespace HelpByPros.DataAccess.Entities
                .IsRequired() // NOT NULL
                .OnDelete(DeleteBehavior.Cascade);// ON DELETE CASCADE
 
-                entity.Property(p => p.Expertise )
+                entity.Property(p => p.Expertise)
                     .IsRequired();
 
             });
-            
+
             modelBuilder.Entity<AccountInfo>(entity =>
             {
                 entity.Property(p => p.Id)
@@ -136,7 +136,7 @@ namespace HelpByPros.DataAccess.Entities
                 entity.Property(p => p.Answered)
                     .IsRequired(); // NOT NULL
                 entity.Property(p => p.Answered)
-                   .HasMaxLength(200)                   
+                   .HasMaxLength(200)
                    .IsRequired(); // NOT NULL
                 entity.Property(p => p.Category)
                   .HasMaxLength(200)
@@ -149,7 +149,7 @@ namespace HelpByPros.DataAccess.Entities
                 entity.HasIndex(p => p.Id)
                    .IsUnique();// UNIQUE
             });
-           
+
             modelBuilder.Entity<Answers>(entity =>
             {
                 entity.Property(p => p.Id)
@@ -184,9 +184,9 @@ namespace HelpByPros.DataAccess.Entities
 
             });
 
- 
 
-           
+
+
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
