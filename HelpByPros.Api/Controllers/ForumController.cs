@@ -30,6 +30,7 @@ namespace HelpByPros.Api.Controllers
             _logger = logger;
             _userRepo = userRepo;
             _forumRepo = forumRepo;
+            _messageSender = sentMessage;
         }
 
 
@@ -37,9 +38,25 @@ namespace HelpByPros.Api.Controllers
         public async Task<ForumModel> Get(int Qid)
         {
             ForumModel forumModel = new ForumModel();
-            forumModel.Question = await _forumRepo.GetQuestionAsync(Qid);
-            forumModel.Answers = (List<Answer>)await _forumRepo.GetAnswerListAsync(Qid, 0, 100);
-            return forumModel;
+
+            try
+            {
+                forumModel.Question = await _forumRepo.GetQuestionAsync(Qid);
+                forumModel.Question.Author = null;
+                forumModel.Answers = (List<Answer>)await _forumRepo.GetAnswerListAsync(Qid, 0, 100);
+                foreach(Answer ans in forumModel.Answers)
+                ans.Author = null;
+
+                Response.StatusCode = 200;
+
+                return forumModel;
+            }
+            catch
+            {
+                Response.StatusCode = 400;
+                return forumModel;
+
+            }
         }
 
 
@@ -66,6 +83,10 @@ namespace HelpByPros.Api.Controllers
             try
             {
                 await _forumRepo.AddQuestionAsync(x);
+                
+                
+                _messageSender.SentMessageThruPhoneCreate("Someone Posted a Question in your expertise!",await _userRepo.GetPhoneListForProfessionalExpertise(q.Category));
+
             }
             catch
             {
@@ -89,7 +110,11 @@ namespace HelpByPros.Api.Controllers
                 x.DownVote = a.DownVote;
                 x.Source = a.Source;
                 Response.StatusCode = 201;         
-                await _forumRepo.AddAnswerAsync(x);             
+                await _forumRepo.AddAnswerAsync(x);
+                List<string> y = new List<string>();
+                y.Add(await _userRepo.GetAuthorOfQuestion(a.QuestionID));
+                _messageSender.SentMessageThruPhoneCreate("Someone Answered Your Question!",y );
+
             }
             catch
             {
@@ -174,8 +199,13 @@ namespace HelpByPros.Api.Controllers
                 Response.StatusCode = 400;
             }
         }
+        //test
 
-
+        [HttpGet("GetEmptyModel", Name = "Den")]
+        public QuestionModel DeleteQuedstion()
+        {
+            return new QuestionModel();
+        }
 
 
 

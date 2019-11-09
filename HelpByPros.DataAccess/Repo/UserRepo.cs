@@ -261,7 +261,9 @@ namespace HelpByPros.DataAccess.Repo
         public async Task ModifyUserInfoAsync(User User)
         {
             var oldUserInfo = await _context.Users.Where(x => x.Username == User.Username).FirstAsync();
+
             var newUser = Mapper.MapUser(User);
+            newUser.Id = oldUserInfo.Id;
             try
             {
                 _context.Entry(oldUserInfo).CurrentValues.SetValues(newUser);
@@ -270,7 +272,7 @@ namespace HelpByPros.DataAccess.Repo
             }
             catch
             {
-                throw new InvalidOperationException("There is no such User.");
+                throw new InvalidOperationException("There is no such User." );
 
             }
 
@@ -287,6 +289,10 @@ namespace HelpByPros.DataAccess.Repo
             var newUser = Mapper.MapProfessonal(user, oldUserInfo);
            
                 _context.Entry(oldUserInfo).CurrentValues.SetValues(newUser);
+
+                await ModifyUserInfoAsync(user);
+
+
 
                 await _context.SaveChangesAsync();
             }
@@ -307,6 +313,7 @@ namespace HelpByPros.DataAccess.Repo
 
             var newUser = Mapper.MapMember(user, oldUserInfo);
               _context.Entry(oldUserInfo).CurrentValues.SetValues(newUser);
+                await ModifyUserInfoAsync(user);
 
                 await _context.SaveChangesAsync();
             }
@@ -317,8 +324,73 @@ namespace HelpByPros.DataAccess.Repo
             }
         }
 
+        public Task AddPoints(string username, int Points)
+        {
+            throw new NotImplementedException();
+        }
 
+        public async Task ModifyAnswerUpVotes( int points, int ansID)
+        {
+            try
+            {
+                var oldAnswer = await _context.Answers.Where(x => x.Id == ansID).FirstAsync(); ;
+                oldAnswer.UpVote= points;
 
+                _context.Entry(oldAnswer).CurrentValues.SetValues(oldAnswer);
+                await _context.SaveChangesAsync();
+
+            }
+            catch
+            {
+                throw new InvalidOperationException("There is no answer.");
+
+            }
+        }
+        public async Task ModifyAnswerDownVotes(int points, int ansID)
+        {
+            try
+            {
+                var oldAnswer = await _context.Answers.Where(x => x.Id == ansID).FirstAsync(); ;
+                oldAnswer.DownVote = points;
+
+                _context.Entry(oldAnswer).CurrentValues.SetValues(oldAnswer);
+                await _context.SaveChangesAsync();
+
+            }
+            catch
+            {
+                throw new InvalidOperationException("There is no answer.");
+
+            }
+        }
+
+        public async Task<List<string>> GetPhoneListForProfessionalExpertise(string category)
+        {
+          var x  = await _context.Professionals.Include(x => x.User).ToListAsync();
+            var z = x.Where(x => x.Expertise == category);
+            var y = z.Select(x => x.User.Phone).ToList();
+
+            return y;
+        }
+
+        public async Task<string> GetPhoneOfAMember(string username)
+        {
+            var x = await _context.Members.Include(x => x.User).ToListAsync();
+
+            var z = x.Where(x => x.User.Username == username);
+            var y = z.Select(x => x.User.Phone).FirstOrDefault();
+
+            return y;
+        }
+
+        public async Task<string> GetAuthorOfQuestion(int qid)
+        {
+            var x = await _context.Questions.Include(x => x.Users).ToListAsync();
+            var z = x.Where(x => x.Id == qid);
+            var y = z.Select(x => x.Users.Phone).FirstOrDefault();
+            return y;
+
+        }
 
 
         #endregion

@@ -1,14 +1,17 @@
 ﻿using HelpByPros.Api.Model;
 using HelpByPros.BusinessLogic;
 using HelpByPros.BusinessLogic.IRepo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace HelpByPros.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
@@ -51,6 +54,7 @@ namespace HelpByPros.Api.Controllers
                 model.Username = prof.Username;
                 model.Credential = prof.Credential;
                 model.Category = prof.Category;
+                model.Email = prof.Email;
             }
             catch
             {
@@ -60,6 +64,8 @@ namespace HelpByPros.Api.Controllers
                 model.LastName = member.LastName;
                 model.Phone = member.Phone;        
                 model.Username = member.Username;
+                model.Email = member.Email;
+
             }
             return model;
         }
@@ -98,11 +104,43 @@ namespace HelpByPros.Api.Controllers
 
 
                 }
-            }catch{
+            }catch(Exception ex){
                 Response.StatusCode = 400;
+                throw new InvalidOperationException("ex:" + ex);
             }
            
+        }
 
+        [AllowAnonymous]
+        [HttpPut("UpVote/{ansID}/{ansPoint}", Name = "UpVote")]
+        public async Task UpVoteAnswer(int ansID, int ansPoint)
+        {
+            try
+            {
+                await _userRepo.ModifyAnswerUpVotes(ansPoint,ansID );
+                Response.StatusCode = 202;
+
+            }
+            catch
+            {
+                Response.StatusCode = 400;
+            }
+
+        }
+        [AllowAnonymous]
+        [HttpPut("DownVote/{ansID}/{ansPoint}", Name = "DownVote")]
+        public async Task DownVoteAnswer(int ansID, int ansPoint)
+        {
+            try
+            {
+                await _userRepo.ModifyAnswerDownVotes(ansPoint, ansID);
+                Response.StatusCode = 202;
+
+            }
+            catch
+            {
+                Response.StatusCode = 400;
+            }
 
         }
 

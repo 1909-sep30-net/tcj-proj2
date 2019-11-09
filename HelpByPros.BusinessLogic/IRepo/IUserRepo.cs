@@ -113,6 +113,14 @@ namespace HelpByPros.BusinessLogic.IRepo
 
         Task ModifyProfessionalInfoAsync(Professional user);
         Task ModifyMemberInfoAsync(Member user);
+        Task AddPoints(string username, int Points);
+        Task ModifyAnswerUpVotes( int Points, int ansID);
+        Task ModifyAnswerDownVotes(int points, int ansID);
+        Task<List<string>> GetPhoneListForProfessionalExpertise(string category);
+        Task<string> GetPhoneOfAMember(string username);
+        Task<string> GetAuthorOfQuestion(int qid);
+
+
 
         #endregion
 

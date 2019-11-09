@@ -69,21 +69,18 @@ namespace HelpByPros.DataAccess
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
-        /// 
-        //        public static Professionals MapProfessonal(Professional p, Professionals y= null)
-
         public static Members MapMember(Member m, Members y=null)
         {
             var accInfo = new AccountInfo();
             accInfo.PointAvailable = m.PointAvailable;
             var x = new Members
             {
-                User = MapUser(m)
+                User = MapUser(m),
 
+                
 
             };
-
-
+            x.User.Phone = m.Phone;
             if (y == null)
             {
                 accInfo.PointAvailable = m.PointAvailable;
