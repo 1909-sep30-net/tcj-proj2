@@ -12,7 +12,7 @@ namespace HelpByPros.Test
         [Fact]
         public void Category_StoresCorrectly()
         {
-            Category category = new Category();
+            string category = "Math";
 
             _question.Category = category.ToString();
 

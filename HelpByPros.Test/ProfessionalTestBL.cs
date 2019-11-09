@@ -62,6 +62,7 @@ namespace HelpByPros.Test
 
         }
 
+
         [Fact]
         public void Title_StoresCorrectly()
         {
@@ -71,5 +72,6 @@ namespace HelpByPros.Test
 
             Assert.Equal(title, (Category)Enum.Parse(typeof(Category), _professional.Category, true));
         }
+
     }
 }

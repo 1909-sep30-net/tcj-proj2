@@ -76,8 +76,8 @@ namespace HelpByPros.DataAccess
             var x = new Members
             {
                 User = MapUser(m)
-                
-                
+
+
             };
             x.AccInfo = accInfo;
 
@@ -104,9 +104,9 @@ namespace HelpByPros.DataAccess
                 Profile_Pic = p.User.Profile_Pic,
                 PointAvailable = p.AccInfo.PointAvailable,
                 Category = p.Expertise
-         
 
-        };
+
+            };
 
         }
         /// <summary>
