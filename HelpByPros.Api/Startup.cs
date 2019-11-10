@@ -34,9 +34,11 @@ namespace PH
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("https://helpbypros.azurewebsites.net/"
-
-                                        ).AllowCredentials().AllowAnyHeader().AllowAnyMethod() ;
+                    // In future, put actual deployed website here
+                    builder.WithOrigins("http://localhost:4200")
+                    .AllowCredentials()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod() ;
                 });
             });
 
