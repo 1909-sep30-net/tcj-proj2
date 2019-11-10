@@ -1,19 +1,27 @@
 ﻿using HelpByPros.BusinessLogic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace HelpByPros.Api.Model
 {
     public class RegisterModel
     {
-        
+        [Required]
+        [Display(Name = "Email Address")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Must Enter Correct Email Address.")]
         public string Email { get; set; }
+        [Required(ErrorMessage = "First Name is Required.")]
+        [Display(Name = "First Name")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "The Input Must be Letters")]
         public string FirstName { get; set; }
+        [Required(ErrorMessage = "Last Name is Required.")]
+        [Display(Name = "Last Name")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "The Input Must be Letters")]
         public string LastName { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        [Display(Name = "Phone Number")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Provided Phone Number not Valid")]
         public string Phone { get; set; }
         public bool IsProfessional { get; set; }
         public string Category { get; set; }

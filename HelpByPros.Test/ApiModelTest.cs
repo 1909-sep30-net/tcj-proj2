@@ -9,22 +9,8 @@ namespace HelpByPros.Test
    public class ApiModelTest
     {
         [Fact]
-        public void UserModelShouldMapTtoUser()
-        {/*
-            public string Email { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Username { get; set; }
-            public string Password { get; set; }
-            public string Phone { get; set; }
-            public bool IsProfessional { get; set; }
-            public string Category { get; set; }
-            public int YearsOfExp { get; set; }
-            public string Credential { get; set; }
-            public string Summary { get; set; }*/
-
-
-
+        public void UserModelShouldMapTtoProUser()
+        {
             //ARRANGE 
             var prof = new Professional();
             prof.FirstName = "nan";
@@ -57,6 +43,38 @@ namespace HelpByPros.Test
             Assert.Equal(prof.Credential, model.RegisterProfessional().Credential);
             Assert.Equal(prof.Phone, model.RegisterProfessional().Phone);
 
+
+
+
+        }
+
+
+        [Fact]
+        public void UserModelShouldMapTtoMemberUser()
+        {
+            //ARRANGE 
+            var member = new Member();
+            member.FirstName = "nan";
+            member.Email = "sca@gmail.com";
+            member.Username = "username";
+            member.Phone = "919234922";
+            member.LastName = "lastname";
+
+
+            //Act
+            var model = new RegisterModel();
+            model.IsProfessional = true;
+            model.FirstName = member.FirstName;
+            model.LastName = member.LastName;
+            model.Phone = member.Phone;
+            model.Username = member.Username;
+            model.Email = member.Email;
+
+            Assert.Equal(member.Email, model.RegisterMember().Email);
+            Assert.Equal(member.FirstName, model.RegisterMember().FirstName);
+            Assert.Equal(member.Username, model.RegisterMember().Username);
+            Assert.Equal(member.Phone, model.RegisterMember().Phone);
+            Assert.False(model.IsProfessional = false);
 
 
 
