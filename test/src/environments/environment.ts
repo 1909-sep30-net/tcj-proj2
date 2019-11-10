@@ -6,6 +6,8 @@ export const environment = {
     // fridgeApiBaseUrl: 'https://1909nickproject2api.azurewebsites.net',
 
   HelpBYProsApiBaseUrl: 'https://localhost:44328',
+
+  Category: 'https://localhost:44328/Category',
   production: false
 };
 
