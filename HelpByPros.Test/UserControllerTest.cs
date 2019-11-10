@@ -72,7 +72,7 @@ namespace HelpByPros.Test
         }
 
         [Fact]
-        public async Task GetShouldReturnAModel()
+        public async Task GetShouldReturnAMemberModel()
         {
 
 
@@ -94,7 +94,35 @@ namespace HelpByPros.Test
             Assert.IsType<RegisterModel>( model);
 
         }
+        [Fact]
+        public async Task GetShouldReturnAProfessonalModel()
+        {
 
+
+            var mockRepo = new Mock<IUserRepo>();
+            mockRepo.Setup(r => r.GetAProfessionalAsync(It.IsAny<string>())).Returns(Task.FromResult(new Professional
+            {
+
+                FirstName = "FirstName",
+                LastName = "LastName",
+                Phone = "Phone",
+                Username = "Username",
+                Email = "you@yahoo.com",
+                Summary = "prof.Summary",
+                YearsOfExp = 4,
+                Credential = "prof.Credential",
+                Category = "Math"
+
+
+
+        }));
+            Mock<ILogger<UserController>> logger = new Mock<ILogger<UserController>>();
+            var controller = new UserController(logger.Object, mockRepo.Object, sentMessage.Object);
+
+            var model = Assert.IsType<RegisterModel>(await controller.Get("Username"));
+            Assert.IsType<RegisterModel>(model);
+
+        }
 
 
     }

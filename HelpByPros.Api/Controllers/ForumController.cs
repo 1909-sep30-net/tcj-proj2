@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace HelpByPros.Api.Controllers
 {
@@ -46,12 +47,9 @@ namespace HelpByPros.Api.Controllers
             {
                 forumModel.Question = await _forumRepo.GetQuestionAsync(Qid);
                 forumModel.Question.Author = null;
-                forumModel.Answers = (List<Answer>)await _forumRepo.GetAnswerListAsync(Qid, 0, 100);
+                forumModel.Answers = await _forumRepo.GetAnswerListAsync(Qid, 0, 100);
                 foreach(Answer ans in forumModel.Answers)
-                ans.Author = null;
-
-                //Response.StatusCode = 200;
-
+                    ans.Author = null;
                 return forumModel;
             }
             catch
@@ -72,7 +70,7 @@ namespace HelpByPros.Api.Controllers
         ///         [HttpGet("category/{category}", Name = "GetOneCatgoryList")]
 
         [HttpPost("AddQuestion", Name = "addquestion")]
-        public async Task AddQuestion([FromBody] QuestionModel q)
+        public async Task<ActionResult> AddQuestion([FromBody] QuestionModel q)
         {
             Question x = new Question();
             x.Category = q.Category;
@@ -82,25 +80,25 @@ namespace HelpByPros.Api.Controllers
             x.UserQuestion = q.UserQuestion;
             x.Author = await _userRepo.GetAUserAsync(q.Username);
             x.Id = 0;
-            Response.StatusCode = 201;
             try
             {
                 await _forumRepo.AddQuestionAsync(x);
                 
                 
                 _messageSender.SentMessageThruPhoneCreate("Someone Posted a Question in your expertise!",await _userRepo.GetPhoneListForProfessionalExpertise(q.Category));
+                return StatusCode(StatusCodes.Status201Created);
 
             }
             catch
             {
-                Response.StatusCode = 400;
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
-            
+
 
         }
 
         [HttpPost("AddAnswer", Name ="addanswer")]
-        public async Task AddAnswer([FromBody]AnswerModel a)
+        public async Task<ActionResult> AddAnswer([FromBody]AnswerModel a)
         {
             Answer x = new Answer();
             x.AnsQuestionID = a.QuestionID;
@@ -112,24 +110,25 @@ namespace HelpByPros.Api.Controllers
                 x.UpVote = a.Upvote;
                 x.DownVote = a.DownVote;
                 x.Source = a.Source;
-                Response.StatusCode = 201;         
                 await _forumRepo.AddAnswerAsync(x);
                 List<string> y = new List<string>();
                 y.Add(await _userRepo.GetAuthorOfQuestion(a.QuestionID));
                 _messageSender.SentMessageThruPhoneCreate("Someone Answered Your Question!",y );
+                return StatusCode(StatusCodes.Status201Created);
+
 
             }
             catch
             {
-                Response.StatusCode = 400;
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
-           
+
 
         }
         //        [HttpPost("AddAnswer", Name ="addanswer")]
 
         [HttpPut("EditQuestion", Name = "EditQuestion")]
-        public async Task EditQuestion([FromBody] QuestionModel q)
+        public async Task<ActionResult> EditQuestion([FromBody] QuestionModel q)
         {
            Question x = new Question(); 
             x.Category = q.Category;
@@ -139,19 +138,19 @@ namespace HelpByPros.Api.Controllers
             x.UserQuestion = q.UserQuestion;
             x.Author = await _userRepo.GetAUserAsync(q.Username);
             x.Id = q.QuestionID;
-            Response.StatusCode = 202;
             try
             {
                 await _userRepo.ModifyQuestionAsync(x);
+                return StatusCode(StatusCodes.Status202Accepted);
             }
             catch
             {
-                Response.StatusCode = 400;
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
         }
 
         [HttpPut("EditAnswer", Name = "EditAnswer")]
-        public async Task EditAnswer([FromBody] AnswerModel a)
+        public async Task<ActionResult> EditAnswer([FromBody] AnswerModel a)
         {
             Answer x = new Answer();
             x.AnsQuestionID = a.QuestionID;
@@ -164,42 +163,43 @@ namespace HelpByPros.Api.Controllers
                 x.DownVote = a.DownVote;
                 x.Source = a.Source;                
                 await _userRepo.ModifyAnswerAsync(x);
-                Response.StatusCode = 202;
+                return StatusCode(StatusCodes.Status202Accepted);
 
             }
             catch
             {
-                Response.StatusCode = 400;
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
         }
 
         [HttpDelete("DeleteAnswer/{answerID}", Name = "DeleteAnswer")]
-        public async Task DeleteAnswer( int answerID)
+        public async Task<ActionResult> DeleteAnswer( int answerID)
         {
             try { 
             
                 await _userRepo.DeleteAAnswerAsync(answerID);
-                Response.StatusCode = 204;
+                return StatusCode(StatusCodes.Status204NoContent);
 
             }
             catch
             {
-                Response.StatusCode = 400;
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
         }
         [HttpDelete("DeleteQuestion/{QuestionID}", Name = "DeleteQuestion")]
-        public async Task DeleteQuestion(int questionID)
+        public async Task<ActionResult> DeleteQuestion(int questionID)
         {
             try
             {
 
                 await _userRepo.DeleteQuestionAsync(questionID);
-                Response.StatusCode = 204;
+                return StatusCode(StatusCodes.Status204NoContent);
+
 
             }
             catch
             {
-                Response.StatusCode = 400;
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
         }
         //test
