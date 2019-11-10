@@ -75,19 +75,19 @@ steps:
 - task: SonarCloudPublish@1
   displayName: Publish SonarCloud quality gate result
 
-#- task: DotNetCoreCLI@2
- # displayName: dotnet publish + zip
- # inputs:
- #   command: 'publish'
- #   arguments: --configuration $(buildConfiguration)
- #   publishWebProjects: true
- #   zipAfterPublish: true
+- task: DotNetCoreCLI@2
+  displayName: dotnet publish + zip
+  inputs:
+    command: 'publish'
+    arguments: --configuration $(buildConfiguration)
+    publishWebProjects: true
+    zipAfterPublish: true
 
-#- task: AzureRmWebAppDeployment@4
-  #displayName: App Service deploy
-  #inputs:
-  #  ConnectionType: 'AzureRM'
-  #  azureSubscription: 'Free Trial(9b456fa1-308e-4dba-bc90-6a89c7f8efcf)'
-  #  appType: 'webApp'
-  #  WebAppName: 
-  #  packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+- task: AzureRmWebAppDeployment@4
+  displayName: App Service deploy
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pay-As-You-Go(f28d4954-abb0-42d0-bf3d-f3ac501fe8a3)'
+    appType: 'webApp'
+    WebAppName: 'HelpByPros'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
