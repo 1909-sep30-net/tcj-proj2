@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Linq;
 
 namespace HelpByPros.Api.Controllers
 {
@@ -207,6 +209,16 @@ namespace HelpByPros.Api.Controllers
             return new QuestionModel();
         }
 
+        [HttpGet("Category")]
+        public List<string> GetCategory()
+        {
+            List<string> ListOfCategory = new List<string>();
+            foreach (var x in Enum.GetValues(typeof(Category)).OfType<Category>().ToArray())
+            {
+                ListOfCategory.Add(x.ToString());
+            }
+            return ListOfCategory;
+        }
 
 
 
