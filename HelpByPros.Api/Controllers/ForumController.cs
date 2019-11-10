@@ -29,10 +29,12 @@ namespace HelpByPros.Api.Controllers
         /// <param name="forumRepo"></param>
         public ForumController(ILogger<ForumController> logger, IUserRepo userRepo, ISentMessage sentMessage, IForumRepo forumRepo)
         {
-            _logger = logger;
-            _userRepo = userRepo;
-            _forumRepo = forumRepo;
-            _messageSender = sentMessage;
+            _forumRepo = forumRepo ?? throw new ArgumentNullException(nameof(sentMessage));
+
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _userRepo = userRepo ?? throw new ArgumentNullException(nameof(userRepo));
+            _messageSender = sentMessage ?? throw new ArgumentNullException(nameof(sentMessage));
+
         }
 
 

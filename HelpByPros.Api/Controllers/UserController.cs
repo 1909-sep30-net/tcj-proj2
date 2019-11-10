@@ -2,6 +2,7 @@
 using HelpByPros.BusinessLogic;
 using HelpByPros.BusinessLogic.IRepo;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,9 +21,9 @@ namespace HelpByPros.Api.Controllers
 
         public UserController(ILogger<UserController> logger, IUserRepo userRepo, ISentMessage sentMessage)
         {
-            _logger = logger;
-            _userRepo = userRepo;
-            _messageSender = sentMessage;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _userRepo = userRepo ?? throw new ArgumentNullException(nameof(userRepo));
+            _messageSender = sentMessage ?? throw new ArgumentNullException(nameof(sentMessage));
 
         }
         [HttpGet("DisplayUserModel",Name = "DisplayingUserModel")]
@@ -87,59 +88,60 @@ namespace HelpByPros.Api.Controllers
         }
 
         [HttpPut("EditUser", Name = "EditUser")]
-        public async Task EditUsers([FromBody] RegisterModel model)
+        public async Task<ActionResult> EditUsers([FromBody] RegisterModel model)
         {
             try
             {
                 if (model.IsProfessional)
                 {
                     await _userRepo.ModifyProfessionalInfoAsync(model.RegisterProfessional());
-                    Response.StatusCode = 202;
-
+                    return StatusCode(StatusCodes.Status202Accepted);
                 }
                 else
                 {
                     await _userRepo.ModifyMemberInfoAsync(model.RegisterMember());
-                    Response.StatusCode = 202;
-
+                    return StatusCode(StatusCodes.Status202Accepted);
 
                 }
-            }catch(Exception ex){
-                Response.StatusCode = 400;
-                throw new InvalidOperationException("ex:" + ex);
+            }catch{
+                
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
            
         }
 
         [AllowAnonymous]
         [HttpPut("UpVote/{ansID}/{ansPoint}", Name = "UpVote")]
-        public async Task UpVoteAnswer(int ansID, int ansPoint)
+        public async Task<ActionResult> UpVoteAnswer(int ansID, int ansPoint)
         {
             try
             {
                 await _userRepo.ModifyAnswerUpVotes(ansPoint,ansID );
-                Response.StatusCode = 202;
+                return StatusCode(StatusCodes.Status202Accepted);
+
 
             }
             catch
             {
                 Response.StatusCode = 400;
+                return StatusCode(StatusCodes.Status400BadRequest);
+
             }
 
         }
         [AllowAnonymous]
         [HttpPut("DownVote/{ansID}/{ansPoint}", Name = "DownVote")]
-        public async Task DownVoteAnswer(int ansID, int ansPoint)
+        public async Task<ActionResult> DownVoteAnswer(int ansID, int ansPoint)
         {
             try
             {
                 await _userRepo.ModifyAnswerDownVotes(ansPoint, ansID);
-                Response.StatusCode = 202;
+                return StatusCode(StatusCodes.Status202Accepted);
 
             }
             catch
             {
-                Response.StatusCode = 400;
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
 
         }
