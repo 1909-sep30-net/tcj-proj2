@@ -2,6 +2,7 @@
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace HelpByPros.Api.Model
 {
@@ -37,8 +38,9 @@ namespace HelpByPros.Api.Model
                 }
                 catch
                 {
-                    
+                    throw new NullReferenceException("There is no phone number or in incorrect format");
                 }
+               
             }
 
 
