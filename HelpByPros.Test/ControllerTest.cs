@@ -71,5 +71,29 @@ namespace HelpByPros.Test
 
         }
 
+        [Fact]
+        public async Task GetShouldReturnAModel()
+        {
+
+
+            var mockRepo = new Mock<IUserRepo>();
+            mockRepo.Setup(r => r.GetAMemberAsync(It.IsAny<string>())).Returns( Task.FromResult(new Member {
+
+            FirstName = "FirstName",
+            LastName = "LastName",
+            Phone = "Phone",
+            Username = "Username",
+            Email= "you@yahoo.com"
+
+
+        } )) ;
+            Mock<ILogger<UserController>> logger = new Mock<ILogger<UserController>>();
+            var controller = new UserController(logger.Object, mockRepo.Object, sentMessage.Object);
+
+            var model = Assert.IsType<RegisterModel>(await controller.Get("Username"));
+            Assert.IsType<RegisterModel>( model);
+
+        }
+
     }
 }
