@@ -152,7 +152,7 @@ namespace HelpByPros.DataAccess.Repo
         /// <summary>
         /// Get the first page for each answer
         /// </summary>
-        async Task<IEnumerable<Answer>> IForumRepo.GetAnswerListAsync(int qID, int start, int qty)
+        public async Task<List<Answer>> GetAnswerListAsync(int qID, int start, int qty)
         {
             //declare the list
             List<Answer> ansList = new List<Answer>();
@@ -165,9 +165,9 @@ namespace HelpByPros.DataAccess.Repo
             //  to get the next set
             //  get that set
 
-            var others = (from ans in _dbContext.Answers
+            var others =await (from ans in _dbContext.Answers
                           where ans.Id == qID
-                          select ans).Skip(start).Take(qty).ToList();
+                          select ans).Skip(start).Take(qty).ToListAsync();
             others = others.OrderBy(x => x.Best).ToList();
 
 

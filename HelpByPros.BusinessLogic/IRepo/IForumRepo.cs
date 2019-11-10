@@ -27,7 +27,7 @@ namespace HelpByPros.BusinessLogic.IRepo
         /// <summary>
         /// Get a list of answers to a given question, and how many to view.
         /// </summary>
-        public Task<IEnumerable<Answer>> GetAnswerListAsync(int qID, int start, int qty);
+        public Task<List<Answer>> GetAnswerListAsync(int qID, int start, int qty);
 
         /// <summary>
         /// Get an additional list of answers for the next page of questions.

@@ -30,7 +30,6 @@ namespace HelpByPros.Api.Controllers
         public ForumController(ILogger<ForumController> logger, IUserRepo userRepo, ISentMessage sentMessage, IForumRepo forumRepo)
         {
             _forumRepo = forumRepo ?? throw new ArgumentNullException(nameof(sentMessage));
-
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userRepo = userRepo ?? throw new ArgumentNullException(nameof(userRepo));
             _messageSender = sentMessage ?? throw new ArgumentNullException(nameof(sentMessage));
@@ -51,7 +50,7 @@ namespace HelpByPros.Api.Controllers
                 foreach(Answer ans in forumModel.Answers)
                 ans.Author = null;
 
-                Response.StatusCode = 200;
+                //Response.StatusCode = 200;
 
                 return forumModel;
             }

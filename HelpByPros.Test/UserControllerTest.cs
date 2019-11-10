@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelpByPros.Test
 {
-    public class ControllerTest
+    public class UserControllerTest
     {
         Mock<IUserRepo> userRepo = new Mock<IUserRepo>();
         Mock<ISentMessage> sentMessage = new Mock<ISentMessage>();
@@ -94,6 +94,8 @@ namespace HelpByPros.Test
             Assert.IsType<RegisterModel>( model);
 
         }
+
+
 
     }
 }
