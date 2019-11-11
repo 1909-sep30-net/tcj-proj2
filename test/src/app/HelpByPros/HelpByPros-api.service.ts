@@ -27,7 +27,7 @@ export class HelpByProsAPISerivce {
         this.getUser(user.nickname).catch((err: HttpErrorResponse) => {
          console.log("getting email")
          console.log(err.status)
-          if (err.status === 404) {
+          if (err.status === 404 || err.status ==0) {
             // if user does not exist, create
             console.log("erro 404")
              this.createUser().catch((err:HttpErrorResponse) => {  console.log(err.status)
