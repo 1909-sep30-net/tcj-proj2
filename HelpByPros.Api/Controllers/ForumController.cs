@@ -211,6 +211,7 @@ namespace HelpByPros.Api.Controllers
         }
 
         [HttpGet("Category")]
+        [AllowAnonymous]
         public List<string> GetCategory()
         {
             List<string> ListOfCategory = new List<string>();

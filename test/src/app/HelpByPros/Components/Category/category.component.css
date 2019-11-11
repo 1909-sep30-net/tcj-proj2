@@ -1,0 +1,15 @@
+mat-sidenav-containr{
+    height:100%
+}
+mat-sidenav, mat-sidenav-content{
+    padding:16px;
+}
+
+mav-sidenav{
+    background-color:lightcoral;
+    width: 200px;
+}
+#hi{
+    background-color:green;
+
+}
