@@ -9,7 +9,18 @@ import { RegisterComponent } from  '../app/HelpByPros/Components/register/regist
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {HomeComponent} from './HelpByPros/Components/Home/home.component'
+import {CategoryComponent} from './HelpByPros/Components/Category/category.component'
+import {MatSidenavModule} from '@angular/material/sidenav'; 
+import {MatToolbarModule} from '@angular/material'; 
+import {MatCheckboxModule} from '@angular/material'; 
+import {MatFormFieldModule} from '@angular/material'; 
+import { MatSliderModule } from '@angular/material/slider';
+import { MatOptionModule } from '@angular/material';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +28,7 @@ import {HomeComponent} from './HelpByPros/Components/Home/home.component'
     NavbarComponent,
     ProfileComponent,
     RegisterComponent,
-    HomeComponent
+    CategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +36,16 @@ import {HomeComponent} from './HelpByPros/Components/Home/home.component'
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatSliderModule,
+    MatOptionModule,
+    LayoutModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
