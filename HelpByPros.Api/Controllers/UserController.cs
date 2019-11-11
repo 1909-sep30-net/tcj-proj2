@@ -73,7 +73,7 @@ namespace HelpByPros.Api.Controllers
         //Post: api/Register
 
         [HttpPost("CreateUser", Name = "CreateUser")]
-        public async Task<ActionResult> CreateUser([Bind("email,username")] RegisterModel model)
+        public async Task<ActionResult> CreateUser([FromBody] RegisterModel model)
         {
             try
             {

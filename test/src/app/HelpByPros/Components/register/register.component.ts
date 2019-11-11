@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import CreateUser from 'src/app/HelpByPros/Models/UserCreate'
+import CreateUser from 'src/app/HelpByPros/Models/user-create'
 
 @Component({
   selector: 'app-register',
