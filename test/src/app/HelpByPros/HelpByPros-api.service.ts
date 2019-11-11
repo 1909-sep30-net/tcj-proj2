@@ -54,12 +54,12 @@ export class HelpByProsAPISerivce {
 
   }
   getUser(username: string): Promise<User> {
-    const url = `${environment.HelpBYProsApiBaseUrl}/users/${username}`;
+    const url = `${environment.HelpBYProsApiBaseUrl}/user/${username}`;
     return this.httpClient.get<User>(url).toPromise();
   }
 
   createUser(): Promise<User> {
-    const url = `${environment.HelpBYProsApiBaseUrl}/users/CreateUser`;
+    const url = `${environment.HelpBYProsApiBaseUrl}/user/CreateUser`;
     return this.httpClient.post<User>(url, this.user).toPromise();
   }
 
