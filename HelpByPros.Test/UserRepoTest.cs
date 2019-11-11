@@ -83,11 +83,6 @@ namespace HelpByPros.Test
                 Assert.Equal("Duplicate info in unique Column", ex.Message);
 
             }
-            
-
-
-            // assert
-
         }
 
         /// <summary>
