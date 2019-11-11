@@ -9,7 +9,10 @@ import CreateUser from 'src/app/HelpByPros/Models/UserCreate'
 export class RegisterComponent implements OnInit {
   user: CreateUser = null;
 
-
+  getCategoryList(): void {
+  
+   // this.helpbypros.getCategoryList().then(items => this.items= items);
+   }
   constructor() { }
 
   ngOnInit() {
