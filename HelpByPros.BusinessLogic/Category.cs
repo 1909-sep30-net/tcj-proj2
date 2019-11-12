@@ -7,9 +7,9 @@ namespace HelpByPros.BusinessLogic
     {
         Math=1,
         ComputerScience,
-        Construction,
-        English ,
-        Doctor,
+        Industrial,
+        English,
+        Medical,
         Agriculture,
     }
 }
