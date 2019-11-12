@@ -18,12 +18,16 @@ export class NavbarComponent implements OnInit {
     ) { 
 
 
+
+  ngOnInit() 
+  {
+    
+
   }
 
   get user(){
     return this.HelpByProsApi.userC;
   }
-  ngOnInit() {
-  }
+
 
 }
