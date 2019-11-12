@@ -9,21 +9,25 @@ import { HelpByProsAPISerivce } from '../HelpByPros/HelpByPros-api.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
 export class NavbarComponent implements OnInit {
   public items: UserCreate = null;
 
-  constructor(
-    public auth: AuthService,
-    public HelpByProsApi: HelpByProsAPISerivce
-    ) { 
-
+  constructor(   public auth: AuthService,  public HelpByProsApi: HelpByProsAPISerivce ) 
+  { 
 
   }
 
-  get user(){
+  ngOnInit() 
+  {
+    
+
+  }
+
+  get user()
+  {
     return this.HelpByProsApi.userC;
   }
-  ngOnInit() {
-  }
+
 
 }

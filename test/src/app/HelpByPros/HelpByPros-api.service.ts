@@ -45,13 +45,21 @@ export class HelpByProsAPISerivce {
 
   }
 
-  getCategoryList(): Promise<CategoryItems[]>  {
+  //Get a list of categories
+  getCategoryList(): Promise<CategoryItems[]>  
+  {
+  
     const url = `${environment.HelpBYProsApiBaseUrl}/forum/category`;
     return this.httpClient.get<CategoryItems[]>(url).toPromise();
+  
   }
+
+
+  
 
   getACategoryQuestioList(category:string): Promise<QuestionItems[]>{
     const url = `${environment.HelpBYProsApiBaseUrl}/home/category/${category}`;
+
     return this.httpClient.get<QuestionItems[]>(url).toPromise();
 
   }
