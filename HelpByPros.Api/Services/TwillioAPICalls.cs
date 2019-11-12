@@ -24,7 +24,13 @@ namespace HelpByPros.Api.Model
 
         private static bool IsPhoneNumber(string number)
         {
-            return Regex.Match(number, @"^(\+[0-9]{9})$").Success;
+          
+                if (string.IsNullOrEmpty(number))
+                    return false;
+                var r = new Regex(@"^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$");
+                return r.IsMatch(number);
+
+          
         }
         public IConfiguration Configuration { get; }
 
