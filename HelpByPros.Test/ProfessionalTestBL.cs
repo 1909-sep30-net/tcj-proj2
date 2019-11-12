@@ -66,7 +66,7 @@ namespace HelpByPros.Test
         [Fact]
         public void Title_StoresCorrectly()
         {
-            Category title = Category.Doctor;
+            Category title = Category.Medical;
 
             _professional.Category = title.ToString();
 
