@@ -1,0 +1,63 @@
+<pre *ngIf="auth.userProfile$ | async as profile">
+      
+       
+<div class="container" [hidden]= "submitted">
+        <h1>Question Form</h1>
+        <form (ngSubmit)="onSubmit()" #Postquestion="ngForm">
+
+
+          <div class="form-group">
+            <label for="UserQuestion">Question Header</label>
+            <input type="text" class="form-control" id="UserQuestion" 
+            required
+            [(ngModel)]="model.UserQuestion" 
+            name ="UserQuestion" >
+          </div>
+          <div class="form-group">
+                <label for="Category">Category</label>
+                <select class="form-control" id="Category" required
+                
+                [(ngModel)]="model.Category" name="Category">
+
+               
+                  <option *ngFor="let item of items" [value]="item"></option>
+                </select>
+              </div>
+    
+          <div class="form-group">
+            <label for="QuestionBody">Summary</label>
+            <input type="text" class="form-control" id="QuestionBody"
+            [(ngModel)]="model.QuestionBody" name="QuestionBody">
+
+          </div>
+    
+          <button type="submit" class="btn btn-success"
+          [disabled] =!Postquestion.form.valid
+          
+          >Submit</button>
+
+          
+    
+        </form>
+    </div>
+
+    <div  *ngIf="!submitted" >
+            <h2>You submitted the following:</h2>
+            <div class="row">
+              <div class="col-xs-3">header</div>
+              <div class="col-xs-9">{{ model.UserQuestion }}</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-3">body</div>
+              <div class="col-xs-9">{{ model.QuestionBody }}</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-3">category</div>
+              <div class="col-xs-9">{{ model.Category }}</div>
+              <div class="col-xs-9">{{submitted }}</div>
+            </div>
+            <br>
+            <button class="btn btn-primary" (click)="submitted=false">Go Back</button>
+          </div> 
+
+</pre>

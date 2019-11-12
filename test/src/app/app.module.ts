@@ -25,6 +25,8 @@ import { MatListModule } from '@angular/material/list';
 import { HomeComponent } from './home/home.component';
 import { QuestionsComponent } from './HelpByPros/Components/Category/questions/questions.component';
 import { StatedataService } from './statedata.service';
+import { PostquestionComponent } from './HelpByPros/Components/postquestion/postquestion.component';
+import { FormsModule }   from '@angular/forms';
 
 
 @NgModule({
@@ -36,6 +38,7 @@ import { StatedataService } from './statedata.service';
     CategoryComponent,
     HomeComponent,
     QuestionsComponent,
+    PostquestionComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,9 +63,12 @@ import { StatedataService } from './statedata.service';
     MatButtonModule,
     MatIconModule,
     MatListModule,
+    FormsModule,
   ],
+
   //subscribe to different services
-  providers: [StatedataService],
+  providers: [CategoryComponent], [StatedataService]
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -59,15 +59,18 @@ namespace HelpByPros.Api.Controllers
             }
             catch
             {
-                var member = await _userRepo.GetAMemberAsync(username);
-                model.IsProfessional = false ;
-                model.FirstName = member.FirstName;
-                model.LastName = member.LastName;
-                model.Phone = member.Phone;        
-                model.Username = member.Username;
-                model.Email = member.Email;
-
+            
+                    var member = await _userRepo.GetAMemberAsync(username);
+                    model.IsProfessional = false;
+                    model.FirstName = member.FirstName;
+                    model.LastName = member.LastName;
+                    model.Phone = member.Phone;
+                    model.Username = member.Username;
+                    model.Email = member.Email;
+            
+    
             }
+         
             return model;
         }
         //Post: api/Register
@@ -75,15 +78,17 @@ namespace HelpByPros.Api.Controllers
         [HttpPost("CreateUser", Name = "CreateUser")]
         public async Task<ActionResult> CreateUser([FromBody] RegisterModel model)
         {
-            if (model.IsProfessional) {
-                await _userRepo.AddProfessionalAsync(model.RegisterProfessional());
-                    }
-            else
-            {
-                await _userRepo.AddMemberAsync(model.RegisterMember());
+        
+                if (model.IsProfessional)
+                {   
+                    await _userRepo.AddProfessionalAsync(model.RegisterProfessional());
+                }
+                else
+                {
+                    await _userRepo.AddMemberAsync(model.RegisterMember());
 
-            }
-            return CreatedAtRoute("DisplayUserModel", model);
+                }
+            return Ok();        
 
         }
 

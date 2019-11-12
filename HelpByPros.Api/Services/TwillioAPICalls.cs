@@ -3,6 +3,7 @@ using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Text.RegularExpressions;
 
 namespace HelpByPros.Api.Model
 {
@@ -20,6 +21,11 @@ namespace HelpByPros.Api.Model
         {
             Configuration = configuration;
         }
+
+        private static bool IsPhoneNumber(string number)
+        {
+            return Regex.Match(number, @"^(\+[0-9]{9})$").Success;
+        }
         public IConfiguration Configuration { get; }
 
         public void SentMessageThruPhoneCreate(string x, IEnumerable<string> phoneList )
@@ -27,23 +33,23 @@ namespace HelpByPros.Api.Model
 
             foreach (string phone in phoneList)
             {
-                try
-                {
-                    TwilioClient.Init(Configuration.GetConnectionString("AccountSid"), Configuration.GetConnectionString("AuthToken"));
-                    var message = MessageResource.Create(
-                      body: x,
-                      from: new Twilio.Types.PhoneNumber("+12565768348"),
-                      to: new Twilio.Types.PhoneNumber(phone)
-                    );
-                }
-                catch
-                {
-                    throw new NullReferenceException("There is no phone number or in incorrect format");
-                }
-               
+                
+                    if (IsPhoneNumber(phone))
+                    {
+                        TwilioClient.Init(Configuration.GetConnectionString("AccountSid"), Configuration.GetConnectionString("AuthToken"));
+                        var message = MessageResource.Create(
+                          body: x,
+                          from: new Twilio.Types.PhoneNumber("+12565768348"),
+                          to: new Twilio.Types.PhoneNumber(phone)
+                        );
+                    }
+                    
+             
             }
 
 
+
         }
+
     }
 }

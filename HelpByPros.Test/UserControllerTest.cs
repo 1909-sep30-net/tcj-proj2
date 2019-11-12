@@ -25,8 +25,8 @@ namespace HelpByPros.Test
             Mock<ILogger<UserController>> logger = new Mock<ILogger<UserController>>();
             var controller = new UserController(logger.Object,mockRepo.Object,sentMessage.Object);
 
-            var statusCode = Assert.IsType<CreatedAtRouteResult>(await controller.CreateUser(new RegisterModel() { }));
-            Assert.Equal(201, statusCode.StatusCode);
+            var statusCode = Assert.IsType<OkResult>(await controller.CreateUser(new RegisterModel() { }));
+            Assert.Equal(200, statusCode.StatusCode);
         }
 
         [Fact]
