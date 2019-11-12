@@ -31,10 +31,10 @@ export class PostquestionComponent implements OnInit {
   
     this.getCategoryList();
     if( this.items!=null){
-    this.model = new QuestionItems(this.items[0].name,"Type Your Question", "Additional Informatino", "member1",0);
+    this.model = new QuestionItems(this.items[0].name,"Type Your Question", "Additional Informatino", "member2",0);
     console.log(this.items[0].name)
     }else{
-      this.model = new QuestionItems("Math","Type Your Question", "Additional Informatino", "member1",0);
+      this.model = new QuestionItems("Math","Type Your Question", "Additional Informatino", "member2",0);
     }
     this.submitted=false;
 
@@ -42,7 +42,7 @@ export class PostquestionComponent implements OnInit {
 
   ngOnInit() {
     if( this.items!=null){
-      this.model = new QuestionItems(this.items[0].name,"Type Your Question", "Additional Informatino", "member1",0);
+      this.model = new QuestionItems(this.items[0].name,"Type Your Question", "Additional Informatino", "member2",0);
     }
 
   }

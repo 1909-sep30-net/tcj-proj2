@@ -38,7 +38,8 @@ namespace PH
                     builder.WithOrigins("http://localhost:4200")
                     .AllowCredentials()
                     .AllowAnyHeader()
-                    .AllowAnyMethod() ;
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();
                 });
             });
 
