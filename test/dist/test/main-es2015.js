@@ -45,7 +45,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\r\n<h1> {{ category }} </h1>\r\n\r\n<h2 *ngFor=\"let question of questionList\">\r\n      <!-- <code>{{ question | json }}</code> -->\r\n      <p> {{ question.username }} asks </p>\r\n      <h3>{{question.userQuestion }}</h3>\r\n      <ul style=\"list-style-type: none;\"><li>{{ question.questionBody }} </li></ul>\r\n        \r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\r\n<h1> {{ category }} </h1>\r\n\r\n <a routerLink=\"postquestion\" (click)=\"setqCatState( category )\"> <h3> Ask a Question  </h3></a>\r\n\r\n<h2 *ngFor=\"let question of questionList\">\r\n      <!-- <code>{{ question | json }}</code> -->\r\n      <p> {{ question.username }} asks </p>\r\n      <h3>{{question.userQuestion }}</h3>\r\n      <ul style=\"list-style-type: none;\"><li>{{ question.questionBody }} </li></ul>\r\n        \r\n");
 
 /***/ }),
 
@@ -58,7 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<pre *ngIf=\"auth.userProfile$ | async as profile\">\r\n      \r\n       \r\n<div class=\"container\" [hidden]= \"submitted\">\r\n        <h1>Question Form</h1>\r\n        <form (ngSubmit)=\"onSubmit()\" #Postquestion=\"ngForm\">\r\n\r\n\r\n          <div class=\"form-group\">\r\n            <label for=\"UserQuestion\">Question Header</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"UserQuestion\" \r\n            required\r\n            [(ngModel)]=\"model.UserQuestion\" \r\n            name =\"UserQuestion\" >\r\n          </div>\r\n          <div class=\"form-group\">\r\n                <label for=\"Category\">Category</label>\r\n                <select class=\"form-control\" id=\"Category\" required\r\n                \r\n                [(ngModel)]=\"model.Category\" name=\"Category\">\r\n\r\n               \r\n                  <option *ngFor=\"let item of items\" [value]=\"item\"></option>\r\n                </select>\r\n              </div>\r\n    \r\n          <div class=\"form-group\">\r\n            <label for=\"QuestionBody\">Summary</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"QuestionBody\"\r\n            [(ngModel)]=\"model.QuestionBody\" name=\"QuestionBody\">\r\n\r\n          </div>\r\n    \r\n          <button type=\"submit\" class=\"btn btn-success\"\r\n          [disabled] =!Postquestion.form.valid\r\n          \r\n          >Submit</button>\r\n\r\n          \r\n    \r\n        </form>\r\n    </div>\r\n\r\n    <div  *ngIf=\"!submitted\" >\r\n            <h2>You submitted the following:</h2>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-3\">header</div>\r\n              <div class=\"col-xs-9\">{{ model.UserQuestion }}</div>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-3\">body</div>\r\n              <div class=\"col-xs-9\">{{ model.QuestionBody }}</div>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-3\">category</div>\r\n              <div class=\"col-xs-9\">{{ model.Category }}</div>\r\n              <div class=\"col-xs-9\">{{submitted }}</div>\r\n            </div>\r\n            <br>\r\n            <button class=\"btn btn-primary\" (click)=\"submitted=false\">Go Back</button>\r\n          </div> \r\n\r\n</pre>");
+/* harmony default export */ __webpack_exports__["default"] = ("<pre *ngIf=\"auth.userProfile$ | async as profile\">\r\n      \r\n       \r\n<div class=\"container\" [hidden]= \"submitted\">\r\n        <h1>Question Form</h1>\r\n        <form (ngSubmit)=\"onSubmit()\" #Postquestion=\"ngForm\">\r\n\r\n\r\n          <div class=\"form-group\">\r\n            <label for=\"UserQuestion\">Question Header</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"UserQuestion\" \r\n            required\r\n            [(ngModel)]=\"model.UserQuestion\" \r\n            name =\"UserQuestion\" >\r\n          </div>\r\n          <div class=\"form-group\">\r\n                <label for=\"Category\">Category</label>\r\n                <select class=\"form-control\" id=\"Category\" required\r\n                \r\n                [(ngModel)]=\"model.Category\" name=\"Category\">\r\n\r\n               \r\n                  <option *ngFor=\"let item of items\" [value]=\"item\"></option>\r\n                </select>\r\n              </div>\r\n    \r\n          <div class=\"form-group\">\r\n            <label for=\"QuestionBody\">Elaborate on Question</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"QuestionBody\"\r\n            [(ngModel)]=\"model.QuestionBody\" name=\"QuestionBody\">\r\n\r\n          </div>\r\n    \r\n          <button type=\"submit\" class=\"btn btn-success\"\r\n          [disabled] =!Postquestion.form.valid\r\n          \r\n          >Submit</button>\r\n\r\n          \r\n    \r\n        </form>\r\n    </div>\r\n\r\n    <div  *ngIf=\"!submitted\" >\r\n            <h2>You submitted the following:</h2>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-3\">header</div>\r\n              <div class=\"col-xs-9\">{{ model.UserQuestion }}</div>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-3\">body</div>\r\n              <div class=\"col-xs-9\">{{ model.QuestionBody }}</div>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-3\">category</div>\r\n              <div class=\"col-xs-9\">{{ model.Category }}</div>\r\n              <div class=\"col-xs-9\">{{submitted }}</div>\r\n            </div>\r\n            <br>\r\n            <button class=\"btn btn-primary\" (click)=\"submitted=false\">Go Back</button>\r\n          </div> \r\n\r\n</pre>");
 
 /***/ }),
 
@@ -84,7 +84,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<!-- this is the \"index\", it serves as the home-page for the website-->\r\n\r\n<!-- top navbar -->\r\n<app-navbar></app-navbar>\r\n\r\n\r\n<!-- category only displayes if logged in -->\r\n<!-- moved to it's own component-->\r\n<!-- <app-category></app-category> -->\r\n\r\n    <div id= \"category\">    <app-category ></app-category>\r\n    </div>\r\n\r\n    <div id =\"pq\">\r\n            <app-postquestion></app-postquestion>\r\n\r\n    </div>\r\n\r\n\r\n\r\n<!-- containers show up here beneith the navbar-->\r\n<div class=\"container\">\r\n    <router-outlet></router-outlet>\r\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- this is the \"index\", it serves as the home-page for the website-->\r\n\r\n<!-- top navbar -->\r\n<app-navbar></app-navbar>\r\n\r\n\r\n<!-- category only displayes if logged in -->\r\n<!-- moved to it's own component-->\r\n<!-- <app-category></app-category> \r\n\r\n    <div id= \"category\">    <app-category ></app-category>\r\n    </div>\r\n\r\n    <div id =\"pq\">\r\n            <app-postquestion></app-postquestion>\r\n\r\n    </div>\r\n-->\r\n\r\n\r\n<!-- containers show up here beneith the navbar-->\r\n<div class=\"container\">\r\n    <router-outlet></router-outlet>\r\n</div>");
 
 /***/ }),
 
@@ -529,13 +529,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_HelpByPros_Models_question_items__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/HelpByPros/Models/question-items */ "./src/app/HelpByPros/Models/question-items.ts");
 /* harmony import */ var _HelpByPros_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../HelpByPros-api.service */ "./src/app/HelpByPros/HelpByPros-api.service.ts");
 /* harmony import */ var src_app_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/auth.service */ "./src/app/auth.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+
 
 
 
 
 
 let PostquestionComponent = class PostquestionComponent {
-    constructor(helpbypros, auth) {
+    constructor(route, helpbypros, auth) {
+        this.route = route;
         this.helpbypros = helpbypros;
         this.auth = auth;
         this.items = null;
@@ -545,7 +548,7 @@ let PostquestionComponent = class PostquestionComponent {
             console.log(this.items[0].name);
         }
         else {
-            this.model = new src_app_HelpByPros_Models_question_items__WEBPACK_IMPORTED_MODULE_2__["default"]("Math", "Type Your Question", "Additional Informatino", "member2", 0);
+            this.model = new src_app_HelpByPros_Models_question_items__WEBPACK_IMPORTED_MODULE_2__["default"]("ComputerScience", "Do androids dream of electric sheep?", "Or do they lay silent as they sleep?", "fds", 0);
         }
         this.submitted = false;
     }
@@ -563,6 +566,7 @@ let PostquestionComponent = class PostquestionComponent {
     }
 };
 PostquestionComponent.ctorParameters = () => [
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"] },
     { type: _HelpByPros_api_service__WEBPACK_IMPORTED_MODULE_3__["HelpByProsAPISerivce"] },
     { type: src_app_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"] }
 ];
@@ -918,6 +922,7 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 { path: 'profile', component: _profile_profile_component__WEBPACK_IMPORTED_MODULE_8__["ProfileComponent"] },
                 { path: 'categories', component: _HelpByPros_Components_Category_category_component__WEBPACK_IMPORTED_MODULE_12__["CategoryComponent"] },
                 { path: 'categories/questions', component: _HelpByPros_Components_Category_questions_questions_component__WEBPACK_IMPORTED_MODULE_21__["QuestionsComponent"] },
+                { path: 'categories/questions/postquestion', component: _HelpByPros_Components_postquestion_postquestion_component__WEBPACK_IMPORTED_MODULE_23__["PostquestionComponent"] }
             ]),
             _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClientModule"],
