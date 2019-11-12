@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +22,9 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { HomeComponent } from './home/home.component';
+import { QuestionsComponent } from './HelpByPros/Components/Category/questions/questions.component';
+import { StatedataService } from './statedata.service';
 
 
 @NgModule({
@@ -29,9 +34,18 @@ import { MatListModule } from '@angular/material/list';
     ProfileComponent,
     RegisterComponent,
     CategoryComponent,
+    HomeComponent,
+    QuestionsComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    RouterModule.forRoot([   
+      { path: '', component: HomeComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'categories', component: CategoryComponent },
+      { path: 'categories/questions', component: QuestionsComponent},    
+    ]),
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -47,7 +61,8 @@ import { MatListModule } from '@angular/material/list';
     MatIconModule,
     MatListModule,
   ],
-  providers: [],
+  //subscribe to different services
+  providers: [StatedataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

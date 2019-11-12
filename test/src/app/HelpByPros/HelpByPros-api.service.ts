@@ -13,12 +13,20 @@ export class HelpByProsAPISerivce {
 
   constructor(private httpClient: HttpClient) { }
 
-  getCategoryList(): Promise<CategoryItems[]>  {
+  //Get a list of categories
+  getCategoryList(): Promise<CategoryItems[]>  
+  {
+  
     const url = `${environment.HelpBYProsApiBaseUrl}/forum/category`;
     return this.httpClient.get<CategoryItems[]>(url).toPromise();
+  
   }
 
-  getACategoryQuestioList(x:string): Promise<QuestionItems[]>{
+  
+  //For testing only//
+  getACategoryQuestioList(x:string): Promise<QuestionItems[]>
+  {
+  
     const url = `${environment.HelpBYProsApiBaseUrl}/home/category/`+x;
     return this.httpClient.get<QuestionItems[]>(url).toPromise();
 

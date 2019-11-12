@@ -1,8 +1,9 @@
-    <div *ngIf="items.length === 0">
-        Fridge is empty
-      </div>
-    <li *ngFor="let item of items">
-       {{ item }}  
-    </li>
+    
+    <h2 *ngFor="let category of categories">
+      
+      <!-- set the statedata servive's value for current category-->
+      <a routerLink="questions" (click)="setqCatState( category )"> {{ category }}  </a>
+
+    </h2>
 
    

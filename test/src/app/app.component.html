@@ -1,5 +1,13 @@
+<!-- this is the "index", it serves as the home-page for the website-->
+
+<!-- top navbar -->
 <app-navbar></app-navbar>
 
-<app-category></app-category>
+<!-- category only displayes if logged in -->
+<!-- moved to it's own component-->
+<!-- <app-category></app-category> -->
 
-<router-outlet></router-outlet>
+<!-- containers show up here beneith the navbar-->
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
