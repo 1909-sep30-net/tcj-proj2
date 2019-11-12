@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
   }
 
   get user(){
-    return this.HelpByProsApi.user;
+    return this.HelpByProsApi.userC;
   }
   ngOnInit() {
   }

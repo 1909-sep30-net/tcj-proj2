@@ -29,9 +29,9 @@ namespace HelpByPros.DataAccess.Repo
                 _context.Add(e);
                 await _context.SaveChangesAsync();
             }
-            catch
+            catch(DbUpdateException ex)
             {
-                throw new InvalidOperationException("There is already an existed username, phone, or email");
+                throw new InvalidOperationException("There is already an existed username, phone, or email" + ex);
             }
         }
         public async Task AddProfessionalAsync(Professional p)

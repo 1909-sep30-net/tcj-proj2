@@ -16,13 +16,15 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
   providedIn: 'root'
 })
 export class HelpByProsAPISerivce {
-  user:User =null;
+  userC:User =null;
 
   constructor(
     private httpClient: HttpClient,   
     auth: AuthService
   ) { 
-    auth.userProfile$.subscribe(user => {
+    console.log("getting")
+
+    auth.userProfile$.subscribe(user => { 
       if (user) {
         this.getUser(user.nickname).catch((err: HttpErrorResponse) => {
          console.log("getting email")
@@ -30,13 +32,13 @@ export class HelpByProsAPISerivce {
           if (err.status === 404 || err.status ==0) {
             // if user does not exist, create
             console.log("erro 404")
-             this.createUser().catch((err:HttpErrorResponse) => {  console.log(err.status)
-            });
+            return this.createUser()
+            
           } else {
             throw err;
           }
         }).then(apiUser => {
-        //  this.user = apiUser;
+          this.userC= apiUser;
         });
       }
     });
@@ -60,7 +62,7 @@ export class HelpByProsAPISerivce {
 
   createUser(): Promise<User> {
     const url = `${environment.HelpBYProsApiBaseUrl}/user/CreateUser`;
-    return this.httpClient.post<User>(url, this.user).toPromise();
+    return this.httpClient.post<User>(url, this.userC).toPromise();
   }
 
   

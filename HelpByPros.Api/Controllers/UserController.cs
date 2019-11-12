@@ -75,8 +75,7 @@ namespace HelpByPros.Api.Controllers
         [HttpPost("CreateUser", Name = "CreateUser")]
         public async Task<ActionResult> CreateUser([FromBody] RegisterModel model)
         {
-            try
-            {
+        
                 if (model.IsProfessional)
                 {
                     await _userRepo.AddProfessionalAsync(model.RegisterProfessional());
@@ -86,12 +85,7 @@ namespace HelpByPros.Api.Controllers
                     await _userRepo.AddMemberAsync(model.RegisterMember());
 
                 }
-                return CreatedAtRoute("DisplayUserModel", model);
-            }
-            catch
-            {
-                return Conflict();
-            }
+            return Ok();        
 
         }
 

@@ -1,11 +1,15 @@
 import UserCreate from './user-create';
 
 export default interface Users extends UserCreate {
-    Summary:string;
-    yearOfExp:string;
+    FirstName:string;
+    LastName:string;
+    Username:string;
+    Password:string;
+    phone:string;
     IsProfessional:true;
-    epertise: string;
-    first: string ;
-    username: string;
+    Category:string;
+    yearOfExp:string;
+    Credential: string;
+    Summary:string;
   }
   
