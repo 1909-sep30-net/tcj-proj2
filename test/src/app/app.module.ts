@@ -26,7 +26,7 @@ import { HomeComponent } from './home/home.component';
 import { QuestionsComponent } from './HelpByPros/Components/Category/questions/questions.component';
 import { StatedataService } from './statedata.service';
 import { PostquestionComponent } from './HelpByPros/Components/postquestion/postquestion.component';
-import { FormsModule }   from '@angular/forms';
+
 
 
 @NgModule({
@@ -47,7 +47,8 @@ import { FormsModule }   from '@angular/forms';
       { path: '', component: HomeComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'categories', component: CategoryComponent },
-      { path: 'categories/questions', component: QuestionsComponent},    
+      { path: 'categories/questions', component: QuestionsComponent},
+      { path: 'categories/questions/postquestion', component: PostquestionComponent}    
     ]),
     AppRoutingModule,
     HttpClientModule,
@@ -67,7 +68,7 @@ import { FormsModule }   from '@angular/forms';
   ],
 
   //subscribe to different services
-  providers: [CategoryComponent], [StatedataService]
+  providers: [CategoryComponent, StatedataService],
 
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,8 @@
 
 <h1> {{ category }} </h1>
 
+<h3> <a routerLink="postquestion" (click)="setqCatState( category )"> Ask a Question  </h3></a>
+
 <h2 *ngFor="let question of questionList">
       <!-- <code>{{ question | json }}</code> -->
       <p> {{ question.username }} asks </p>
