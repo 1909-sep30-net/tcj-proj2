@@ -20,7 +20,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-
+import { PostquestionComponent } from './HelpByPros/Components/postquestion/postquestion.component';
+import { FormsModule }   from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,8 @@ import { MatListModule } from '@angular/material/list';
     ProfileComponent,
     RegisterComponent,
     CategoryComponent,
+    PostquestionComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -46,8 +49,9 @@ import { MatListModule } from '@angular/material/list';
     MatButtonModule,
     MatIconModule,
     MatListModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [CategoryComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

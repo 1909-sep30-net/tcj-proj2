@@ -1,3 +1,13 @@
 app-category{
     background-color: brown;
 }
+
+#category {
+    float: left;
+    width: 20%;
+    overflow: hidden;
+  }
+  
+  #pq {
+    overflow: hidden;
+  }

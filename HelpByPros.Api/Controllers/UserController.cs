@@ -59,15 +59,18 @@ namespace HelpByPros.Api.Controllers
             }
             catch
             {
-                var member = await _userRepo.GetAMemberAsync(username);
-                model.IsProfessional = false ;
-                model.FirstName = member.FirstName;
-                model.LastName = member.LastName;
-                model.Phone = member.Phone;        
-                model.Username = member.Username;
-                model.Email = member.Email;
-
+            
+                    var member = await _userRepo.GetAMemberAsync(username);
+                    model.IsProfessional = false;
+                    model.FirstName = member.FirstName;
+                    model.LastName = member.LastName;
+                    model.Phone = member.Phone;
+                    model.Username = member.Username;
+                    model.Email = member.Email;
+            
+    
             }
+         
             return model;
         }
         //Post: api/Register
@@ -77,7 +80,7 @@ namespace HelpByPros.Api.Controllers
         {
         
                 if (model.IsProfessional)
-                {
+                {   
                     await _userRepo.AddProfessionalAsync(model.RegisterProfessional());
                 }
                 else

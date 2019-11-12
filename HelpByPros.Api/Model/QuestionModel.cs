@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HelpByPros.Api.Model
 {
-    public class QuestionModel
+   public class QuestionModel
     {
         
         public string Category { get; set; }

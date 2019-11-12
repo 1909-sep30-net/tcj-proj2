@@ -17,7 +17,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class HelpByProsAPISerivce {
   userC:User =null;
-
+  CreateQuestion: QuestionItems;
   constructor(
     private httpClient: HttpClient,   
     auth: AuthService
@@ -29,16 +29,16 @@ export class HelpByProsAPISerivce {
         this.getUser(user.nickname).catch((err: HttpErrorResponse) => {
          console.log("getting email")
          console.log(err.status)
-          if (err.status === 404 || err.status ==0) {
+          if (err.status === 404 || err.status ==0 || err.status==500) {
             // if user does not exist, create
             console.log("erro 404")
-            return this.createUser()
+            //return this.createUser({email: user.nickname});
             
           } else {
             throw err;
           }
         }).then(apiUser => {
-          this.userC= apiUser;
+          //this.userC= apiUser;
         });
       }
     });
@@ -60,9 +60,14 @@ export class HelpByProsAPISerivce {
     return this.httpClient.get<User>(url).toPromise();
   }
 
-  createUser(): Promise<User> {
+  createUser(user: UserCreate): Promise<User> {
     const url = `${environment.HelpBYProsApiBaseUrl}/user/CreateUser`;
-    return this.httpClient.post<User>(url, this.userC).toPromise();
+    return this.httpClient.post<User>(url, user).toPromise();
+  }
+
+  createQuestion(q:QuestionItems): Promise<QuestionItems> {
+    const url = `${environment.HelpBYProsApiBaseUrl}/forum/AddQuestion`;
+    return this.httpClient.post<QuestionItems>(url, q).toPromise();
   }
 
   

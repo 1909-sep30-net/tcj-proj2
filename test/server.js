@@ -34,4 +34,4 @@ app.get("/api/external", checkJwt, (req, res) => {
 });
 
 // Start the app
-app.listen(3001, () => console.log('API listening on 3001'));
+app.listen(4200, () => console.log('API listening on 3001'));

@@ -80,12 +80,13 @@ namespace HelpByPros.Api.Controllers
             x.UserQuestion = q.UserQuestion;
             x.Author = await _userRepo.GetAUserAsync(q.Username);
             x.Id = 0;
+            _messageSender.SentMessageThruPhoneCreate("Someone Posted a Question in your expertise!", await _userRepo.GetPhoneListForProfessionalExpertise(q.Category));
+
             try
             {
                 await _forumRepo.AddQuestionAsync(x);
                 
                 
-                _messageSender.SentMessageThruPhoneCreate("Someone Posted a Question in your expertise!",await _userRepo.GetPhoneListForProfessionalExpertise(q.Category));
                 return StatusCode(StatusCodes.Status201Created);
 
             }
